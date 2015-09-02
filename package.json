@@ -1,0 +1,21 @@
+{
+  "name": "float-labels.js",
+  "description": "The float label pattern floats the inline label up above the input after the user focuses on the form field or enters a value.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Paul Ryley",
+    "email": "paul@geminilabs.io",
+    "url": "http://geminilabs.io"
+  },
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.8.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "elixir-jshint": "^1.0.0",
+    "laravel-elixir": "^3.2.6"
+  }
+}
