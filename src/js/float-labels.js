@@ -3,7 +3,7 @@
  *
  * Version: 1.0.0
  * Author: Paul Ryley (http://geminilabs.io)
- * URL: http://geminilabs.github.io/float-labels.js/
+ * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
  */
 
