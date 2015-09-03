@@ -1,4 +1,4 @@
-# Float Labels v1.0.0
+# Float Labels v1.0.3
 
 The float label pattern floats the inline label up above the input after the user focuses on the form field or enters a value.
 
