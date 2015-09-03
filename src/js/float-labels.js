@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 1.0.0
+ * Version: 1.0.3
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -103,7 +103,7 @@
 	 */
 	floatLabel = function( el, placeholder )
 	{
-		var id, label, label_el;
+		var id, label, label_el, floatlabel = 'floatlabel';
 
 		el = $( el );
 		id = el.attr( 'id' );
@@ -124,13 +124,13 @@
 			}
 		}
 
-		if( !el.parent().hasClass( 'floatlabel' ) ) {
+		if( !el.parent().hasClass( floatlabel ) ) {
 
 			if( !label.length ) {
 				label = el.attr( 'placeholder' );
 			}
 
-			el.addClass( 'floatlabel-input' ).wrap( '<div class="floatlabel"/>' );
+			el.addClass( floatlabel + '-input' ).wrap( _pf( '<div class="{0} {0}-{1}"/>', floatlabel, id ) );
 
 			// allow for custom defined events
 			opts.customEvent.call( this, el );
@@ -146,7 +146,7 @@
 				label_el.remove();
 			}
 
-			el.after( '<label for="' + id + '" class="floatlabel-label">' + label + '</label>' );
+			el.after( _pf('<label for="{0}" class="{1}-label">{2}</label>', id, floatlabel, label ) );
 		}
 
 		if( el.val().length ) {
@@ -189,6 +189,19 @@
 		else {
 			el.parent().removeClass( 'is-active' );
 		}
+	};
+
+	/**
+	 * Simplified printf implementation
+	 */
+	_pf = function( format )
+	{
+		var args = [].slice.call( arguments, 1, arguments.length );
+
+		return format.replace( /{(\d+)}/g, function ( match, number )
+		{
+			return typeof args[ number ] !== undefined ? args[ number ] : match;
+		});
 	};
 
 }).call( this );
