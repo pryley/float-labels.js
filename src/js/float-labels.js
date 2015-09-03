@@ -132,21 +132,18 @@
 
 			el.addClass( 'floatlabel-input' ).wrap( '<div class="floatlabel"/>' );
 
-			if( label_el.length ) {
-				label_el.remove();
+			// allow for custom defined events
+			opts.customEvent.call( this, el );
+
+			// allow for custom defined labels
+			var custom_label = opts.customLabel.call( this, el, label );
+
+			if( custom_label !== undefined ) {
+				label = custom_label;
 			}
 
-			if( el !== undefined ) {
-
-				// allow for custom defined events
-				opts.customEvent.call( this, el );
-
-				// allow for custom defined labels
-				var custom_label = opts.customLabel.call( this, el );
-
-				if( custom_label !== undefined ) {
-					label = custom_label;
-				}
+			if( label_el.length ) {
+				label_el.remove();
 			}
 
 			el.after( '<label for="' + id + '" class="floatlabel-label">' + label + '</label>' );
