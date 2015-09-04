@@ -1,0 +1,28 @@
+{
+  "name": "float-labels.js",
+  "version": "1.0.4",
+  "description": "This plugin applies the float label pattern to a form.",
+  "homepage": "https://github.com/geminilabs/float-labels.js",
+  "authors": [
+    "Paul Ryley <paul@geminilabs.io>"
+  ],
+  "main": [
+    "dist/float-labels.min.js",
+    "dist/float-labels.css"
+  ],
+  "keywords": [
+    "jquery",
+    "floatlabels"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.8"
+  }
+}
