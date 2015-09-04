@@ -1,4 +1,6 @@
-# Float Labels v1.0.3
+# Float Labels v1.0.4
+
+This plugin applies the float label pattern to a form.
 
 The float label pattern floats the inline label up above the input after the user focuses on the form field or enters a value.
 
@@ -7,7 +9,14 @@ For production, use the files from the `dist/` folder.
 ## Usage Example
 
 ```
-jQuery( 'form' ).floatlabels();
+<script src="js/jquery.min.js"></script>
+<script src="js/float-labels.min.js"></script>
+
+<link href="css/float-labels.css" rel="stylesheet">
+
+<script>
+	jQuery( 'form' ).floatlabels();
+</script>
 ```
 
 ## Options
