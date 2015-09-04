@@ -1,4 +1,4 @@
-# Float Labels v1.0.4
+# Float Labels v1.0.5
 
 This plugin applies the float label pattern to a form.
 
