@@ -7,7 +7,7 @@
     "Paul Ryley <paul@geminilabs.io>"
   ],
   "main": [
-    "dist/float-labels.min.js",
+    "dist/float-labels.js",
     "dist/float-labels.css"
   ],
   "keywords": [

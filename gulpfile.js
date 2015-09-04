@@ -1,24 +1,68 @@
-var gulp   = require( 'gulp' );
-var Elixir = require( 'laravel-elixir' );
-
-require( 'elixir-jshint' );
-
-Elixir.config.production = true;
-Elixir.config.sourcemaps = false;
-Elixir.config.assetsPath = 'src/';
-Elixir.config.publicPath = 'dist/';
-
-Elixir.config.css.sass.folder = 'scss';
+var gulp       = require( 'gulp' );
+var autoprefix = require( 'gulp-autoprefixer' );
+var jshint     = require( 'gulp-jshint' );
+var minifyCSS  = require( 'gulp-minify-css' );
+var notify     = require( 'gulp-notify' );
+var rename     = require( 'gulp-rename' );
+var sass       = require( 'gulp-sass' );
+var uglify     = require( 'gulp-uglify' );
+var gutil      = require( 'gulp-util' );
+var watch      = require( 'gulp-watch' );
 
 var paths = {
-    src  : Elixir.config.assetsPath,
-    dest : Elixir.config.publicPath
-};
+	dist : 'dist/',
+	js   : ['src/js/float-labels.js'],
+	scss : ['src/scss/float-labels.scss']
+}
 
-Elixir( function( mix )
+/* CSS Task
+ -------------------------------------------------- */
+gulp.task( 'css', function ()
 {
-    mix
-    .jshint( [ paths.src + 'js/**/*.js'] )
-    .scripts( 'float-labels.js', paths.dest + 'float-labels.min.js' )
-    .sass( 'float-labels.scss', paths.dest + 'float-labels.css' );
+	return gulp
+		.src( paths.scss )
+		.pipe( sass({ outputStyle: 'expanded' }).on( 'error', sass.logError ) )
+		.pipe( autoprefix() )
+		.pipe( gulp.dest( paths.dist ) )
+		.pipe( rename({ suffix: '.min' }) )
+		.pipe( minifyCSS() )
+		.pipe( gulp.dest( paths.dist ) )
+		.pipe( notify({
+			message: 'CSS Task complete!',
+			onLast : true
+		}) );
 });
+
+/* JS Task
+ -------------------------------------------------- */
+gulp.task( 'js', function ()
+{
+	return gulp
+		.src( paths.js )
+		.pipe( jshint() )
+		.pipe( jshint.reporter( 'jshint-stylish' ) )
+		.pipe( jshint.reporter( 'fail' ).on( 'error', function() { this.emit( 'end' ); }) )
+		.pipe( gulp.dest( paths.dist ) )
+		.pipe( uglify({ preserveComments: 'license' }) )
+		.pipe( rename({ suffix: '.min' }) )
+		.pipe( gulp.dest( paths.dist ) )
+		.pipe( notify({
+			message: 'JS Task complete!',
+			onLast : true
+		}) );
+});
+
+/* Watch Task
+ -------------------------------------------------- */
+gulp.task( 'watch', function ()
+{
+	gulp.watch( paths.js, ['js'] );
+	gulp.watch( paths.scss, ['css'] );
+});
+
+/* Default Task
+ -------------------------------------------------- */
+gulp.task( 'default', function ()
+{
+	gulp.start( 'css', 'js' );
+} );
