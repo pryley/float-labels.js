@@ -62,9 +62,14 @@
 
 			if( form.get(0).tagName !== 'FORM' ) {
 				var forms = form.find( 'form' );
-				if( forms === 0 ) {
+
+				if( forms.length === 0 ) {
 					forms = form.closest( 'form' );
 				}
+				if( forms.length === 0 ) {
+					return;
+				}
+
 				form = forms;
 			}
 
