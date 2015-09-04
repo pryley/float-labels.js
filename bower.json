@@ -12,7 +12,8 @@
   ],
   "keywords": [
     "jquery",
-    "floatlabels"
+    "floatlabels",
+    "float-labels"
   ],
   "license": "MIT",
   "ignore": [
