@@ -68,6 +68,7 @@ All changes should be committed to the files in `src/`.
 ## Changelog
 
 `v1.0.0` - [03/09/2015] initial release
+
 `v1.0.6` - [23/09/2015] skip a form element if related label is not found, adjusted SCSS variables
 
 ## License
