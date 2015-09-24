@@ -1,13 +1,13 @@
-var gulp       = require( 'gulp' );
-var autoprefix = require( 'gulp-autoprefixer' );
-var jshint     = require( 'gulp-jshint' );
-var minifyCSS  = require( 'gulp-minify-css' );
-var notify     = require( 'gulp-notify' );
-var rename     = require( 'gulp-rename' );
-var sass       = require( 'gulp-sass' );
-var uglify     = require( 'gulp-uglify' );
-var gutil      = require( 'gulp-util' );
-var watch      = require( 'gulp-watch' );
+
+var gulp         = require( 'gulp' );
+var autoprefixer = require( 'gulp-autoprefixer' );
+var jshint       = require( 'gulp-jshint' );
+var minifycss    = require( 'gulp-minify-css' );
+var notify       = require( 'gulp-notify' );
+var rename       = require( 'gulp-rename' );
+var sass         = require( 'gulp-sass' );
+var uglify       = require( 'gulp-uglify' );
+var watch        = require( 'gulp-watch' );
 
 var paths = {
 	dist : 'dist/',
@@ -22,10 +22,10 @@ gulp.task( 'css', function ()
 	return gulp
 		.src( paths.scss )
 		.pipe( sass({ outputStyle: 'expanded' }).on( 'error', sass.logError ) )
-		.pipe( autoprefix() )
+		.pipe( autoprefixer() )
 		.pipe( gulp.dest( paths.dist ) )
 		.pipe( rename({ suffix: '.min' }) )
-		.pipe( minifyCSS() )
+		.pipe( minifycss() )
 		.pipe( gulp.dest( paths.dist ) )
 		.pipe( notify({
 			message: 'CSS Task complete!',
