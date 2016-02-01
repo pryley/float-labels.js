@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 1.0.7
+ * Version: 1.0.8
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -11,7 +11,8 @@ form.floated-labels .floatlabel {
 }
 
 form.floated-labels .floatlabel input,
-form.floated-labels .floatlabel select {
+form.floated-labels .floatlabel select,
+form.floated-labels .floatlabel textarea {
   font-size: 16px;
   line-height: normal;
   background-color: inherit;
@@ -46,6 +47,13 @@ form.floated-labels .floatlabel.is-focused label.floatlabel-label {
   color: #007ba4;
 }
 
+form.floated-labels .floatlabel.is-focused input,
+form.floated-labels .floatlabel.is-focused select,
+form.floated-labels .floatlabel.is-focused textarea {
+  background-color: inherit;
+  border-color: #ccc;
+}
+
 form.floated-labels .floatlabel label.floatlabel-label {
   position: absolute;
   display: block;
@@ -57,7 +65,7 @@ form.floated-labels .floatlabel label.floatlabel-label {
   opacity: 0;
   visibility: hidden;
   -webkit-transition: all 0.3s ease-in-out;
-          transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   padding: 0 1px;
 }
 
@@ -70,8 +78,7 @@ form.floated-labels .styled.select {
   position: relative;
 }
 
-form.floated-labels .styled.select:before,
-form.floated-labels .styled.select:after {
+form.floated-labels .styled.select:before, form.floated-labels .styled.select:after {
   content: '';
   position: absolute;
   display: block;
@@ -85,13 +92,11 @@ form.floated-labels .styled.select:after {
 form.floated-labels .styled.select:before {
   right: 18px;
   -webkit-transform: skew(0deg, 45deg);
-      -ms-transform: skew(0deg, 45deg);
           transform: skew(0deg, 45deg);
 }
 
 form.floated-labels .styled.select:after {
   right: 12px;
   -webkit-transform: skew(0deg, -45deg);
-      -ms-transform: skew(0deg, -45deg);
           transform: skew(0deg, -45deg);
 }

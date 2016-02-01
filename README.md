@@ -1,4 +1,4 @@
-# Float Labels v1.0.7
+# Float Labels v1.0.8
 
 This plugin applies the float label pattern to a form.
 
@@ -105,6 +105,12 @@ All changes should be committed to the files in `src/`.
 - add the `data-tooltip=""` attribute to the label if it exists
 - new option `priority` for placeholder/label
 - detect if field ID is not unique and handle label
+
+`v1.0.8 - [31/01/2016]`
+
+- added "*-active" SCSS variables for borders and backgrounds
+- fixed textarea font-size potentially differing from inputs/selects
+- updated npm package dependancies
 
 ## License
 

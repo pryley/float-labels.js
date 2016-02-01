@@ -1,8 +1,8 @@
 
 var gulp         = require( 'gulp' );
 var autoprefixer = require( 'gulp-autoprefixer' );
+var cssnano      = require( 'gulp-cssnano' );
 var jshint       = require( 'gulp-jshint' );
-var minifycss    = require( 'gulp-minify-css' );
 var notify       = require( 'gulp-notify' );
 var rename       = require( 'gulp-rename' );
 var sass         = require( 'gulp-sass' );
@@ -25,7 +25,7 @@ gulp.task( 'css', function ()
 		.pipe( autoprefixer() )
 		.pipe( gulp.dest( paths.dist ) )
 		.pipe( rename({ suffix: '.min' }) )
-		.pipe( minifycss() )
+		.pipe( cssnano() )
 		.pipe( gulp.dest( paths.dist ) )
 		.pipe( notify({
 			message: 'CSS Task complete!',
