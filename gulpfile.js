@@ -10,10 +10,10 @@ var uglify       = require( 'gulp-uglify' );
 var watch        = require( 'gulp-watch' );
 
 var paths = {
-	dist : 'dist/',
-	js   : ['src/js/float-labels.js'],
-	scss : ['src/scss/float-labels.scss']
-}
+	dist: 'dist/',
+	js  : ['src/js/float-labels.js'],
+	scss: ['src/scss/float-labels.scss']
+};
 
 /* CSS Task
  -------------------------------------------------- */
@@ -65,4 +65,4 @@ gulp.task( 'watch', function ()
 gulp.task( 'default', function ()
 {
 	gulp.start( 'css', 'js' );
-} );
+});

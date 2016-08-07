@@ -1,4 +1,4 @@
-# Float Labels v1.0.8
+# Float Labels v1.0.9
 
 This plugin applies the float label pattern to a form.
 
@@ -111,6 +111,10 @@ All changes should be committed to the files in `src/`.
 - added "*-active" SCSS variables for borders and backgrounds
 - fixed textarea font-size potentially differing from inputs/selects
 - updated npm package dependancies
+
+`v1.0.9 - [06/08/2016]`
+
+- publish to npm
 
 ## License
 
