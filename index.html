@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+	<title>float-labels.js by geminilabs</title>
+
+	<link href="assets/css/styles.css" rel="stylesheet">
+	<link href="dist/float-labels.css" rel="stylesheet">
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+<div class="wrapper">
+
+	<header>
+
+		<h1>float-labels.js</h1>
+
+		<p>
+			<a href="https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js"><img src="https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js.svg" alt="GitHub version" height="18"></a>
+			<a href="https://github.com/geminilabs/float-labels.js/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" height="18"></a>
+		</p>
+
+		<p>This zero-dependency plugin applies the float label pattern to a form.</p>
+		<p>The float label pattern floats the inline label up above the input after the user focuses on the form field or enters a value.</p>
+		<p>For production, use the files from the <code>dist/</code> folder.</p>
+
+		<p class="view"><a href="https://github.com/geminilabs/float-labels.js">View the Project on GitHub</a></p>
+
+		<ul>
+			<li><a href="https://github.com/geminilabs/float-labels.js/zipball/master">Download <strong>ZIP File</strong></a></li>
+			<li><a href="https://github.com/geminilabs/float-labels.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
+			<li><a href="https://github.com/geminilabs/float-labels.js">View On <strong>GitHub</strong></a></li>
+		</ul>
+
+	</header>
+
+	<section>
+
+		<h2>Live Example</h2>
+
+		<form class="form-1">
+			<label for="input-1">Enter a title</label>
+			<input type="text" id="input-1" placeholder="Input" value="" required/>
+
+			<label for="textarea-1">Enter some content</label>
+			<textarea id="textarea-1" placeholder="Textarea" rows="4" required></textarea>
+
+			<label for="select-1">Select an option</label>
+			<select id="select-1" class="required">
+				<option value="1">Option 1</option>
+				<option value="2">Option 2</option>
+				<option value="3">Option 3</option>
+			</select>
+		</form>
+
+		<h2>Default Usage</h2>
+
+		<h3>Using vanilla javascript</h3>
+
+		<pre><code>&lt;link href="css/float-labels.css" rel="stylesheet"&gt;
+&lt;script src="js/float-labels.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+	var floatlabels = new FloatLabels( document.querySelectorAll( 'form' ));
+&lt;/script&gt;</code></pre>
+
+		<h3>Using jQuery</h3>
+
+		<pre><code>&lt;link href="css/float-labels.css" rel="stylesheet"&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"&gt;&lt;/script&gt;
+&lt;script src="js/float-labels.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+	$( 'form' ).floatlabels();
+&lt;/script&gt;</code></pre>
+
+		<h2>Options</h2>
+
+		<p>Here are the default options</p>
+
+		<pre><code>{
+	customEvent: null,
+	customLabel: null,
+	exclude    : '.no-label',
+	inputRegex : /email|number|password|search|tel|text|url/,
+	prioritize : 'label',
+}</code></pre>
+
+		<h3>customEvent</h3>
+
+		<h3>customLabel</h3>
+
+		<h3>exclude</h3>
+
+		<h3>inputRegex</h3>
+
+		<h3>prioritize</h3>
+
+		<h2>Build</h2>
+
+		<p>float-labels.js uses gulp to build from src.</p>
+
+		<pre><code>$ npm install
+$ gulp</code></pre>
+
+		<p>The compiled files will be saved in the <code>dist/</code> folder.</p>
+
+		<h2>License</h2>
+
+		<p><a href="https://github.com/geminilabs/float-labels.js/blob/master/LICENSE">MIT</a></p>
+
+	</section>
+
+	<footer>
+		<p>This project is maintained by <a href="https://github.com/geminilabs">geminilabs</a></p>
+	</footer>
+
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script> -->
+	<script src="assets/js/scale.fix.js"></script>
+	<script src="src/js/float-labels.js"></script>
+
+	<script>
+		new FloatLabels( 'form' );
+	</script>
+</div>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 1.0.9
+ * Version: 2.0.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -11,131 +11,160 @@
 // Variables
 //
 
-$fl-placeholder       : #aaa !default;
-$fl-text              : #333 !default;
-$fl-text-focus        : #007ba4 !default;
-$fl-borders           : #ccc !default;
-$fl-borders-focus     : #ccc !default;
-$fl-borders-active    : #ccc !default;
-$fl-background        : inherit !default;
-$fl-background-focus  : inherit !default;
-$fl-background-active : inherit !default;
-
-$fl-font-size         : 16px !default;
-$fl-font-size-small   : 11px !default;
-
-$fl-spacing-base      : 24px !default;
-$fl-spacing-half      : $fl-spacing-base / 2 !default;
-$fl-spacing-third     : $fl-spacing-base / 3 !default;
-$fl-spacing-fourth    : $fl-spacing-base / 4 !default;
-
-$fl-transition-speed  : 0.3s !default;
-$fl-transition-easing : ease-in-out !default;
+$fl-base-height             : 48px !default;
+$fl-base-padding            : 7px !default;
+$fl-border-radius           : 3px !default;
+$fl-border-width            : 1px !default;
+$fl-color-background        : #fff !default;
+$fl-color-background-active : #fff !default;
+$fl-color-background-focus  : #fff !default;
+$fl-color-border            : #dfdfdf !default;
+$fl-color-border-active     : #dfdfdf !default;
+$fl-color-border-focus      : #1976D2 !default;
+$fl-color-placeholder       : #bbb !default;
+$fl-color-text              : #444 !default;
+$fl-color-text-focus        : #1976D2 !default;
+$fl-font-size               : 16px !default;
+$fl-font-size-small         : 11px !default;
+$fl-font-weight             : 700 !default;
+$fl-transition-easing       : ease-in-out !default;
+$fl-transition-speed        : 0.2s !default;
 
 //
 // Styles
 //
 
-form.floated-labels {
+.fl-wrap {
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-font-feature-settings: "liga" on;
+	text-rendering: optimizeLegibility;
 
-	.floatlabel {
-
-		position: relative;
-
-		input,
-		select,
-		textarea {
-			font-size: $fl-font-size;
-			line-height: normal;
-			background-color: $fl-background;
-			border: 1px solid $fl-borders;
-			padding: $fl-spacing-half;
-		}
-
-		select {
-			position: relative;
-			color: $fl-placeholder;
-			cursor: pointer;
-			-webkit-appearance: none;
-			-moz-appearance: none;
-		}
-
-		&.is-active {
-			label.floatlabel-label {
-				opacity: 1;
-				visibility: visible;
-			}
-
-			input,
-			select,
-			textarea {
-				color: $fl-text;
-				background-color: $fl-background-active;
-				border-color: $fl-borders-active;
-				padding-top: $fl-spacing-base - ($fl-spacing-third / 2);
-				padding-bottom: $fl-spacing-third / 2;
-			}
-		}
-
-		&.is-focused {
-			label.floatlabel-label {
-				color: $fl-text-focus;
-			}
-
-			input,
-			select,
-			textarea {
-				background-color: $fl-background-focus;
-				border-color: $fl-borders-focus;
-			}
-		}
-
-		label.floatlabel-label {
-			position: absolute;
-			display: block;
-			top: $fl-spacing-third;
-			left: $fl-spacing-half;
-			color: $fl-placeholder;
-			font-size: $fl-font-size-small;
-			line-height: 1;
-			opacity: 0;
-			visibility: hidden;
-			transition: all $fl-transition-speed $fl-transition-easing;
-			padding: 0 1px;
-
-			&.is-visible {
-				opacity: 1;
-				visibility: visible;
-			}
-		}
+	input.fl-input,
+	select.fl-select,
+	textarea.fl-textarea {
+		width: 100%;
+		font-size: $fl-font-size;
+		line-height: normal;
+		background-color: $fl-color-background;
+		border: $fl-border-width solid $fl-color-border;
+		border-radius: $fl-border-radius;
+		box-sizing: border-box;
+		outline: 0;
+		transition: all $fl-transition-speed $fl-transition-easing;
+		padding: ($fl-base-padding * 2);
 	}
 
-	.styled {
+	input.fl-input,
+	select.fl-select {
+		height: $fl-base-height;
+	}
 
-		&.select {
-			position: relative;
+	select.fl-select {
+		position: relative;
+		color: $fl-color-placeholder;
+		cursor: pointer;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		transition: all $fl-transition-speed $fl-transition-easing;
+		outline: 0;
+	}
 
-			&:before,
-			&:after {
-				content: '';
-				position: absolute;
-				display: block;
-				top: $fl-spacing-base;
-				height: 2px;
-				width: $fl-spacing-fourth;
-				background: $fl-placeholder;
-				z-index: 2;
-			}
+	label.fl-label {
+		position: absolute;
+		display: block;
+		top: $fl-border-width;
+		left: $fl-border-width;
+		color: $fl-color-placeholder;
+		font-size: $fl-font-size-small;
+		font-weight: 700;
+		line-height: 1;
+		border-radius: $fl-border-radius;
+		opacity: 0;
+		visibility: hidden;
+		transition: padding $fl-transition-speed $fl-transition-easing,
+					opacity $fl-transition-speed $fl-transition-easing,
+					visibility $fl-transition-speed $fl-transition-easing,
+					color $fl-transition-speed $fl-transition-easing;
+		padding: ($fl-base-padding) ($fl-base-padding * 2) ($fl-base-padding / 2);
+		z-index: 1;
+	}
 
-			&:before {
-				right: $fl-spacing-half + $fl-spacing-fourth;
-				transform: skew(0deg, 45deg);
-			}
-
-			&:after {
-				right: $fl-spacing-half;
-				transform: skew(0deg, -45deg);
-			}
-		}
+	&.fl-wrap-textarea label.fl-label {
+		right: $fl-border-width;
+		background-color: $fl-color-background;
 	}
 }
+
+.fl-wrap.fl-is-active {
+	input.fl-input,
+	select.fl-select,
+	textarea.fl-textarea {
+		color: $fl-color-text;
+		background-color: $fl-color-background-active;
+		border-color: $fl-color-border-active;
+		padding: ($fl-base-padding * 3) ($fl-base-padding * 2) $fl-base-padding;
+	}
+
+	label.fl-label {
+		opacity: 1;
+		visibility: visible;
+		background-color: $fl-color-background-active;
+	}
+}
+
+.fl-wrap.fl-has-focus {
+	input.fl-input,
+	select.fl-select,
+	textarea.fl-textarea {
+		background-color: $fl-color-background-focus;
+		border-color: $fl-color-border-focus;
+	}
+
+	label.fl-label {
+		color: $fl-color-text-focus;
+		background-color: $fl-color-background-focus;
+	}
+}
+
+.fl-wrap.fl-is-required {
+	&:before {
+		content: '*';
+		display: inline-block;
+		vertical-align: middle;
+		position: absolute;
+		top: ($fl-base-height / 2) - ($fl-font-size / 2);
+		right: ($fl-base-padding * 2);
+		height: $fl-base-height;
+		line-height: 1;
+		font-size: ($fl-font-size * 1.75);
+		color: $fl-color-text-focus;
+		transition: all $fl-transition-speed $fl-transition-easing;
+		z-index: 1;
+	}
+
+	&.fl-is-active:before {
+		display: none;
+	}
+}
+
+.fl-has-style {
+
+}
+
+// .fl-select.fl-has-style {
+// 	&:after {
+// 		content: '';
+// 		position: absolute;
+// 		display: block;
+// 		top: 18px;
+// 		right: 18px;
+// 		height: 8px;
+// 		width: 8px;
+// 		border: 1px solid $fl-color-placeholder;
+// 		border-width: 1px 1px 0 0;
+// 		transform: rotate(135deg);
+// 		z-index: 2;
+// 	}
+// }
