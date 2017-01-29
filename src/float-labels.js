@@ -79,16 +79,7 @@
 
 			this.setLabel( labelEl, el );
 			this.wrapLabel( labelEl, el );
-
-			// call the custom defined event
-			if( typeof this.config.customEvent === 'function' ) {
-				this.config.customEvent.call( this, el );
-			}
-
-			// events
-			this.on( 'blur', el, this.onBlur.bind( this ));
-			this.on( 'input', el, this.onChange.bind( this ));
-			this.on( 'focus', el, this.onFocus.bind( this ));
+			this.runEvents( el );
 		},
 
 		getLabel: function( el, form )
@@ -160,6 +151,19 @@
 
 			wrapper.appendChild( labelEl );
 			wrapper.appendChild( el );
+		},
+
+		runEvents: function( el )
+		{
+			// call the custom defined event
+			if( typeof this.config.customEvent === 'function' ) {
+				this.config.customEvent.call( this, el );
+			}
+
+			// events
+			this.on( 'blur', el, this.onBlur.bind( this ));
+			this.on( 'input', el, this.onChange.bind( this ));
+			this.on( 'focus', el, this.onFocus.bind( this ));
 		},
 
 		onBlur: function( ev )
