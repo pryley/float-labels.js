@@ -7,6 +7,8 @@
  * License: MIT
  */
 
+/** global: Option */
+
 ;(function( window, document, undefined )
 {
 	"use strict";
@@ -248,6 +250,7 @@
 
 			Object.keys( extenders ).forEach( function( i ) {
 				for( var key in extenders[ i ] ) {
+					if( !extenders[ i ].hasOwnProperty( key ))continue;
 					result[ key ] = extenders[ i ][ key ];
 				}
 			});

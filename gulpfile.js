@@ -28,7 +28,6 @@ gulp.task( 'css', function ()
 		.pipe( autoprefixer() )
 		.pipe( cssnano() )
 		.pipe( rename( function( path ) {
-			console.log( path );
 			path.dirname = path.dirname.replace( 'src', 'dist' );
 			path.dirname = path.dirname.replace( 'scss', 'css' );
 		}))
