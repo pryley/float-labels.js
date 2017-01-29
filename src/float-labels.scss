@@ -22,6 +22,7 @@ $fl-color-border            : #dfdfdf !default;
 $fl-color-border-active     : #dfdfdf !default;
 $fl-color-border-focus      : #1976D2 !default;
 $fl-color-placeholder       : #bbb !default;
+$fl-color-required          : #D32F2F !default;
 $fl-color-text              : #444 !default;
 $fl-color-text-focus        : #1976D2 !default;
 $fl-font-size               : 16px !default;
@@ -119,7 +120,7 @@ $fl-transition-speed        : 0.2s !default;
 	select.fl-select,
 	textarea.fl-textarea {
 		background-color: $fl-color-background-focus;
-		border-color: $fl-color-border-focus;
+		border-color: #9E9E9E;
 	}
 
 	label.fl-label {
@@ -131,15 +132,14 @@ $fl-transition-speed        : 0.2s !default;
 .fl-wrap.fl-is-required {
 	&:before {
 		content: '*';
-		display: inline-block;
-		vertical-align: middle;
+		display: block;
 		position: absolute;
-		top: ($fl-base-height / 2) - ($fl-font-size / 2);
+		top: 3px;
 		right: ($fl-base-padding * 2);
 		height: $fl-base-height;
-		line-height: 1;
-		font-size: ($fl-font-size * 1.75);
-		color: $fl-color-text-focus;
+		line-height: $fl-base-height;
+		font-size: $fl-font-size;
+		color: $fl-color-required;
 		transition: all $fl-transition-speed $fl-transition-easing;
 		z-index: 1;
 	}
@@ -149,22 +149,75 @@ $fl-transition-speed        : 0.2s !default;
 	}
 }
 
-.fl-has-style {
+//
+// Style 2
+//
 
+.fl-wrap {
+	select.fl-select {
+		padding-right: 50px;
+	}
+
+	label.fl-label {
+		top: -4px;
+		left: 11px;
+		font-size: 12px;
+		border-radius: 0;
+		background-color: transparent;
+		transition: opacity $fl-transition-speed $fl-transition-easing,
+					visibility $fl-transition-speed $fl-transition-easing,
+					color $fl-transition-speed $fl-transition-easing,
+					background-color $fl-transition-speed $fl-transition-easing,
+					top $fl-transition-speed $fl-transition-easing;
+		padding: 4px;
+
+		&:before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 9px;
+			left: 0;
+			right: 0;
+			height: 9px;
+			background-color: #fff;
+			z-index: -1;
+		}
+	}
+
+	&.fl-wrap-textarea label.fl-label {
+		right: auto;
+	}
+
+	&.fl-wrap-select:after {
+		content: '';
+		position: absolute;
+		display: block;
+		top: 18px;
+		right: 38px;
+		height: 8px;
+		width: 8px;
+		border: 1px solid $fl-color-placeholder;
+		border-width: 1px 1px 0 0;
+		transform: rotate(135deg);
+		z-index: 2;
+	}
 }
 
-// .fl-select.fl-has-style {
-// 	&:after {
-// 		content: '';
-// 		position: absolute;
-// 		display: block;
-// 		top: 18px;
-// 		right: 18px;
-// 		height: 8px;
-// 		width: 8px;
-// 		border: 1px solid $fl-color-placeholder;
-// 		border-width: 1px 1px 0 0;
-// 		transform: rotate(135deg);
-// 		z-index: 2;
-// 	}
-// }
+.fl-wrap.fl-is-active {
+	input.fl-input,
+	select.fl-select,
+	textarea.fl-textarea {
+		padding: ($fl-base-padding * 2);
+	}
+
+	label.fl-label {
+		top: -9px;
+		background-color: transparent;
+	}
+}
+
+.fl-wrap.fl-has-focus {
+	label.fl-label {
+		background-color: transparent;
+	}
+}

@@ -1,4 +1,4 @@
-
+var browserSync  = require( 'browser-sync' ).create();
 var gulp         = require( 'gulp' );
 var autoprefixer = require( 'gulp-autoprefixer' );
 var cssnano      = require( 'gulp-cssnano' );
@@ -11,8 +11,11 @@ var watch        = require( 'gulp-watch' );
 
 var paths = {
 	dist: 'dist/',
-	js  : ['src/js/float-labels.js'],
-	scss: ['src/scss/float-labels.scss']
+	js  : ['src/float-labels.js'],
+	scss: [
+		'demo/scss/styles.scss',
+		'src/float-labels.scss',
+	],
 };
 
 /* CSS Task
@@ -20,13 +23,17 @@ var paths = {
 gulp.task( 'css', function ()
 {
 	return gulp
-		.src( paths.scss )
+		.src( paths.scss, { base: '.' })
 		.pipe( sass({ outputStyle: 'expanded' }).on( 'error', sass.logError ))
 		.pipe( autoprefixer() )
-		// .pipe( gulp.dest( paths.dist ))
-		// .pipe( rename({ suffix: '.min' }))
 		.pipe( cssnano() )
-		.pipe( gulp.dest( paths.dist ))
+		.pipe( rename( function( path ) {
+			console.log( path );
+			path.dirname = path.dirname.replace( 'src', 'dist' );
+			path.dirname = path.dirname.replace( 'scss', 'css' );
+		}))
+		.pipe( gulp.dest( '.' ))
+		.pipe( browserSync.stream() )
 		.pipe( notify({
 			message: 'CSS Task complete!',
 			onLast : true
@@ -56,6 +63,7 @@ gulp.task( 'js', function ()
 		.pipe( uglify({ preserveComments: 'license' }))
 		.pipe( rename({ suffix: '.min' }))
 		.pipe( gulp.dest( paths.dist ))
+		.pipe( browserSync.stream() )
 		.pipe( notify({
 			message: 'JS Task complete!',
 			onLast : true
@@ -66,8 +74,15 @@ gulp.task( 'js', function ()
  -------------------------------------------------- */
 gulp.task( 'watch', function ()
 {
+	browserSync.init({
+		server: {
+			baseDir: "."
+		}
+	});
+
 	gulp.watch( paths.js, ['js'] );
 	gulp.watch( paths.scss, ['css'] );
+	gulp.watch( 'index.html' ).on( 'change', browserSync.reload );
 });
 
 /* Default Task

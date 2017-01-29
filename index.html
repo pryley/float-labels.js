@@ -1,135 +1,182 @@
 <!doctype html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<html lang="en-us">
+  <head>
 
-	<title>float-labels.js by geminilabs</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link href="assets/css/styles.css" rel="stylesheet">
-	<link href="dist/float-labels.css" rel="stylesheet">
+    <title>float-labels.js by geminilabs</title>
 
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-</head>
-<body>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
+    <link rel="stylesheet" href="demo/css/styles.css">
+    <link rel="stylesheet" href="dist/float-labels.css">
 
-<div class="wrapper">
+  </head>
+  <body>
 
-	<header>
+    <section class="page-header">
+      <h1 class="project-name">float-labels.js</h1>
+      <h2 class="project-tagline">A zero-dependency plugin that applies the float label pattern to a form.</h2>
+      <a href="https://github.com/geminilabs/float-labels.js" class="btn">View on GitHub</a>
+      <a href="https://github.com/geminilabs/float-labels.js/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/geminilabs/float-labels.js/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-		<h1>float-labels.js</h1>
+    <section class="main-content">
 
-		<p>
-			<a href="https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js"><img src="https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js.svg" alt="GitHub version" height="18"></a>
-			<a href="https://github.com/geminilabs/float-labels.js/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" height="18"></a>
-		</p>
+      <p>
+        <a href="https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js"><img src="https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js.svg" alt="GitHub version" height="18"></a>
+        <a href="https://github.com/geminilabs/float-labels.js/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" height="18"></a>
+      </p>
 
-		<p>This zero-dependency plugin applies the float label pattern to a form.</p>
-		<p>The float label pattern floats the inline label up above the input after the user focuses on the form field or enters a value.</p>
-		<p>For production, use the files from the <code>dist/</code> folder.</p>
+      <p>The float label pattern floats the inline label up above the input after the user focuses on the form field or enters a value.</p>
+      <p>For production, use the files from the <code>dist/</code> folder.</p>
 
-		<p class="view"><a href="https://github.com/geminilabs/float-labels.js">View the Project on GitHub</a></p>
+      <h2>Demo</h2>
 
-		<ul>
-			<li><a href="https://github.com/geminilabs/float-labels.js/zipball/master">Download <strong>ZIP File</strong></a></li>
-			<li><a href="https://github.com/geminilabs/float-labels.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
-			<li><a href="https://github.com/geminilabs/float-labels.js">View On <strong>GitHub</strong></a></li>
-		</ul>
+      <form class="form-1">
+        <label for="input-1">Enter a title</label>
+        <input type="text" id="input-1" placeholder="Input" value="" required/>
 
-	</header>
+        <label for="textarea-1">Enter some content</label>
+        <textarea id="textarea-1" placeholder="Textarea" rows="4" required></textarea>
 
-	<section>
+        <label for="select-1">Select an option</label>
+        <select id="select-1" class="required">
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
 
-		<h2>Live Example</h2>
+        <button type="reset">Reset form</button>
+      </form>
 
-		<form class="form-1">
-			<label for="input-1">Enter a title</label>
-			<input type="text" id="input-1" placeholder="Input" value="" required/>
+      <h2>Default Usage</h2>
 
-			<label for="textarea-1">Enter some content</label>
-			<textarea id="textarea-1" placeholder="Textarea" rows="4" required></textarea>
+      <h3>Using vanilla javascript</h3>
 
-			<label for="select-1">Select an option</label>
-			<select id="select-1" class="required">
-				<option value="1">Option 1</option>
-				<option value="2">Option 2</option>
-				<option value="3">Option 3</option>
-			</select>
-		</form>
+      <div class="highlight highlight-Html"><pre><code>&lt;link href="css/float-labels.css" rel="stylesheet"&gt;
 
-		<h2>Default Usage</h2>
-
-		<h3>Using vanilla javascript</h3>
-
-		<pre><code>&lt;link href="css/float-labels.css" rel="stylesheet"&gt;
 &lt;script src="js/float-labels.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
-	var floatlabels = new FloatLabels( document.querySelectorAll( 'form' ));
-&lt;/script&gt;</code></pre>
+  var floatlabels = new FloatLabels( document.querySelectorAll( 'form' ));
+&lt;/script&gt;</code></pre></div>
 
-		<h3>Using jQuery</h3>
+      <h3>Using jQuery</h3>
 
-		<pre><code>&lt;link href="css/float-labels.css" rel="stylesheet"&gt;
+      <div class="highlight highlight-Html"><pre><code>&lt;link href="css/float-labels.css" rel="stylesheet"&gt;
+
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"&gt;&lt;/script&gt;
 &lt;script src="js/float-labels.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
-	$( 'form' ).floatlabels();
-&lt;/script&gt;</code></pre>
+  $( 'form' ).floatlabels();
+&lt;/script&gt;</code></pre></div>
 
-		<h2>Options</h2>
+      <h2>Options</h2>
 
-		<p>Here are the default options</p>
+      <h3>Default options</h3>
 
-		<pre><code>{
-	customEvent: null,
-	customLabel: null,
-	exclude    : '.no-label',
-	inputRegex : /email|number|password|search|tel|text|url/,
-	prioritize : 'label',
+      <pre><code>{
+  customEvent  : null,
+  customLabel  : null,
+  exclude      : '.no-label',
+  inputRegex   : /email|number|password|search|tel|text|url/,
+  prioritize   : 'label',
+  requiredClass: 'required',
+  styledForm   : true,
+  transform    : 'input,select,textarea',
 }</code></pre>
 
-		<h3>customEvent</h3>
+      <h4>customEvent</h4>
 
-		<h3>customLabel</h3>
+      <blockquote>
+      <p>Type: <code>Function</code></p>
+      <p>This function is run immediately after an element has been transformed by float-labels.</p>
+      <pre><code>customEvent: function( el ) {
+  console.log( el );
+},</code></pre>
+      </blockquote>
 
-		<h3>exclude</h3>
+      <h4>customLabel</h4>
 
-		<h3>inputRegex</h3>
+      <blockquote>
+      <p>Type: <code>Function</code></p>
+      <p>This function lets you modify a label text; it must return a string.</p>
+      <pre><code>customLabel: function( labelEl, el ) {
+  console.log( labelEl );
+  return labelEl.text;
+},</code></pre>
+      </blockquote>
 
-		<h3>prioritize</h3>
+      <h4>exclude</h4>
 
-		<h2>Build</h2>
+      <blockquote>
+      <p>Type: <code>String</code></p>
+      <p>A comma-separated string of DOM selector elements to exclude.</p>
+      </blockquote>
 
-		<p>float-labels.js uses gulp to build from src.</p>
+      <h4>inputRegex</h4>
 
-		<pre><code>$ npm install
-$ gulp</code></pre>
+      <blockquote>
+      <p>Type: <code>Regex</code></p>
+      <p>Regex of INPUT types to transform.</p>
+      </blockquote>
 
-		<p>The compiled files will be saved in the <code>dist/</code> folder.</p>
+      <h4>prioritize</h4>
 
-		<h2>License</h2>
+      <blockquote>
+      <p>Type: <code>String</code></p>
+      <p>Choose to prioritize either the label or placeholder text as the floating-label.</p>
+      </blockquote>
 
-		<p><a href="https://github.com/geminilabs/float-labels.js/blob/master/LICENSE">MIT</a></p>
+      <h4>requiredClass</h4>
 
-	</section>
+      <blockquote>
+      <p>Type: <code>String</code></p>
+      <p>The class name of required elements (if not using the required attribute).</p>
+      </blockquote>
 
-	<footer>
-		<p>This project is maintained by <a href="https://github.com/geminilabs">geminilabs</a></p>
-	</footer>
+      <h4>styledForm</h4>
 
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script> -->
-	<script src="assets/js/scale.fix.js"></script>
-	<script src="src/js/float-labels.js"></script>
+      <blockquote>
+      <p>Type: <code>Boolean</code></p>
+      <p>Add additional CSS styling to the form.</p>
+      </blockquote>
 
-	<script>
-		new FloatLabels( 'form' );
-	</script>
-</div>
+      <h4>transform</h4>
 
-</body>
+      <blockquote>
+      <p>Type: <code>String</code></p>
+      <p>A comma-separated string of DOM elements to transform. Available options are: <code>input</code>, <code>select</code>, and <code>textarea</code>.</p>
+      </blockquote>
+
+      <h2>Build</h2>
+
+      <p>float-labels.js uses <a href="https://yarnpkg.com/">yarn</a> to manage package dependencies and <a href="http://gulpjs.com/">gulp</a> to build from <code>src/</code>.</p>
+
+      <div class="highlight highlight-Bash"><pre><code>$ yarn
+$ gulp</code></pre></div>
+
+      <p>The compiled files will be saved in the <code>dist/</code> folder.</p>
+
+      <h2>License</h2>
+
+      <p><a href="https://github.com/geminilabs/float-labels.js/blob/master/LICENSE">MIT</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner">This project is maintained by <a href="https://github.com/geminilabs">geminilabs</a></span>
+      </footer>
+
+    </section>
+
+    <script src="src/float-labels.js"></script>
+
+    <script>
+      new FloatLabels( 'form' );
+    </script>
+
+  </body>
 </html>

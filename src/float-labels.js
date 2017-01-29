@@ -45,6 +45,8 @@
 
 				var exclude = _this.sprintf( ':not($0)', _this.config.exclude.split(/[\s,]+/).join( '):not(' ));
 
+				_this.on( 'reset', form, _this.onReset.bind( _this ));
+
 				_this.addClass( form, _this.prefixed( 'form' ));
 
 				if( _this.config.styledForm ) {
@@ -115,7 +117,7 @@
 
 			// call the custom defined label event
 			if( typeof this.config.customLabel === 'function' ) {
-				var customLabel = this.config.customLabel.call( this, el );
+				var customLabel = this.config.customLabel.call( this, labelEl, el );
 				if( customLabel !== undefined ) {
 					labelText = customLabel;
 				}
@@ -174,6 +176,17 @@
 			this.addClass( ev.target.parentNode, this.prefixed( 'has-focus' ));
 		},
 
+		onReset: function( ev )
+		{
+			var _this = this;
+
+			this.config.transform.split(/[\s,]+/).forEach( function( tag ) {
+				ev.target.querySelectorAll( tag ).forEach( function( el ) {
+					_this.removeClass( el.parentNode, _this.prefixed( 'is-active' ));
+				});
+			});
+		},
+
 		addClass: function( el, className )
 		{
 			if( el.classList ) {
@@ -218,6 +231,13 @@
 		off: function( event, el, handler )
 		{
 			this.event( 'remove', event, el, handler );
+		},
+
+		trigger: function( event, el )
+		{
+			var ev = document.createEvent( 'HTMLEvents' );
+			ev.initEvent( event, false, true );
+			el.dispatchEvent( ev );
 		},
 
 		extend: function()
