@@ -19,14 +19,13 @@
 	{
 		this.el = el;
 		this.options = options;
-		this.prefix = 'fl-';
-
 		this.init();
 	};
 
 	Plugin.prototype = {
 
 		defaults: {
+			classPrefix  : 'fl-',
 			customEvent  : null,
 			customLabel  : null,
 			exclude      : '.no-label',
@@ -44,6 +43,7 @@
 			document.querySelectorAll( this.el ).forEach( function( form ) {
 
 				_this.config = _this.extend( {}, _this.defaults, _this.options, form.getAttribute( 'data-options' ));
+				_this.prefix = _this.config.classPrefix;
 
 				var exclude = _this.sprintf( ':not($0)', _this.config.exclude.split(/[\s,]+/).join( '):not(' ));
 
