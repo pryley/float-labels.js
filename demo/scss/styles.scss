@@ -1,429 +1,197 @@
-@import "../../node_modules/normalize.css/normalize";
-
-// Breakpoints
-$large-breakpoint: 50em !default;
-$medium-breakpoint: 42em !default;
-
-// Headers
-$header-heading-color: #fff !default;
-$header-bg-color: #263238 !default;
-$header-bg-color-secondary: #155799 !default;
-
-// Text
-$section-headings-color: #263238 !default;
-$body-text-color: #546E7A !default;
-$body-link-color: #1565C0 !default;
-$blockquote-text-color: #607D8B !default;
-
-// Code
-$code-bg-color: #ECEFF1 !default;
-$code-text-color: #607D8B !default;
-$pre-bg-color: #263238 !default;
-$pre-text-color: #DCEDC8 !default;
-
-// Borders
-$border-color: #ECEFF1 !default;
-$table-border-color: #ECEFF1 !default;
-$hr-border-color: #ECEFF1 !default;
-
-@mixin large {
-  @media screen and (min-width: #{$large-breakpoint}) {
-    @content;
-  }
+@mixin small {
+	@media screen and (min-width: 35em) {
+		@content;
+	}
 }
 
 @mixin medium {
-  @media screen and (min-width: #{$medium-breakpoint}) and (max-width: #{$large-breakpoint}) {
-    @content;
-  }
+	@media screen and (min-width: 42em) {
+		@content;
+	}
 }
 
-@mixin small {
-  @media screen and (max-width: #{$medium-breakpoint}) {
-    @content;
-  }
+@mixin large {
+	@media screen and (min-width: 50em) {
+		@content;
+	}
 }
 
-* {
-  box-sizing: border-box;
-}
+$features: (
+	// debug: true,
+	styled: false,
+);
 
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  color: $body-text-color;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: "liga" on;
-  text-rendering: optimizeLegibility;
+@import "../../../nolie/src/1-functions/all";
+@import "../../../nolie/src/2-config/all";
 
-}
+$colors: (
+	white: #fff,
+	primary: material-color(blue, 800),
+);
+
+$typefaces: extend($typefaces, (
+  body: ('Open Sans', sans-serif),
+));
+
+$typestyles: extend($typestyles, (
+	heading-1: h3 1 bold,
+	heading-2: xxl 1 bold,
+	heading-3: l 1 bold,
+	heading-4: m 1 bold,
+));
+
+@import "../../../nolie/src/3-mixins/all";
+@import "../../../nolie/src/4-components/all";
+
+$transition-duration: 0.2s;
+$transition-function: ease-in-out;
 
 a {
-  color: $body-link-color;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
+	color: color(primary);
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
-.btn {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(255, 255, 255, 0.08);
-  // border-color: rgba(255, 255, 255, 0.2);
-  // border-style: solid;
-  // border-width: 1px;
-  // border-radius: 0.2rem;
-  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+blockquote {
+	border-left: 4px solid material-color(blue-grey, 50);
+	color: material-color(blue-grey, 700);
+	p {
+		@include font-size(s);
+		&:not(:last-child) {
+			@include margin-bottom(0.5);
+		}
+	}
+	pre {
+		margin-bottom: 0;
+	}
+}
 
-  &:hover {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
+code {
+	@include font-size(m);
+	border-radius: $border-radius;
+	background-color: material-color(blue-grey, 50);
+	text-shadow: 1px 1px 0 rgba(color(white), 0.75);
+}
 
-  + .btn {
-    margin-left: 1rem;
-  }
-
-  @include large {
-    padding: 0.75rem 1rem;
-  }
-
-  @include medium {
-    padding: 0.6rem 0.9rem;
-    font-size: 0.9rem;
-  }
-
-  @include small {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-
-    + .btn {
-      margin-top: 1rem;
-      margin-left: 0;
-    }
-  }
+pre {
+	@include line-height(1);
+	font-weight: weight(light);
+	background-color: material-color(blue-grey, 900);
+	code {
+		@include font-size(s);
+		color: material-color(light-green, 100);
+		text-shadow: 1px 1px 0 rgba(color(black), 0.25);
+		background: none;
+	}
 }
 
 .page-header {
-  color: $header-heading-color;
-  text-align: center;
-  background-color: $header-bg-color;
+	@include debug-baseline;
+	@include padding(2 1);
+	background-color: material-color(blue-grey, 900);
+	text-align: center;
 
-  @include large {
-    padding: 5rem 6rem;
-  }
+	@include medium {
+		@include padding(2 3);
+	}
 
-  @include medium {
-    padding: 3rem 4rem;
-  }
+	@include large {
+		@include padding(4 3);
+	}
 
-  @include small {
-    padding: 2rem 1rem;
-  }
+	.button {
+		color: rgba(color(white), 0.7);
+		border-color: transparent;
+		background-color: rgba(material-color(blue-grey, 700), 0.3);
+		@include button-medium;
+		@include margin(0.75 0 0);
+		&:hover {
+			color: rgba(color(white), 0.7);
+			border-color: transparent;
+			background-color: rgba(material-color(blue-grey, 700), 0.5);
+		}
+		&:active {
+			background-color: rgba(material-color(blue-grey, 700), 0.7);
+		}
+
+		@include small {
+			@include margin(0.75 0.25 0);
+		}
+	}
 }
 
-.project-name {
-  margin-top: 0;
-  margin-bottom: 0.1rem;
-
-  @include large {
-    font-size: 3.25rem;
-  }
-
-  @include medium {
-    font-size: 2.25rem;
-  }
-
-  @include small {
-    font-size: 1.75rem;
-  }
-}
-
-.project-tagline {
-  margin-bottom: 2rem;
-  font-weight: normal;
-  opacity: 0.7;
-
-  @include large {
-    font-size: 1.25rem;
-  }
-
-  @include medium {
-    font-size: 1.15rem;
-  }
-
-  @include small {
-    font-size: 1rem;
-  }
+.page-footer {
+	max-width: 52em;
+	margin: 0 auto;
+	@include padding(1);
+	p:first-child {
+		position: relative;
+		top: $border-width;
+		font-weight: bold;
+		border-top: $border-width solid material-color(blue-grey, 50);
+		margin: -($border-width * 2) 0 0;
+		@include padding-top(1);
+	}
 }
 
 .main-content {
-  word-wrap: break-word;
-
-  :first-child {
-    margin-top: 0;
-  }
-
-  @include large {
-    max-width: 50rem;
-    padding: 2rem 4rem;
-    margin: 0 auto;
-    font-size: 1.1rem;
-  }
-
-  @include medium {
-    padding: 2rem 4rem;
-    font-size: 1.1rem;
-  }
-
-  @include small {
-    padding: 2rem 1rem;
-    font-size: 1rem;
-  }
-
-  img {
-    max-width: 100%;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-weight: normal;
-    color: $section-headings-color;
-  }
-
-  p {
-    margin-bottom: 1em;
-  }
-
-  code {
-    padding: 2px 4px;
-    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 0.9rem;
-    color: $code-text-color;
-    background-color: $code-bg-color;
-    border-radius: 0.2rem;
-  }
-
-  pre {
-    padding: 0.8rem;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.25);
-    color: $pre-text-color;
-    word-wrap: normal;
-    background-color: $pre-bg-color;
-    border-radius: 0.2rem;
-
-    > code {
-      padding: 0;
-      margin: 0;
-      font-size: 0.8rem;
-      color: $pre-text-color;
-      word-break: normal;
-      white-space: pre;
-      background: transparent;
-      border: 0;
-    }
-  }
-
-  .highlight {
-    margin-bottom: 1rem;
-
-    pre {
-      margin-bottom: 0;
-      word-break: normal;
-    }
-  }
-
-  .highlight pre,
-  pre {
-    padding: 0.8rem;
-    overflow: auto;
-    font-size: 0.9rem;
-    line-height: 1.45;
-    border-radius: 0.2rem;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  pre code,
-  pre tt {
-    display: inline;
-    max-width: initial;
-    padding: 0;
-    margin: 0;
-    overflow: initial;
-    line-height: inherit;
-    word-wrap: normal;
-    background-color: transparent;
-    border: 0;
-
-    &:before,
-    &:after {
-      content: normal;
-    }
-  }
-
-  ul,
-  ol {
-    margin-top: 0;
-  }
-
-  blockquote {
-    padding: 0 1rem;
-    margin-left: 0;
-    color: $blockquote-text-color;
-    border-left: 0.3rem solid $border-color;
-
-    > :first-child {
-      margin-top: 0;
-    }
-
-    > :last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  table {
-    display: block;
-    width: 100%;
-    overflow: auto;
-    word-break: normal;
-    word-break: keep-all; // For Firefox to horizontally scroll wider tables.
-    -webkit-overflow-scrolling: touch;
-    font-size: 0.9rem;
-
-    th {
-      font-weight: bold;
-      text-align: left;
-    }
-
-    th,
-    td {
-      padding: 0.5rem 1rem;
-      border: 1px solid $table-border-color;
-    }
-  }
-
-  dl {
-    padding: 0;
-
-    dt {
-      padding: 0;
-      margin-top: 1rem;
-      font-size: 1rem;
-      font-weight: bold;
-    }
-
-    dd {
-      padding: 0;
-      margin-bottom: 1rem;
-    }
-  }
-
-  hr {
-    height: 2px;
-    padding: 0;
-    margin: 1rem 0;
-    background-color: $hr-border-color;
-    border: 0;
-  }
+	max-width: 52em;
+	margin: 0 auto;
+	@include padding(1.5 1 0);
 }
 
-.site-footer {
-  padding-top: 2rem;
-  margin-top: 2rem;
-  border-top: solid 1px $hr-border-color;
-
-  @include large {
-    font-size: 1rem;
-  }
-
-  @include medium {
-    font-size: 1rem;
-  }
-
-  @include small {
-    font-size: 0.9rem;
-  }
+.section:not(:last-child) {
+	@include margin-bottom(2);
 }
 
-.site-footer-owner {
-  display: block;
-  font-weight: bold;
+.project-name {
+	color: color(white);
+
+	@include medium {
+		@include font-size(h2);
+		@include line-height(2);
+	}
+
+	@include large {
+		@include font-size(h1);
+	}
 }
 
-.site-footer-credits {
-  color: $blockquote-text-color;
+.project-tagline {
+	color: rgba(color(white), 0.5);
+	font-weight: weight(normal);
+	@include font-size(m);
+	@include margin-bottom(1);
+
+	@include medium {
+		@include font-size(xl);
+		@include line-height(2);
+		@include line-height(1.5);
+	}
 }
 
-form {
-  margin: 2rem 0;
+.badge {
+	display: inline-block;
+	@include line-height(1.5);
+	@include margin-bottom(1);
+	img {
+		@include spacing(height, 1);
+	}
 }
 
-input,
-textarea,
-select {
-  font-size: 1em;
-  display: block;
-  margin: 1rem 0;
+.button {
+	width: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	transition: background-color $transition-duration $transition-function;
+	@include button-style-primary;
+	@include small {
+		width: auto;
+	}
 }
 
-input,
-textarea {
-  border: 1px inset rgb(238, 238, 238);
-  width: 50%;
-  padding: 0.9rem 0.6rem;
-}
-
-button {
-  outline: 0;
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: $body-link-color;
-  border-radius: 0.2rem;
-  border: none;
-  transition: color 0.2s, background-color 0.2s;
-  padding: 0.6rem 0.9rem;
-
-  &:hover {
-    color: rgba(255, 255, 255, 0.9);
-    background-color: darken( $body-link-color, 5 );
-  }
-
-  &:active {
-    color: rgba(255, 255, 255, 1);
-    background-color: darken( $body-link-color, 10 );
-  }
-
-  @include large {
-    padding: 0.75rem 1.6rem;
-  }
-
-  @include medium {
-    padding: 0.6rem 1.6rem;
-  }
-
-  @include small {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-  }
+form .button {
+	margin: 0;
 }

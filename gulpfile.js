@@ -16,7 +16,7 @@ var paths = {
 	dist: 'dist/',
 	js  : 'src/float-labels.js',
 	scss: [
-		'demo/scss/styles.scss',
+		'demo/scss/**/*.scss',
 		'src/float-labels.scss',
 	],
 };
@@ -118,7 +118,7 @@ gulp.task( 'watch', function ()
 
 	gulp.watch( paths.js, ['js'] );
 	gulp.watch( paths.scss, ['css'] );
-	gulp.watch( 'index.html' ).on( 'change', browserSync.reload );
+	gulp.watch( '*.html' ).on( 'change', browserSync.reload );
 });
 
 /* Default Task
