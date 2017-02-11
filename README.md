@@ -1,4 +1,7 @@
-# Float Labels
+# float-labels.js
+
+[![GitHub version](https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js.svg)](https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/geminilabs/star-rating.js/blob/master/LICENSE)
 
 A zero-dependency plugin that applies the float label pattern to a form.
 
