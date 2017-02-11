@@ -1,7 +1,7 @@
 {
   "name": "float-labels.js",
-  "description": "This plugin applies the float label pattern to a form.",
-  "version": "1.0.9",
+  "description": "A zero-dependency plugin that applies the float label pattern to a form.",
+  "version": "2.0.0",
   "author": {
     "name": "Paul Ryley",
     "email": "paul@geminilabs.io",
@@ -17,18 +17,21 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "browser-sync": "^2.18.6",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-bump": "^2.4.0",
     "gulp-cssnano": "^2.1.2",
+    "gulp-if": "^2.0.2",
     "gulp-jshint": "^2.0.1",
     "gulp-notify": "~2.2.0",
     "gulp-rename": "~1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "~2.0.0",
-    "gulp-util": "^3.0.7",
     "gulp-watch": "~4.3.9",
     "jshint": "^2.9.2",
-    "jshint-stylish": "^2.2.0"
+    "jshint-stylish": "^2.2.0",
+    "yargs": "^6.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

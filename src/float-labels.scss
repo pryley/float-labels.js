@@ -1,0 +1,234 @@
+/*!
+ * Float Labels
+ *
+ * Version: 2.0.0
+ * Author: Paul Ryley (http://geminilabs.io)
+ * URL: https://github.com/geminilabs/float-labels.js
+ * License: MIT
+ */
+
+$float-labels: () !default;
+
+$float-labels-defaults: (
+	base-height             : 24px,
+	base-padding            : 6px,
+	border-radius           : 3px,
+	border-width            : 1px,
+	margin-bottom           : 24px,
+	color-background        : #fff,
+	color-background-active : #fff,
+	color-background-focus  : #fff,
+	color-border            : #dfdfdf,
+	color-border-active     : #dfdfdf,
+	color-border-focus      : #1976D2,
+	color-placeholder       : #bbb,
+	color-required          : #D32F2F,
+	color-text              : #444,
+	color-text-focus        : #1976D2,
+	line-height             : 1.5,
+	font-size               : 16px,
+	font-size-small         : 12px,
+	font-weight             : 400,
+	transition-easing       : ease-in-out,
+	transition-speed        : 0.2s,
+);
+
+@function fl($value) {
+	@return map-get(map-merge($float-labels-defaults, $float-labels), $value);
+}
+
+@mixin fl-style-1 {
+	input.fl-input,
+	select.fl-select,
+	textarea.fl-textarea {
+		padding: fl(base-padding) fl(base-padding)*2;
+	}
+	select.fl-select {
+		height: fl(base-height) + fl(base-padding)*2 + fl(border-width)*2;
+	}
+	.fl-is-active input.fl-input,
+	.fl-is-active select.fl-select,
+	.fl-is-active textarea.fl-textarea {
+		padding: fl(base-padding) fl(base-padding)*2;
+	}
+	label.fl-label {
+		top: fl(border-width);
+		left: fl(border-width) + fl(base-padding)*1.5;
+		background-color: transparent;
+		padding: fl(base-padding)*2 fl(base-padding)/2;
+	}
+	label.fl-label:before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: fl(border-width) + fl(base-padding) + fl(font-size-small);
+		left: 0;
+		right: 0;
+		height: fl(border-width);
+		background-color: fl(color-background);
+		z-index: -1;
+	}
+	$label-top: round((fl(base-padding) + fl(font-size-small))/2);
+	.fl-is-active label.fl-label {
+		top: - $label-top;
+		padding: fl(base-padding)/2;
+	}
+	.fl-is-active label.fl-label:before {
+		top: $label-top;
+	}
+}
+
+@mixin fl-style-2 {
+	input.fl-input,
+	select.fl-select,
+	textarea.fl-textarea {
+		padding: fl(base-padding)*2;
+	}
+	select.fl-select {
+		height: fl(base-height) + fl(base-padding)*4 + fl(border-width)*2;
+	}
+	.fl-is-active input.fl-input,
+	.fl-is-active select.fl-select,
+	.fl-is-active textarea.fl-textarea {
+		padding: fl(base-padding)*3 fl(base-padding)*2 fl(base-padding)*1;
+	}
+	label.fl-label {
+		top: fl(border-width);
+		left: fl(border-width) + fl(base-padding)*1.5;
+		background-color: fl(color-background);
+		padding: fl(base-padding) fl(base-padding)/2 fl(base-padding)/2;
+	}
+	.fl-has-focus label.fl-label {
+		background-color: fl(color-background-focus);
+	}
+	.fl-is-active label.fl-label {
+		background-color: fl(color-background-active);
+	}
+	.fl-is-required:before {
+		padding-top: fl(base-padding)*2;
+	}
+}
+
+.fl-wrap {
+	position: relative;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.fl-form input.fl-input,
+.fl-form select.fl-select,
+.fl-form textarea.fl-textarea {
+	width: 100%;
+	outline: 0;
+	font-size: fl(font-size);
+	line-height: fl(line-height);
+	border-radius: fl(border-radius);
+	border: fl(border-width) solid fl(color-border);
+	background-color: fl(color-background);
+	box-sizing: border-box;
+	transition: all fl(transition-speed) fl(transition-easing);
+	margin-bottom: fl(margin-bottom);
+
+	&:-moz-placeholder {
+		color: fl(color-placeholder);
+	}
+	&::-moz-placeholder {
+		color: fl(color-placeholder);
+	}
+	&:-ms-input-placeholder {
+		color: fl(color-placeholder);
+	}
+	&::-webkit-input-placeholder {
+		color: fl(color-placeholder);
+	}
+}
+
+.fl-form select.fl-select {
+	position: relative;
+	color: fl(color-placeholder);
+	cursor: pointer;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.fl-form .fl-is-active input.fl-input,
+.fl-form .fl-is-active select.fl-select,
+.fl-form .fl-is-active textarea.fl-textarea {
+	color: fl(color-text);
+	background-color: fl(color-background-active);
+	border-color: fl(color-border-active);
+}
+
+.fl-form .fl-has-focus input.fl-input,
+.fl-form .fl-has-focus select.fl-select,
+.fl-form .fl-has-focus textarea.fl-textarea {
+	background-color: fl(color-background-focus);
+	border-color: fl(color-border-focus);
+}
+
+.fl-form label.fl-label {
+	opacity: 0;
+	visibility: hidden;
+	display: block;
+	position: absolute;
+	top: - fl(font-size-small);
+	left: 0;
+	font-size: fl(font-size-small);
+	font-weight: fl(font-weight);
+	line-height: 1;
+	color: fl(color-placeholder);
+	border-radius-top-left: fl(border-radius);
+	transition: all fl(transition-speed) fl(transition-easing);
+	z-index: 1;
+}
+
+.fl-form .fl-is-active label.fl-label {
+	opacity: 1;
+	visibility: visible;
+}
+
+.fl-form .fl-has-focus label.fl-label {
+	color: fl(color-text-focus);
+}
+
+.fl-form .fl-is-required:before {
+	opacity: 1;
+	content: '*';
+	display: block;
+	position: absolute;
+	top: fl(border-width);
+	right: fl(base-height)/2 + fl(base-padding)/2;
+	font-size: fl(font-size);
+	line-height: 1.75;
+	color: fl(color-required);
+	transition: all fl(transition-speed) fl(transition-easing);
+	padding: fl(base-padding) 0 0;
+	z-index: 1;
+}
+
+.fl-form .fl-is-required.fl-is-active:before {
+	opacity: 0;
+}
+
+.fl-form.fl-style-1 {
+	@include fl-style-1;
+}
+
+.fl-form.fl-style-2 {
+	@include fl-style-2;
+}
+
+.fl-wrap-select:after {
+	content: '';
+	position: absolute;
+	display: block;
+	top: fl(border-width);
+	right: 6px;
+	height: calc(100% - #{fl(border-width)*2});
+	width: fl(base-height)/2;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 16'><path fill='#{fl(color-placeholder)}' d='M 4 0 L 0 6.5 L 8 6.5 L 4 0 z M 0 9.5 L 4 16 L 4 16 L 8 9.5 z'/></svg>") no-repeat;
+	background-position: 100% 50%;
+	background-size: 7px 14px;
+	z-index: 2;
+}

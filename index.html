@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Float Labels by Gemini Labs</title>
+    <meta name="keywords" content="float label pattern">
+    <meta name="description" content="A zero-dependency plugin that applies the float label pattern to a form.">
+    <meta name="author" content="Paul Ryley">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
+    <link rel="stylesheet" href="demo/css/styles.css">
+  </head>
+  <body>
+
+    <header class="page-header">
+      <h1 class="project-name">float-labels.js</h1>
+      <h2 class="project-tagline">A zero-dependency plugin that applies the float label pattern to a form.</h2>
+      <a class="button medium" href="https://github.com/geminilabs/float-labels.js">View on GitHub</a>
+      <a class="button medium" href="https://github.com/geminilabs/float-labels.js/zipball/master">Download .zip</a>
+      <a class="button medium" href="https://github.com/geminilabs/float-labels.js/tarball/master">Download .tar.gz</a>
+    </header>
+
+    <main class="main-content">
+
+      <section class="section">
+        <a class="badge" href="https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js"><img src="https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js.svg" alt="GitHub version" height="18"></a>
+        <a class="badge" href="https://github.com/geminilabs/float-labels.js/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" height="18"></a>
+        <p>The float label pattern floats the inline label up above the input after the user focuses on the form field or enters a value.</p>
+        <p>For production, use the files from the <code>dist/</code> folder.</p>
+      </section>
+
+      <section class="section">
+        <h2>Demo</h2>
+
+        <form class="form-1">
+          <label for="input-1">Enter a title</label>
+          <input type="text" id="input-1" placeholder="Input" value="" required/>
+
+          <label for="textarea-1">Enter some content</label>
+          <textarea id="textarea-1" placeholder="Textarea" rows="4" autocomplete="off" required></textarea>
+
+          <label for="select-1">Select an option</label>
+          <select id="select-1" class="required">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+
+          <input type="radio" name="style" id="style-0" value="fl-style-0"/>
+          <label for="style-0">Default Style</label>
+
+          <input type="radio" name="style" id="style-1" value="fl-style-1" checked/>
+          <label for="style-1">Style 1</label>
+
+          <input type="radio" name="style" id="style-2" value="fl-style-2"/>
+          <label for="style-2">Style 2</label>
+
+          <button type="reset" class="button large">Reset form</button>
+        </form>
+      </section>
+
+      <section class="section">
+        <h2>Usage</h2>
+
+        <p>Load the <code>dist/float-labels.css</code> and <code>dist/float-labels.min.js</code> files somewhere on your page and then trigger the plugin as follows:</p>
+
+        <h3>Using vanilla javascript</h3>
+
+        <div class="highlight highlight-Html"><pre class="alt"><code>var floatlabels = new FloatLabels( 'form', {
+    style: 1,
+});</code></pre></div>
+
+        <h3>Using jQuery</h3>
+
+        <div class="highlight highlight-Html"><pre><code>jQuery( 'form' ).floatlabels({
+    style: 1,
+});</code></pre></div>
+      </section>
+
+      <section class="section">
+        <h2>Options</h2>
+
+        <h3>Default options</h3>
+
+        <div class="highlight highlight-Javascript"><pre><code>{
+    customEvent  : null,
+    customLabel  : null,
+    exclude      : '.no-label',
+    inputRegex   : /email|number|password|search|tel|text|url/,
+    prioritize   : 'label',
+    requiredClass: 'required',
+    style        : 0,
+    transform    : 'input, select, textarea',
+}</code></pre></div>
+
+        <h4>customEvent</h4>
+
+        <blockquote>
+        <p>Type: <code>Function</code></p>
+        <p>This function is run immediately after an element has been transformed by float-labels.</p>
+        <div class="highlight highlight-Javascript"><pre><code>customEvent: function( el ) {
+    // do something
+},</code></pre></div>
+        </blockquote>
+
+        <h4>customLabel</h4>
+
+        <blockquote>
+        <p>Type: <code>Function</code></p>
+        <p>This function lets you modify a label text; it must return a string.</p>
+        <div class="highlight highlight-Javascript"><pre><code>customLabel: function( labelEl, el ) {
+    return labelEl.text;
+},</code></pre></div>
+        </blockquote>
+
+        <h4>exclude</h4>
+
+        <blockquote>
+        <p>Type: <code>String</code></p>
+        <p>A comma-separated string of DOM selector elements to exclude.</p>
+        </blockquote>
+
+        <h4>inputRegex</h4>
+
+        <blockquote>
+        <p>Type: <code>Regex</code></p>
+        <p>Regex of INPUT types to transform.</p>
+        </blockquote>
+
+        <h4>prioritize</h4>
+
+        <blockquote>
+        <p>Type: <code>String</code></p>
+        <p>Choose to prioritize either the label or placeholder text as the floating-label.</p>
+        </blockquote>
+
+        <h4>requiredClass</h4>
+
+        <blockquote>
+        <p>Type: <code>String</code></p>
+        <p>The class name of required elements (if not using the required attribute).</p>
+        </blockquote>
+
+        <h4>style</h4>
+
+        <blockquote>
+        <p>Type: <code>Number</code></p>
+        <p>Choose the style to use, value can be either <code>0</code>, <code>1</code>, or <code>2</code>.</p>
+        </blockquote>
+
+        <h4>transform</h4>
+
+        <blockquote>
+        <p>Type: <code>String</code></p>
+        <p>A comma-separated string of DOM elements to transform. Available options are: <code>input</code>, <code>select</code>, and <code>textarea</code>.</p>
+        </blockquote>
+      </section>
+
+      <section class="section">
+        <h2>Build</h2>
+
+        <p>float-labels.js uses <a href="https://yarnpkg.com/">yarn</a> to manage package dependencies and <a href="http://gulpjs.com/">gulp</a> to build from <code>src/</code>.</p>
+
+        <div class="highlight highlight-Bash"><pre><code>$ yarn
+$ gulp</code></pre></div>
+
+        <p>The compiled files will be saved in the <code>dist/</code> folder.</p>
+
+        <h3>Style Customization</h3>
+
+        <p><a href="http://sass-lang.com/">Sass</a> is used to build the stylesheet so you can <code>@import</code> the <code>src/float-labels.scss</code> file to compile it directly into your Sass project.</p>
+
+        <p>Following are the default sass values for Float Labels, they are contained in a map variable.</p>
+
+        <pre><code>$float-labels-defaults: (
+    base-height             : 24px,
+    base-padding            : 6px,
+    border-radius           : 3px,
+    border-width            : 1px,
+    margin-bottom           : 24px,
+    color-background        : #fff,
+    color-background-active : #fff,
+    color-background-focus  : #fff,
+    color-border            : #dfdfdf,
+    color-border-active     : #dfdfdf,
+    color-border-focus      : #1976D2,
+    color-placeholder       : #bbb,
+    color-required          : #D32F2F,
+    color-text              : #444,
+    color-text-focus        : #1976D2,
+    line-height             : 1.5,
+    font-size               : 16px,
+    font-size-small         : 12px,
+    font-weight             : 400,
+    transition-easing       : ease-in-out,
+    transition-speed        : 0.2s,
+);</code></pre>
+
+        <p>To override any values with your own, simply create a new <code>$float-labels</code> map variable and include only the values you wish to change.</p>
+
+        <p><strong>Important:</strong> Make sure you define <code>$float-labels</code> before you import the <code>src/float-labels.scss</code> file:</p>
+
+        <pre><code>$float-labels: (
+    border-radius      : 0,
+    border-width       : 2px,
+    color-border-focus : #009688,
+    color-text-focus   : #009688,
+    font-weight        : 700,
+);
+
+@import "../../node_modules/float-labels.js/src/float-labels"</code></pre>
+
+      </section>
+
+      <section class="section">
+        <h2>License</h2>
+        <p><a href="https://github.com/geminilabs/float-labels.js/blob/master/LICENSE">MIT</a></p>
+      </section>
+
+    </main>
+
+    <footer class="page-footer">
+      <p>This project is maintained by <a href="https://github.com/geminilabs">Gemini Labs</a></p>
+    </footer>
+
+    <script src="src/float-labels.js"></script>
+    <script>
+      new FloatLabels( '.form-1', {
+        style: 1
+      });
+
+        document.querySelectorAll( 'input[name="style"]' ).forEach( function( el ) {
+          el.addEventListener( 'change', function( ev ) {
+            var form = ev.target.closest( 'form' );
+            form.className = form.className.replace( /\b fl-style-\d\b/g, '' ) + ' ' + ev.target.value;
+          }, false );
+        });
+    </script>
+
+  </body>
+</html>
