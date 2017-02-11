@@ -32,7 +32,7 @@
 			inputRegex   : /email|number|password|search|tel|text|url/,
 			prioritize   : 'label', // label|placeholder
 			requiredClass: 'required',
-			styledForm   : true,
+			style        : 0, // 0|1|2
 			transform    : 'input,select,textarea'
 		},
 
@@ -41,7 +41,6 @@
 			var _this = this;
 
 			document.querySelectorAll( this.el ).forEach( function( form ) {
-
 				_this.config = _this.extend( {}, _this.defaults, _this.options, form.getAttribute( 'data-options' ));
 
 				var exclude = _this.sprintf( ':not($0)', _this.config.exclude.split(/[\s,]+/).join( '):not(' ));
@@ -49,11 +48,9 @@
 				_this.on( 'reset', form, _this.onReset.bind( _this ));
 
 				_this.addClass( form, _this.prefixed( 'form' ));
-
-				if( _this.config.styledForm ) {
-					_this.addClass( form, _this.prefixed( 'has-style' ));
+				if( _this.config.style ) {
+					_this.addClass( form, _this.prefixed( 'style-' + _this.config.style ));
 				}
-
 				_this.config.transform.split(/[\s,]+/).forEach( function( tag ) {
 					form.querySelectorAll( tag + exclude ).forEach( function( el ) {
 						_this.floatLabel( form, el );
