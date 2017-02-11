@@ -21,10 +21,10 @@ var floatlabels = new FloatLabels( 'form', {
 });
 ```
 
-### Using jQuery
+### Using jQuery/Zepto
 
 ```js
-jQuery( 'form' ).floatlabels({
+$( 'form' ).floatlabels({
     style: 1,
 });
 ```
@@ -164,6 +164,11 @@ $float-labels: (
 
 @import "../../node_modules/float-labels.js/src/float-labels"
 ```
+
+## Compatibility
+
+- All modern browsers
+- IE 9+
 
 ## Contributing
 
