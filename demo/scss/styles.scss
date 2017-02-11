@@ -24,6 +24,10 @@ $features: (
 @import "../../../nolie/src/1-functions/all";
 @import "../../../nolie/src/2-config/all";
 
+$float-labels: (
+	margin-bottom: spacing($base-line-height - 1),
+);
+
 $colors: (
 	white: #fff,
 	primary: material-color(blue, 800),
@@ -42,6 +46,7 @@ $typestyles: extend($typestyles, (
 
 @import "../../../nolie/src/3-mixins/all";
 @import "../../../nolie/src/4-components/all";
+@import "../../src/float-labels";
 
 $transition-duration: 0.2s;
 $transition-function: ease-in-out;
@@ -182,16 +187,48 @@ pre {
 }
 
 .button {
-	width: 100%;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	transition: background-color $transition-duration $transition-function;
 	@include button-style-primary;
+	@include button-group;
+	&.secondary {
+		@include button-style-secondary;
+	}
+	&.outline {
+		// color: color(muted);
+		border-color: color(muted);
+		background-color: rgba(color(muted), 0.5);
+		// background: none;
+		&:hover {
+			background-color: rgba(color(muted), 0.75);
+			// color: darken(color(muted), 10);
+			// border-color: darken(color(muted), 10);
+		}
+		&:active,
+		&.active {
+			background-color: color(muted);
+			// color: color(white);
+			// color: darken(color(muted), 20);
+			border-color: darken(color(muted), 20);
+		}
+		&:disabled,
+		&.disabled {
+			color: color(muted);
+			border-color: color(muted);
+		}
+		// @include button-style-outline;
+	}
+}
+
+:not(.button-group) > .button {
+	width: 100%;
 	@include small {
 		width: auto;
 	}
 }
 
 form .button {
+	display: block;
 	margin: 0;
 }

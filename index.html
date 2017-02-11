@@ -7,7 +7,6 @@
     <title>float-labels.js by Gemini Labs</title>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
     <link rel="stylesheet" href="demo/css/styles.css">
-    <link rel="stylesheet" href="dist/float-labels.css">
   </head>
   <body>
 
@@ -36,7 +35,7 @@
           <input type="text" id="input-1" placeholder="Input" value="" required/>
 
           <label for="textarea-1">Enter some content</label>
-          <textarea id="textarea-1" placeholder="Textarea" rows="4" required></textarea>
+          <textarea id="textarea-1" placeholder="Textarea" rows="4" autocomplete="off" required></textarea>
 
           <label for="select-1">Select an option</label>
           <select id="select-1" class="required">
@@ -44,6 +43,15 @@
             <option value="2">Option 2</option>
             <option value="3">Option 3</option>
           </select>
+
+          <input type="radio" name="style" id="style-0" value="fl-style-0" checked/>
+          <label for="style-0">Default Style</label>
+
+          <input type="radio" name="style" id="style-1" value="fl-style-1"/>
+          <label for="style-1">Style 1</label>
+
+          <input type="radio" name="style" id="style-2" value="fl-style-2"/>
+          <label for="style-2">Style 2</label>
 
           <button type="reset" class="button large">Reset form</button>
         </form>
@@ -177,6 +185,13 @@ $ gulp</code></pre></div>
     <script src="src/float-labels.js"></script>
     <script>
       new FloatLabels( 'form' );
+
+        document.querySelectorAll( 'input[name="style"]' ).forEach( function( el ) {
+          el.addEventListener( 'change', function( ev ) {
+            var form = ev.target.closest( 'form' );
+            form.className = form.className.replace( /\b fl-style-\d\b/g, '' ) + ' ' + ev.target.value;
+          }, false );
+        });
     </script>
 
   </body>

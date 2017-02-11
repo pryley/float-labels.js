@@ -7,200 +7,228 @@
  * License: MIT
  */
 
-//
-// Variables
-//
+$float-labels: () !default;
 
-$fl-style                   : 1 !default;
-$fl-base-height             : 24px !default;
-$fl-base-padding            : 6px !default;
-$fl-border-radius           : 3px !default;
-$fl-border-width            : 1px !default;
-$fl-margin-bottom           : 24px !default;
-$fl-color-background        : #fff !default;
-$fl-color-background-active : #fff !default;
-$fl-color-background-focus  : #fff !default;
-$fl-color-border            : #dfdfdf !default;
-$fl-color-border-active     : #dfdfdf !default;
-$fl-color-border-focus      : #1976D2 !default;
-$fl-color-placeholder       : #bbb !default;
-$fl-color-required          : #D32F2F !default;
-$fl-color-text              : #444 !default;
-$fl-color-text-focus        : #1976D2 !default;
-$fl-line-height             : 1.5 !default;
-$fl-font-size               : 16px !default;
-$fl-font-size-small         : 12px !default;
-$fl-font-weight             : 700 !default;
-$fl-transition-easing       : ease-in-out !default;
-$fl-transition-speed        : 0.2s !default;
+$float-labels-defaults: (
+	base-height             : 24px,
+	base-padding            : 6px,
+	border-radius           : 3px,
+	border-width            : 1px,
+	margin-bottom           : 24px,
+	color-background        : #fff,
+	color-background-active : #fff,
+	color-background-focus  : #fff,
+	color-border            : #dfdfdf,
+	color-border-active     : #dfdfdf,
+	color-border-focus      : #1976D2,
+	color-placeholder       : #bbb,
+	color-required          : #D32F2F,
+	color-text              : #444,
+	color-text-focus        : #1976D2,
+	line-height             : 1.5,
+	font-size               : 16px,
+	font-size-small         : 12px,
+	font-weight             : 400,
+	transition-easing       : ease-in-out,
+	transition-speed        : 0.2s,
+);
 
-//
-// Styles
-//
+@function fl($value) {
+	@return map-get(map-merge($float-labels-defaults, $float-labels), $value);
+}
+
+@mixin fl-style-1 {
+	input.fl-input,
+	select.fl-select,
+	textarea.fl-textarea {
+		padding: fl(base-padding) fl(base-padding)*2;
+	}
+	select.fl-select {
+		height: fl(base-height) + fl(base-padding)*2 + fl(border-width)*2;
+	}
+	.fl-is-active input.fl-input,
+	.fl-is-active select.fl-select,
+	.fl-is-active textarea.fl-textarea {
+		padding: fl(base-padding) fl(base-padding)*2;
+	}
+	label.fl-label {
+		top: fl(border-width);
+		left: fl(border-width) + fl(base-padding)*1.5;
+		background-color: transparent;
+		padding: fl(base-padding)*2 fl(base-padding)/2;
+	}
+	label.fl-label:before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: fl(border-width) + fl(base-padding) + fl(font-size-small);
+		left: 0;
+		right: 0;
+		height: fl(border-width);
+		background-color: fl(color-background);
+		z-index: -1;
+	}
+	$label-top: round((fl(base-padding) + fl(font-size-small))/2);
+	.fl-is-active label.fl-label {
+		top: - $label-top;
+		padding: fl(base-padding)/2;
+	}
+	.fl-is-active label.fl-label:before {
+		top: $label-top;
+	}
+}
+
+@mixin fl-style-2 {
+	input.fl-input,
+	select.fl-select,
+	textarea.fl-textarea {
+		padding: fl(base-padding)*2;
+	}
+	select.fl-select {
+		height: fl(base-height) + fl(base-padding)*4 + fl(border-width)*2;
+	}
+	.fl-is-active input.fl-input,
+	.fl-is-active select.fl-select,
+	.fl-is-active textarea.fl-textarea {
+		padding: fl(base-padding)*3 fl(base-padding)*2 fl(base-padding)*1;
+	}
+	label.fl-label {
+		top: fl(border-width);
+		left: fl(border-width) + fl(base-padding)*1.5;
+		background-color: fl(color-background);
+		padding: fl(base-padding) fl(base-padding)/2 fl(base-padding)/2;
+	}
+	.fl-has-focus label.fl-label {
+		background-color: fl(color-background-focus);
+	}
+	.fl-is-active label.fl-label {
+		background-color: fl(color-background-active);
+	}
+	.fl-is-required:before {
+		padding-top: fl(base-padding)*2;
+	}
+}
 
 .fl-wrap {
 	position: relative;
+	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	font-feature-settings: "liga" 1;
-	text-rendering: optimizeLegibility;
 }
 
-.fl-wrap input.fl-input,
-.fl-wrap select.fl-select,
-.fl-wrap textarea.fl-textarea {
-	transition: all $fl-transition-speed $fl-transition-easing;
+.fl-form input.fl-input,
+.fl-form select.fl-select,
+.fl-form textarea.fl-textarea {
 	width: 100%;
 	outline: 0;
+	font-size: fl(font-size);
+	line-height: fl(line-height);
+	border-radius: fl(border-radius);
+	border: fl(border-width) solid fl(color-border);
+	background-color: fl(color-background);
 	box-sizing: border-box;
-	font-size: $fl-font-size;
-	line-height: $fl-line-height;
-	border-radius: $fl-border-radius;
-	border: $fl-border-width solid $fl-color-border;
-	background-color: $fl-color-background;
-	margin-bottom: $fl-margin-bottom;
-	@if $fl-style == 1 {
-		padding: ($fl-base-padding * 1.5) ($fl-base-padding * 2);
+	transition: all fl(transition-speed) fl(transition-easing);
+	margin-bottom: fl(margin-bottom);
+
+	&:-moz-placeholder {
+		color: fl(color-placeholder);
 	}
-	@else {
-		padding: $fl-base-padding ($fl-base-padding * 2);
+	&::-moz-placeholder {
+		color: fl(color-placeholder);
+	}
+	&:-ms-input-placeholder {
+		color: fl(color-placeholder);
+	}
+	&::-webkit-input-placeholder {
+		color: fl(color-placeholder);
 	}
 }
 
-.fl-wrap select.fl-select {
+.fl-form select.fl-select {
 	position: relative;
+	color: fl(color-placeholder);
 	cursor: pointer;
 	-webkit-appearance: none;
 	-moz-appearance: none;
-	color: $fl-color-placeholder;
-	@if $fl-style == 1 {
-		height: $fl-base-height + ($fl-base-padding * 3) + ($fl-border-width * 2);
-	}
 }
 
-.fl-wrap label.fl-label {
-	position: absolute;
-	display: block;
-	font-size: $fl-font-size-small;
-	font-weight: 700;
-	line-height: 1;
-	z-index: 1;
+.fl-form .fl-is-active input.fl-input,
+.fl-form .fl-is-active select.fl-select,
+.fl-form .fl-is-active textarea.fl-textarea {
+	color: fl(color-text);
+	background-color: fl(color-background-active);
+	border-color: fl(color-border-active);
+}
+
+.fl-form .fl-has-focus input.fl-input,
+.fl-form .fl-has-focus select.fl-select,
+.fl-form .fl-has-focus textarea.fl-textarea {
+	background-color: fl(color-background-focus);
+	border-color: fl(color-border-focus);
+}
+
+.fl-form label.fl-label {
 	opacity: 0;
 	visibility: hidden;
-	color: $fl-color-placeholder;
-	border-radius-top-left: $fl-border-radius;
-	@if $fl-style == 1 {
-		top: $fl-border-width + ($fl-base-padding / 2);
-		left: $fl-border-width + ($fl-base-padding * 2);
-		background-color: $fl-color-background;
-		padding: ($fl-base-padding / 2) ($fl-base-padding / 2) ($fl-base-padding / 2) 0;
-		transition: padding $fl-transition-speed $fl-transition-easing,
-					opacity $fl-transition-speed $fl-transition-easing,
-					visibility $fl-transition-speed $fl-transition-easing,
-					color $fl-transition-speed $fl-transition-easing;
-	}
-	@else {
-		top: ($fl-border-width * 2);
-		left: $fl-border-width + ($fl-base-padding * 1.5);
-		background-color: transparent;
-		padding: ($fl-base-padding * 2) ($fl-base-padding / 2);
-		transition: padding $fl-transition-speed $fl-transition-easing,
-					opacity $fl-transition-speed $fl-transition-easing,
-					visibility $fl-transition-speed $fl-transition-easing,
-					color $fl-transition-speed $fl-transition-easing,
-					background-color $fl-transition-speed $fl-transition-easing,
-					top $fl-transition-speed $fl-transition-easing;
-	}
-}
-
-.fl-wrap label.fl-label:before {
-	content: '';
 	display: block;
 	position: absolute;
-	top: $fl-font-size-small - ($fl-border-width * 3);
+	top: - fl(font-size-small);
 	left: 0;
-	right: 0;
-	height: $fl-border-width;
-	background-color: $fl-color-background;
-	z-index: -1;
+	font-size: fl(font-size-small);
+	font-weight: fl(font-weight);
+	line-height: 1;
+	color: fl(color-placeholder);
+	border-radius-top-left: fl(border-radius);
+	transition: all fl(transition-speed) fl(transition-easing);
+	z-index: 1;
 }
 
-.fl-is-active input.fl-input,
-.fl-is-active select.fl-select,
-.fl-is-active textarea.fl-textarea {
-	color: $fl-color-text;
-	background-color: $fl-color-background-active;
-	border-color: $fl-color-border-active;
-	@if $fl-style == 1 {
-		padding: ($fl-base-padding * 2.5) ($fl-base-padding * 2) ($fl-base-padding * 0.5);
-	}
-	@else {
-		padding: $fl-base-padding ($fl-base-padding * 2);
-	}
-}
-
-.fl-is-active label.fl-label {
+.fl-form .fl-is-active label.fl-label {
 	opacity: 1;
 	visibility: visible;
-	@if $fl-style == 1 {
-		background-color: $fl-color-background-active;
-	}
-	@else {
-		padding: ($fl-base-padding / 2);
-		top: $fl-border-width - ($fl-base-padding / 2) - ($fl-font-size-small / 2);
-	}
 }
 
-.fl-has-focus input.fl-input,
-.fl-has-focus select.fl-select,
-.fl-has-focus textarea.fl-textarea {
-	background-color: $fl-color-background-focus;
-	border-color: $fl-color-border-focus;
+.fl-form .fl-has-focus label.fl-label {
+	color: fl(color-text-focus);
 }
 
-.fl-has-focus label.fl-label {
-	color: $fl-color-text-focus;
-	// background-color: $fl-color-background-focus;
-}
-
-.fl-is-required:before {
+.fl-form .fl-is-required:before {
+	opacity: 1;
 	content: '*';
 	display: block;
 	position: absolute;
-	top: ($fl-border-width * 2);
-	right: ($fl-base-padding * 2);
-	font-size: $fl-font-size;
-	color: $fl-color-required;
-	transition: all $fl-transition-speed $fl-transition-easing;
+	top: fl(border-width);
+	right: fl(base-height)/2 + fl(base-padding)/2;
+	font-size: fl(font-size);
+	line-height: 1.75;
+	color: fl(color-required);
+	transition: all fl(transition-speed) fl(transition-easing);
+	padding: fl(base-padding) 0 0;
 	z-index: 1;
-	@if $fl-style == 1 {
-		height: $fl-base-height + ($fl-base-padding * 3);
-		line-height: $fl-base-height + ($fl-base-padding * 4);
-	}
-	@else {
-		height: $fl-base-height + ($fl-base-padding * 2);
-		line-height: $fl-base-height + ($fl-base-padding * 3);
-	}
 }
 
-.fl-is-required.fl-is-active:before {
-	display: none;
+.fl-form .fl-is-required.fl-is-active:before {
+	opacity: 0;
 }
 
-// .fl-wrap select.fl-select {
-// 	padding-right: 50px;
-// }
+.fl-form.fl-style-1 {
+	@include fl-style-1;
+}
 
-// .fl-wrap-select:after {
-// 	content: '';
-// 	position: absolute;
-// 	display: block;
-// 	top: 18px;
-// 	right: 38px;
-// 	height: 8px;
-// 	width: 8px;
-// 	border: 1px solid $fl-color-placeholder;
-// 	border-width: 1px 1px 0 0;
-// 	transform: rotate(135deg);
-// 	z-index: 2;
-// }
+.fl-form.fl-style-2 {
+	@include fl-style-2;
+}
+
+.fl-wrap-select:after {
+	content: '';
+	position: absolute;
+	display: block;
+	top: fl(border-width);
+	right: 6px;
+	height: calc(100% - #{fl(border-width)*2});
+	width: fl(base-height)/2;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 16'><path fill='#{fl(color-placeholder)}' d='M 4 0 L 0 6.5 L 8 6.5 L 4 0 z M 0 9.5 L 4 16 L 4 16 L 8 9.5 z'/></svg>") no-repeat;
+	background-position: 100% 50%;
+	background-size: 7px 14px;
+	z-index: 2;
+}
