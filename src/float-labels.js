@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -17,7 +17,7 @@
 
 	var Plugin = function( el, options )
 	{
-		this.el = el;
+		this.el = this.isString( el ) ? document.querySelectorAll( el ) : el;
 		this.options = options;
 		this.prefix = 'fl-';
 		this.init();
@@ -40,7 +40,7 @@
 		{
 			var _this = this;
 
-			document.querySelectorAll( this.el ).forEach( function( form ) {
+			Array.prototype.forEach.call( this.el, function( form ) {
 				_this.config = _this.extend( {}, _this.defaults, _this.options, form.getAttribute( 'data-options' ));
 
 				var exclude = _this.sprintf( ':not($0)', _this.config.exclude.split(/[\s,]+/).join( '):not(' ));
@@ -258,6 +258,10 @@
 			return result;
 		},
 
+		isString: function( str ) {
+			return Object.prototype.toString.call( str ) === "[object String]";
+		},
+
 		createEl: function( tag, attributes )
 		{
 			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
@@ -293,10 +297,8 @@
 
 	if( !$ )return;
 
-	$.fn.starrating = function( options ) {
-		return this.each( function() {
-			if( $.data( this, "plugin_floatlabels" ))return;
-			$.data( this, "plugin_floatlabels", new Plugin( this, options ));
-		});
+	$.fn.floatlabels = function( options ) {
+		if( $.data( this, "plugin_floatlabels" ))return;
+		$.data( this, "plugin_floatlabels", new Plugin( this, options ));
 	};
 })( window, document );

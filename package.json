@@ -1,7 +1,7 @@
 {
   "name": "float-labels.js",
   "description": "A zero-dependency plugin that applies the float label pattern to a form.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": {
     "name": "Paul Ryley",
     "email": "paul@geminilabs.io",
@@ -31,6 +31,7 @@
     "gulp-watch": "~4.3.9",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0",
+    "nolie.css": "geminilabs/nolie.css#develop",
     "yargs": "^6.6.0"
   },
   "scripts": {

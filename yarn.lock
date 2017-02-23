@@ -1367,6 +1367,13 @@ gulp-if@^2.0.2:
     ternary-stream "^2.0.1"
     through2 "^2.0.1"
 
+gulp-insert@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/gulp-insert/-/gulp-insert-0.5.0.tgz#32313f13e4a23cf5acca5ce5f0c080923c778602"
+  dependencies:
+    readable-stream "^1.0.26-4"
+    streamqueue "0.0.6"
+
 gulp-jshint@^2.0.1:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/gulp-jshint/-/gulp-jshint-2.0.4.tgz#f382b18564b1072def0c9aaf753c146dadb4f0e8"
@@ -1393,7 +1400,7 @@ gulp-notify@~2.2.0:
     node.extend "^1.1.3"
     through2 "^0.6.3"
 
-gulp-rename@~1.2.2:
+gulp-rename@^1.2.2, gulp-rename@~1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
 
@@ -2432,6 +2439,23 @@ node.extend@^1.1.3:
   dependencies:
     is "^3.1.0"
 
+nolie.css@geminilabs/nolie.css#develop:
+  version "0.1.0"
+  resolved "https://codeload.github.com/geminilabs/nolie.css/tar.gz/22f663ef97f5cf8c4a000b59b53cd197771fe2e4"
+  dependencies:
+    browser-sync "^2.18.6"
+    gulp "^3.9.1"
+    gulp-autoprefixer "^3.1.0"
+    gulp-cssnano "^2.1.2"
+    gulp-if "^2.0.2"
+    gulp-insert "^0.5.0"
+    gulp-notify "~2.2.0"
+    gulp-rename "^1.2.2"
+    gulp-sass "^2.3.2"
+    gulp-watch "~4.3.9"
+    typey "^1.1.1"
+    yargs "^6.6.0"
+
 "nopt@2 || 3", nopt@3.0.x, nopt@~3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
@@ -2463,10 +2487,6 @@ normalize-url@^1.4.0:
     prepend-http "^1.0.0"
     query-string "^4.1.0"
     sort-keys "^1.0.0"
-
-normalize.css@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-5.0.0.tgz#7cec875ce8178a5333c4de80b68ea9c18b9d7c37"
 
 "npmlog@0 || 1 || 2 || 3 || 4", npmlog@^4.0.0, npmlog@^4.0.1:
   version "4.0.2"
@@ -3009,7 +3029,7 @@ read-pkg@^1.0.0:
     normalize-package-data "^2.3.2"
     path-type "^1.0.0"
 
-readable-stream@1.1, readable-stream@~1.1.9:
+readable-stream@1.1, readable-stream@^1.0.26-2, readable-stream@^1.0.26-4, readable-stream@~1.1.9:
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.13.tgz#f6eef764f514c89e2b9e23146a75ba106756d23e"
   dependencies:
@@ -3437,6 +3457,12 @@ stream-throttle@^0.1.3:
     commander "^2.2.0"
     limiter "^1.0.5"
 
+streamqueue@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/streamqueue/-/streamqueue-0.0.6.tgz#66f5f5ec94e9b8af249e4aec2dd1f741bfe94de3"
+  dependencies:
+    readable-stream "^1.0.26-2"
+
 strict-uri-encode@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
@@ -3615,6 +3641,10 @@ tunnel-agent@~0.4.1:
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
+
+typey@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/typey/-/typey-1.1.1.tgz#4c6072223de431de2468aa858c04ae842b26e680"
 
 ua-parser-js@0.7.12:
   version "0.7.12"
