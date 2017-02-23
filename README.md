@@ -176,6 +176,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v2.0.1 - [23/01/2017]`
+
+- Fix jQuery plugin
+
 `v2.0.0 - [11/01/2017]`
 
 - added 2 new styles
