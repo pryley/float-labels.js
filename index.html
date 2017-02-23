@@ -34,6 +34,11 @@
         <h2>Demo</h2>
 
         <form class="form-1">
+          <label for="input-13">Enter a title</label>
+          <input type="text" id="input-13" placeholder="Input" value="" required/>
+        </form>
+
+        <form class="form-1">
           <label for="input-1">Enter a title</label>
           <input type="text" id="input-1" placeholder="Input" value="" required/>
 
@@ -232,18 +237,24 @@ $ gulp</code></pre></div>
       <p>This project is maintained by <a href="https://github.com/geminilabs">Gemini Labs</a></p>
     </footer>
 
+    <!-- <script src="demo/js/jquery-3.1.1.slim.min.js"></script> -->
     <script src="src/float-labels.js"></script>
     <script>
+
       new FloatLabels( '.form-1', {
         style: 1
       });
 
-        document.querySelectorAll( 'input[name="style"]' ).forEach( function( el ) {
-          el.addEventListener( 'change', function( ev ) {
-            var form = ev.target.closest( 'form' );
-            form.className = form.className.replace( /\b fl-style-\d\b/g, '' ) + ' ' + ev.target.value;
-          }, false );
-        });
+      // jQuery( '.form-1' ).floatlabels({
+      //   style: 1,
+      // });
+
+      document.querySelectorAll( 'input[name="style"]' ).forEach( function( el ) {
+        el.addEventListener( 'change', function( ev ) {
+          var form = ev.target.closest( 'form' );
+          form.className = form.className.replace( /\b fl-style-\d\b/g, '' ) + ' ' + ev.target.value;
+        }, false );
+      });
     </script>
 
   </body>
