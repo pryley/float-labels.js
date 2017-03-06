@@ -9,6 +9,15 @@ The float label pattern floats the inline label up above the input after the use
 
 For production, use the files from the `dist/` folder.
 
+## Installation
+
+Use one of the following methods to add Float Labels to your project:
+
+- [Download ZIP](https://github.com/geminilabs/float-labels.js/zipball/master)
+- `yarn add float-labels.js`
+- `npm install float-labels.js`
+- `bower install float-labels.js`
+
 ## Usage
 
 Load the `dist/float-labels.css` and `dist/float-labels.min.js` files somewhere on your page and then trigger the plugin as follows:

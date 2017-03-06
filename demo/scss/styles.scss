@@ -147,6 +147,10 @@ pre {
 	@include padding(1.5 1 0);
 }
 
+.section ul {
+	@include line-height(1.25);
+}
+
 .section:not(:last-child) {
 	@include margin-bottom(2);
 }
