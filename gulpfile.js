@@ -1,16 +1,17 @@
-var browserSync  = require( 'browser-sync' ).create();
-var gulp         = require( 'gulp' );
-var autoprefixer = require( 'gulp-autoprefixer' );
-var bump         = require( 'gulp-bump' );
-var cssnano      = require( 'gulp-cssnano' );
-var gulpif       = require( 'gulp-if' );
-var jshint       = require( 'gulp-jshint' );
-var notify       = require( 'gulp-notify' );
-var rename       = require( 'gulp-rename' );
-var sass         = require( 'gulp-sass' );
-var uglify       = require( 'gulp-uglify' );
-var watch        = require( 'gulp-watch' );
-var args         = require( 'yargs' ).argv;
+var browserSync    = require( 'browser-sync' ).create();
+var gulp           = require( 'gulp' );
+var autoprefixer   = require( 'gulp-autoprefixer' );
+var bump           = require( 'gulp-bump' );
+var cssnano        = require( 'gulp-cssnano' );
+var gulpif         = require( 'gulp-if' );
+var jshint         = require( 'gulp-jshint' );
+var moduleImporter = require( 'sass-module-importer' );
+var notify         = require( 'gulp-notify' );
+var rename         = require( 'gulp-rename' );
+var sass           = require( 'gulp-sass' );
+var uglify         = require( 'gulp-uglify' );
+var watch          = require( 'gulp-watch' );
+var args           = require( 'yargs' ).argv;
 
 var paths = {
 	dist: 'dist/',
@@ -27,7 +28,10 @@ gulp.task( 'css', function ()
 {
 	return gulp
 		.src( paths.scss, { base: '.' })
-		.pipe( sass({ outputStyle: 'expanded' }).on( 'error', sass.logError ))
+		.pipe( sass({
+			importer: moduleImporter(),
+			outputStyle: 'expanded'
+		}).on( 'error', sass.logError ))
 		.pipe( autoprefixer() )
 		.pipe( gulpif( args.production, cssnano() ))
 		.pipe( rename( function( path ) {
