@@ -185,6 +185,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v2.0.2 - [14/07/2017]`
+
+- Fix usage of forEach method on a NodeList
+
 `v2.0.1 - [23/01/2017]`
 
 - Fix jQuery plugin

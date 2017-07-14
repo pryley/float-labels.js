@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -40,7 +40,7 @@
 		{
 			var _this = this;
 
-			Array.prototype.forEach.call( this.el, function( form ) {
+			[].forEach.call( this.el, function( form ) {
 				_this.config = _this.extend( {}, _this.defaults, _this.options, form.getAttribute( 'data-options' ));
 
 				var exclude = _this.sprintf( ':not($0)', _this.config.exclude.split(/[\s,]+/).join( '):not(' ));
@@ -52,7 +52,7 @@
 					_this.addClass( form, _this.prefixed( 'style-' + _this.config.style ));
 				}
 				_this.config.transform.split(/[\s,]+/).forEach( function( tag ) {
-					form.querySelectorAll( tag + exclude ).forEach( function( el ) {
+					[].forEach.call( form.querySelectorAll( tag + exclude ), function( el ) {
 						_this.floatLabel( form, el );
 					});
 				});
@@ -183,7 +183,7 @@
 			var _this = this;
 
 			this.config.transform.split(/[\s,]+/).forEach( function( tag ) {
-				ev.target.querySelectorAll( tag ).forEach( function( el ) {
+				[].forEach.call( ev.target.querySelectorAll( tag ), function( el ) {
 					_this.removeClass( el.parentNode, _this.prefixed( 'is-active' ));
 				});
 			});
