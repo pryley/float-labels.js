@@ -207,6 +207,7 @@ $ gulp</code></pre></div>
     font-size               : 16px,
     font-size-small         : 12px,
     font-weight             : 400,
+    parent                  : '',
     transition-easing       : ease-in-out,
     transition-speed        : 0.2s,
 );</code></pre>
@@ -224,6 +225,18 @@ $ gulp</code></pre></div>
 );
 
 @import "../../node_modules/float-labels.js/src/float-labels"</code></pre>
+
+        <h3>How to change CSS style priority</h3>
+
+        <p>Sometimes existing CSS stylesheet rules will override the styling of Float Labels. To solve this problem, you can specify a "parent" option in the <code>$float-labels</code> map variable. This option value should be property such as an existing #id definition with a high priority/specificity.</p>
+
+        <p>In the following example, all Float Labels css rules will begin with <code>form#my-form</code>:</p>
+
+        <pre><code>$float-labels: (
+    parent: 'form#my-form',
+);</code></pre>
+
+        <p>The CSS rule <code>.fl-form label.fl-label { ... }</code> now becomes <code>form#my-form.fl-form label.fl-label { ... }</code>.</p>
 
       </section>
 

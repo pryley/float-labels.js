@@ -185,43 +185,47 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
-`v2.0.2 - [14/07/2017]`
+`v2.1.0 - [2017-08-07]`
+
+- Added "parent" option in SCSS $float-labels-defaults to change the CSS rules priority.
+
+`v2.0.2 - [2017-07-14]`
 
 - Fix usage of forEach method on a NodeList
 
-`v2.0.1 - [23/01/2017]`
+`v2.0.1 - [2017-01-23]`
 
 - Fix jQuery plugin
 
-`v2.0.0 - [11/01/2017]`
+`v2.0.0 - [2017-01-11]`
 
 - added 2 new styles
 - added new options
-- re-written to be a zero-dependency plugin
+- re-written as a zero-dependency plugin
 
-`v1.0.9 - [06/08/2016]`
+`v1.0.9 - [2016-08-06]`
 
 - publish to npm
 
-`v1.0.8 - [31/01/2016]`
+`v1.0.8 - [2016-01-31]`
 
 - added "*-active" SCSS variables for borders and backgrounds
 - fixed textarea font-size potentially differing from inputs/selects
 - updated npm package dependancies
 
-`v1.0.7 - [23/09/2015]`
+`v1.0.7 - [2015-09-23]`
 
 - add the `placeholder=""` attribute from the label text if it doesn't exist
 - add the `data-tooltip=""` attribute to the label if it exists
 - new option `priority` for placeholder/label
 - detect if field ID is not unique and handle label
 
-`v1.0.6 - [23/09/2015]`
+`v1.0.6 - [2015-09-23]`
 
 - skip a form element if related label is not found
 - adjusted SCSS variables
 
-`v1.0.0 - [03/09/2015]`
+`v1.0.0 - [2015-09-03]`
 
 - initial release
 

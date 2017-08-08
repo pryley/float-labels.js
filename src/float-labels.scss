@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 2.0.2
+ * Version: 2.1.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -29,6 +29,7 @@ $float-labels-defaults: (
 	font-size               : 16px,
 	font-size-small         : 12px,
 	font-weight             : 400,
+	parent                  : '',
 	transition-easing       : ease-in-out,
 	transition-speed        : 0.2s,
 );
@@ -109,16 +110,16 @@ $float-labels-defaults: (
 	}
 }
 
-.fl-wrap {
+#{fl(parent)}.fl-form .fl-wrap {
 	position: relative;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.fl-form input.fl-input,
-.fl-form select.fl-select,
-.fl-form textarea.fl-textarea {
+#{fl(parent)}.fl-form input.fl-input,
+#{fl(parent)}.fl-form select.fl-select,
+#{fl(parent)}.fl-form textarea.fl-textarea {
 	width: 100%;
 	outline: 0;
 	font-size: fl(font-size);
@@ -144,7 +145,7 @@ $float-labels-defaults: (
 	}
 }
 
-.fl-form select.fl-select {
+#{fl(parent)}.fl-form select.fl-select {
 	position: relative;
 	color: fl(color-placeholder);
 	cursor: pointer;
@@ -152,22 +153,22 @@ $float-labels-defaults: (
 	-moz-appearance: none;
 }
 
-.fl-form .fl-is-active input.fl-input,
-.fl-form .fl-is-active select.fl-select,
-.fl-form .fl-is-active textarea.fl-textarea {
+#{fl(parent)}.fl-form .fl-is-active input.fl-input,
+#{fl(parent)}.fl-form .fl-is-active select.fl-select,
+#{fl(parent)}.fl-form .fl-is-active textarea.fl-textarea {
 	color: fl(color-text);
 	background-color: fl(color-background-active);
 	border-color: fl(color-border-active);
 }
 
-.fl-form .fl-has-focus input.fl-input,
-.fl-form .fl-has-focus select.fl-select,
-.fl-form .fl-has-focus textarea.fl-textarea {
+#{fl(parent)}.fl-form .fl-has-focus input.fl-input,
+#{fl(parent)}.fl-form .fl-has-focus select.fl-select,
+#{fl(parent)}.fl-form .fl-has-focus textarea.fl-textarea {
 	background-color: fl(color-background-focus);
 	border-color: fl(color-border-focus);
 }
 
-.fl-form label.fl-label {
+#{fl(parent)}.fl-form label.fl-label {
 	opacity: 0;
 	visibility: hidden;
 	display: block;
@@ -183,16 +184,16 @@ $float-labels-defaults: (
 	z-index: 1;
 }
 
-.fl-form .fl-is-active label.fl-label {
+#{fl(parent)}.fl-form .fl-is-active label.fl-label {
 	opacity: 1;
 	visibility: visible;
 }
 
-.fl-form .fl-has-focus label.fl-label {
+#{fl(parent)}.fl-form .fl-has-focus label.fl-label {
 	color: fl(color-text-focus);
 }
 
-.fl-form .fl-is-required:before {
+#{fl(parent)}.fl-form .fl-is-required:before {
 	opacity: 1;
 	content: '*';
 	display: block;
@@ -207,19 +208,19 @@ $float-labels-defaults: (
 	z-index: 1;
 }
 
-.fl-form .fl-is-required.fl-is-active:before {
+#{fl(parent)}.fl-form .fl-is-required.fl-is-active:before {
 	opacity: 0;
 }
 
-.fl-form.fl-style-1 {
+#{fl(parent)}.fl-form.fl-style-1 {
 	@include fl-style-1;
 }
 
-.fl-form.fl-style-2 {
+#{fl(parent)}.fl-form.fl-style-2 {
 	@include fl-style-2;
 }
 
-.fl-wrap-select:after {
+#{fl(parent)}.fl-form .fl-wrap-select:after {
 	content: '';
 	position: absolute;
 	display: block;

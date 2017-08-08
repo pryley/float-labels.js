@@ -193,36 +193,10 @@ pre {
 .button {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	transition: background-color $transition-duration $transition-function;
-	@include button-style-primary;
+	@include button;
 	@include button-group;
-	&.secondary {
-		@include button-style-secondary;
-	}
-	&.outline {
-		// color: color(muted);
-		border-color: color(muted);
-		background-color: rgba(color(muted), 0.5);
-		// background: none;
-		&:hover {
-			background-color: rgba(color(muted), 0.75);
-			// color: darken(color(muted), 10);
-			// border-color: darken(color(muted), 10);
-		}
-		&:active,
-		&.active {
-			background-color: color(muted);
-			// color: color(white);
-			// color: darken(color(muted), 20);
-			border-color: darken(color(muted), 20);
-		}
-		&:disabled,
-		&.disabled {
-			color: color(muted);
-			border-color: color(muted);
-		}
-		// @include button-style-outline;
-	}
+	@include button-solid(color(primary), color(white));
+	@include button-transition;
 }
 
 :not(.button-group) > .button {

@@ -20,6 +20,14 @@ var paths = {
 		'demo/scss/**/*.scss',
 		'src/float-labels.scss',
 	],
+	bump: {
+		'version': [
+			'bower.json',
+			'package.json',
+			'src/float-labels.js',
+			'src/float-labels.scss',
+		],
+	},
 };
 
 /* CSS Task
@@ -77,37 +85,18 @@ gulp.task( 'js', function ()
 		}));
 });
 
-/* Version Bump Task
+/* Version Task
  -------------------------------------------------- */
-var bumpPaths = [
-	'bower.json',
-	'package.json',
-	'src/float-labels.js',
-	'src/float-labels.scss',
-];
-
-gulp.task( 'bump:patch', function()
-{
-	return gulp
-		.src( bumpPaths, { base: './' })
-		.pipe( bump() )
-		.pipe( gulp.dest( './' ));
-});
-
-gulp.task( 'bump:minor', function()
-{
-	return gulp
-		.src( bumpPaths, { base: './' })
-		.pipe( bump({ type: 'minor' }))
-		.pipe( gulp.dest( './' ));
-});
-
-gulp.task( 'bump:major', function()
-{
-	return gulp
-		.src( bumpPaths, { base: './' })
-		.pipe( bump({ type: 'major' }))
-		.pipe( gulp.dest( './' ));
+gulp.task( 'bump', function() {
+	['patch', 'minor', 'major'].some( function( arg ) {
+		if( !args[arg] )return;
+		for( var key in paths.bump ) {
+			gulp.src( paths.bump[key], { base: '.' })
+				.pipe( bump({ type: arg, key: key }))
+				.pipe( gulp.dest('.'));
+		}
+		return true;
+	});
 });
 
 /* Watch Task
