@@ -35,6 +35,6 @@
     "yargs": "^6.6.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "jshint src/float-labels.js"
   }
 }
