@@ -19,23 +19,25 @@
 		if( !NodeList.prototype.isPrototypeOf( this.el ))return;
 		this.options = options;
 		this.config = [];
-		this.fields = [];
+		this.selectors = [];
 		this.init();
 		this.rebuild = function() {
 			for( var i = 0; i < this.el.length; ++i ) {
+				var fields = this.el[i].querySelectorAll( this.selectors[i] );
 				this.current = i;
-				for( var x = 0; x < this.fields[i].length; ++x ) {
-					this.floatLabel( this.fields[i][x], true );
+				for( var x = 0; x < fields.length; ++x ) {
+					this.floatLabel( fields[x], true );
 				}
 			}
 		};
 		this.destroy = function() {
 			for( var i = 0; i < this.el.length; ++i ) {
+				var fields = this.el[i].querySelectorAll( this.selectors[i] );
 				this.current = i;
 				this.el[i].removeEventListener( 'reset', this.events.reset );
 				this.removeClasses( this.el[i] );
-				for( var x = 0; x < this.fields[i].length; ++x ) {
-					this.reset( this.fields[i][x] );
+				for( var x = 0; x < fields.length; ++x ) {
+					this.reset( fields[x] );
 				}
 			}
 		}
@@ -62,12 +64,13 @@
 				var el = this.el[i];
 				var config = this.extend( {}, this.defaults, this.options, el.getAttribute( 'data-options' ));
 				var exclude = this.sprintf( ':not($0)', config.exclude.split( /[\s,]+/ ).join( '):not(' ));
-				var fields = el.querySelectorAll( config.transform.replace( /,/g, exclude + ',' ) + exclude );
+				var selectors = config.transform.replace( /,/g, exclude + ',' ) + exclude;
+				var fields = el.querySelectorAll( selectors );
 
 				el.addEventListener( 'reset', this.events.reset );
 
 				this.config[i] = config;
-				this.fields[i] = fields;
+				this.selectors[i] = selectors;
 				this.current = i;
 
 				el.classList.add( this.prefixed( 'form' ));
@@ -231,7 +234,7 @@
 
 		onReset: function( ev )
 		{
-			var fields = this.fields[this.current];
+			var fields = this.el[this.current].querySelectorAll( this.selectors[this.current] );
 			for( var i = 0; i < fields.length; ++i ) {
 				fields[i].parentNode.classList.remove( this.prefixed( 'is-active' ));
 			}
