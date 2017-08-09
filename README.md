@@ -22,20 +22,22 @@ Use one of the following methods to add Float Labels to your project:
 
 Load the `dist/float-labels.css` and `dist/float-labels.min.js` files somewhere on your page and then trigger the plugin as follows:
 
-### Using vanilla javascript
-
 ```js
 var floatlabels = new FloatLabels( 'form', {
-    style: 1,
+    // options go here
 });
 ```
 
-### Using jQuery/Zepto
+To re-initialize Float Labels after it has already been initialized (e.g. form fields have changed with ajax):
 
 ```js
-$( 'form' ).floatlabels({
-    style: 1,
-});
+floatlabels.rebuild();
+```
+
+To fully remove Float Labels, including all attached Event Listeners:
+
+```js
+floatlabels.destroy();
 ```
 
 ## Options
@@ -48,6 +50,7 @@ Here are the default options
     customLabel  : null,
     exclude      : '.no-label',
     inputRegex   : /email|number|password|search|tel|text|url/,
+    prefix       : 'fl-',
     prioritize   : 'label',
     requiredClass: 'required',
     style        : 0,
@@ -91,6 +94,14 @@ Type: `Regex`
 
 Regex of INPUT types to transform.
 
+### prefix
+
+Type: `String`
+
+The prefix of all the Float Label CSS classes.
+
+If you change the prefix, you will need to either write your own custom CSS, or change the prefix option in the SCSS to match.
+
 ### prioritize
 
 Type: `String`
@@ -105,9 +116,9 @@ The class name of required elements (if not using the required attribute).
 
 ### style
 
-Type: `Number`
+Type: `Number|String`
 
-Choose the style to use, value can be either `0`, `1`, or `2`.
+Choose the style to use, the default value is either `0`, `1`, or `2`. This is used to create the Float Labels style classname (i.e. `.fl-style-1`). If you have created your own CSS style (i.e. `.fl-style-custom`), enter it here (i.e. `custom`).
 
 ### transform
 
@@ -153,6 +164,8 @@ $float-labels-defaults: (
     font-size               : 16px,
     font-size-small         : 12px,
     font-weight             : 400,
+    parent                  : '',
+    prefix                  : 'fl-',
     transition-easing       : ease-in-out,
     transition-speed        : 0.2s,
 );
@@ -174,16 +187,37 @@ $float-labels: (
 @import "../../node_modules/float-labels.js/src/float-labels"
 ```
 
+### How to change CSS style priority
+
+Sometimes existing CSS stylesheet rules will override the styling of Float Labels. To solve this problem, you can specify a "parent" option in the `$float-labels` map variable. This option value should be property such as an existing #id definition with a high priority/specificity.
+
+In the following example, all Float Labels css rules will begin with `form#my-form`:
+
+```sass
+$float-labels: (
+    parent: 'form#my-form',
+);
+```
+
+The CSS rule `.fl-form label.fl-label { ... }` now becomes `form#my-form.fl-form label.fl-label { ... }`.
+
 ## Compatibility
 
 - All modern browsers
-- IE 9+
+- IE 10+
 
 ## Contributing
 
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v3.0.0 - [2017-08-08]`
+
+- Added "rebuild" and "destroy" public methods
+- Added ability to change the CSS class prefix
+- Removed jQuery plugin as it's unnecessary
+- Removed IE9 support
 
 `v2.1.0 - [2017-08-07]`
 

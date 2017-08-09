@@ -197,6 +197,17 @@ pre {
 	@include button-group;
 	@include button-solid(color(primary), color(white));
 	@include button-transition;
+
+	&.secondary {
+		@include button-solid(color(text), color(white));
+	}
+}
+
+
+.button-group {
+	@include clearfix;
+	display: block;
+	@include margin-bottom(1);
 }
 
 :not(.button-group) > .button {

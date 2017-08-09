@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 2.1.0
+ * Version: 3.0.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -30,6 +30,7 @@ $float-labels-defaults: (
 	font-size-small         : 12px,
 	font-weight             : 400,
 	parent                  : '',
+	prefix                  : 'fl-',
 	transition-easing       : ease-in-out,
 	transition-speed        : 0.2s,
 );
@@ -39,26 +40,26 @@ $float-labels-defaults: (
 }
 
 @mixin fl-style-1 {
-	input.fl-input,
-	select.fl-select,
-	textarea.fl-textarea {
+	input.#{fl(prefix)}input,
+	select.#{fl(prefix)}select,
+	textarea.#{fl(prefix)}textarea {
 		padding: fl(base-padding) fl(base-padding)*2;
 	}
-	select.fl-select {
+	select.#{fl(prefix)}select {
 		height: fl(base-height) + fl(base-padding)*2 + fl(border-width)*2;
 	}
-	.fl-is-active input.fl-input,
-	.fl-is-active select.fl-select,
-	.fl-is-active textarea.fl-textarea {
+	.#{fl(prefix)}is-active input.#{fl(prefix)}input,
+	.#{fl(prefix)}is-active select.#{fl(prefix)}select,
+	.#{fl(prefix)}is-active textarea.#{fl(prefix)}textarea {
 		padding: fl(base-padding) fl(base-padding)*2;
 	}
-	label.fl-label {
+	label.#{fl(prefix)}label {
 		top: fl(border-width);
 		left: fl(border-width) + fl(base-padding)*1.5;
 		background-color: transparent;
 		padding: fl(base-padding)*2 fl(base-padding)/2;
 	}
-	label.fl-label:before {
+	label.#{fl(prefix)}label:before {
 		content: '';
 		display: block;
 		position: absolute;
@@ -70,56 +71,56 @@ $float-labels-defaults: (
 		z-index: -1;
 	}
 	$label-top: round((fl(base-padding) + fl(font-size-small))/2);
-	.fl-is-active label.fl-label {
+	.#{fl(prefix)}is-active label.#{fl(prefix)}label {
 		top: - $label-top;
 		padding: fl(base-padding)/2;
 	}
-	.fl-is-active label.fl-label:before {
+	.#{fl(prefix)}is-active label.#{fl(prefix)}label:before {
 		top: $label-top;
 	}
 }
 
 @mixin fl-style-2 {
-	input.fl-input,
-	select.fl-select,
-	textarea.fl-textarea {
+	input.#{fl(prefix)}input,
+	select.#{fl(prefix)}select,
+	textarea.#{fl(prefix)}textarea {
 		padding: fl(base-padding)*2;
 	}
-	select.fl-select {
+	select.#{fl(prefix)}select {
 		height: fl(base-height) + fl(base-padding)*4 + fl(border-width)*2;
 	}
-	.fl-is-active input.fl-input,
-	.fl-is-active select.fl-select,
-	.fl-is-active textarea.fl-textarea {
+	.#{fl(prefix)}is-active input.#{fl(prefix)}input,
+	.#{fl(prefix)}is-active select.#{fl(prefix)}select,
+	.#{fl(prefix)}is-active textarea.#{fl(prefix)}textarea {
 		padding: fl(base-padding)*3 fl(base-padding)*2 fl(base-padding)*1;
 	}
-	label.fl-label {
+	label.#{fl(prefix)}label {
 		top: fl(border-width);
 		left: fl(border-width) + fl(base-padding)*1.5;
 		background-color: fl(color-background);
 		padding: fl(base-padding) fl(base-padding)/2 fl(base-padding)/2;
 	}
-	.fl-has-focus label.fl-label {
+	.#{fl(prefix)}has-focus label.#{fl(prefix)}label {
 		background-color: fl(color-background-focus);
 	}
-	.fl-is-active label.fl-label {
+	.#{fl(prefix)}is-active label.#{fl(prefix)}label {
 		background-color: fl(color-background-active);
 	}
-	.fl-is-required:before {
+	.#{fl(prefix)}is-required:before {
 		padding-top: fl(base-padding)*2;
 	}
 }
 
-#{fl(parent)}.fl-form .fl-wrap {
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}wrap {
 	position: relative;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-#{fl(parent)}.fl-form input.fl-input,
-#{fl(parent)}.fl-form select.fl-select,
-#{fl(parent)}.fl-form textarea.fl-textarea {
+#{fl(parent)}.#{fl(prefix)}form input.#{fl(prefix)}input,
+#{fl(parent)}.#{fl(prefix)}form select.#{fl(prefix)}select,
+#{fl(parent)}.#{fl(prefix)}form textarea.#{fl(prefix)}textarea {
 	width: 100%;
 	outline: 0;
 	font-size: fl(font-size);
@@ -145,7 +146,7 @@ $float-labels-defaults: (
 	}
 }
 
-#{fl(parent)}.fl-form select.fl-select {
+#{fl(parent)}.#{fl(prefix)}form select.#{fl(prefix)}select {
 	position: relative;
 	color: fl(color-placeholder);
 	cursor: pointer;
@@ -153,22 +154,22 @@ $float-labels-defaults: (
 	-moz-appearance: none;
 }
 
-#{fl(parent)}.fl-form .fl-is-active input.fl-input,
-#{fl(parent)}.fl-form .fl-is-active select.fl-select,
-#{fl(parent)}.fl-form .fl-is-active textarea.fl-textarea {
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-active input.#{fl(prefix)}input,
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-active select.#{fl(prefix)}select,
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-active textarea.#{fl(prefix)}textarea {
 	color: fl(color-text);
 	background-color: fl(color-background-active);
 	border-color: fl(color-border-active);
 }
 
-#{fl(parent)}.fl-form .fl-has-focus input.fl-input,
-#{fl(parent)}.fl-form .fl-has-focus select.fl-select,
-#{fl(parent)}.fl-form .fl-has-focus textarea.fl-textarea {
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}has-focus input.#{fl(prefix)}input,
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}has-focus select.#{fl(prefix)}select,
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}has-focus textarea.#{fl(prefix)}textarea {
 	background-color: fl(color-background-focus);
 	border-color: fl(color-border-focus);
 }
 
-#{fl(parent)}.fl-form label.fl-label {
+#{fl(parent)}.#{fl(prefix)}form label.#{fl(prefix)}label {
 	opacity: 0;
 	visibility: hidden;
 	display: block;
@@ -184,16 +185,16 @@ $float-labels-defaults: (
 	z-index: 1;
 }
 
-#{fl(parent)}.fl-form .fl-is-active label.fl-label {
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-active label.#{fl(prefix)}label {
 	opacity: 1;
 	visibility: visible;
 }
 
-#{fl(parent)}.fl-form .fl-has-focus label.fl-label {
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}has-focus label.#{fl(prefix)}label {
 	color: fl(color-text-focus);
 }
 
-#{fl(parent)}.fl-form .fl-is-required:before {
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-required:before {
 	opacity: 1;
 	content: '*';
 	display: block;
@@ -208,19 +209,19 @@ $float-labels-defaults: (
 	z-index: 1;
 }
 
-#{fl(parent)}.fl-form .fl-is-required.fl-is-active:before {
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-required.#{fl(prefix)}is-active:before {
 	opacity: 0;
 }
 
-#{fl(parent)}.fl-form.fl-style-1 {
+#{fl(parent)}.#{fl(prefix)}form.#{fl(prefix)}style-1 {
 	@include fl-style-1;
 }
 
-#{fl(parent)}.fl-form.fl-style-2 {
+#{fl(parent)}.#{fl(prefix)}form.#{fl(prefix)}style-2 {
 	@include fl-style-2;
 }
 
-#{fl(parent)}.fl-form .fl-wrap-select:after {
+#{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}wrap-select:after {
 	content: '';
 	position: absolute;
 	display: block;

@@ -56,7 +56,10 @@
           <input type="radio" name="style" id="style-2" value="fl-style-2"/>
           <label for="style-2">Style 2</label>
 
-          <button type="reset" class="button large">Reset form</button>
+          <div class="button-group">
+            <button type="button" class="button large fl-toggle">Toggle Float Labels</button>
+            <button type="reset" class="button large secondary">Reset form</button>
+          </div>
         </form>
       </section>
 
@@ -79,17 +82,18 @@
 
         <p>Load the <code>dist/float-labels.css</code> and <code>dist/float-labels.min.js</code> files somewhere on your page and then trigger the plugin as follows:</p>
 
-        <h3>Using vanilla javascript</h3>
-
-        <div class="highlight highlight-Html"><pre class="alt"><code>var floatlabels = new FloatLabels( 'form', {
-    style: 1,
+        <div class="highlight highlight-Javascript"><pre class="alt"><code>var floatlabels = new FloatLabels( 'form', {
+    // options go here,
 });</code></pre></div>
 
-        <h3>Using jQuery/Zepto</h3>
+        <p>To re-initialize Float Labels after it has already been initialized (e.g. form fields have changed with ajax):</p>
 
-        <div class="highlight highlight-Html"><pre><code>$( 'form' ).floatlabels({
-    style: 1,
-});</code></pre></div>
+        <div class="highlight highlight-Javascript"><pre class="alt"><code>floatlabels.rebuild();</code></pre></div>
+
+        <p>To fully remove Float Labels, including all attached Event Listeners:</p>
+
+        <div class="highlight highlight-Javascript"><pre class="alt"><code>floatlabels.destroy();</code></pre></div>
+
       </section>
 
       <section class="section">
@@ -102,6 +106,7 @@
     customLabel  : null,
     exclude      : '.no-label',
     inputRegex   : /email|number|password|search|tel|text|url/,
+    prefix       : 'fl-',
     prioritize   : 'label',
     requiredClass: 'required',
     style        : 0,
@@ -142,6 +147,14 @@
         <p>Regex of INPUT types to transform.</p>
         </blockquote>
 
+        <h4>prefix</h4>
+
+        <blockquote>
+        <p>Type: <code>String</code></p>
+        <p>The prefix of all the Float Label CSS classes.</p>
+        <p>If you change the prefix, you will need to either write your own custom CSS, or change the prefix option in the SCSS to match.</p>
+        </blockquote>
+
         <h4>prioritize</h4>
 
         <blockquote>
@@ -159,8 +172,8 @@
         <h4>style</h4>
 
         <blockquote>
-        <p>Type: <code>Number</code></p>
-        <p>Choose the style to use, value can be either <code>0</code>, <code>1</code>, or <code>2</code>.</p>
+        <p>Type: <code>Number|String</code></p>
+        <p>Choose the style to use, the default value is either <code>0</code>, <code>1</code>, or <code>2</code>. This is used to create the Float Labels style classname (i.e. <code>.fl-style-1</code>). If you have created your own CSS style (i.e. <code>.fl-style-custom</code>), enter it here (i.e. <code>custom</code>).</p>
         </blockquote>
 
         <h4>transform</h4>
@@ -208,6 +221,7 @@ $ gulp</code></pre></div>
     font-size-small         : 12px,
     font-weight             : 400,
     parent                  : '',
+    prefix                  : 'fl-',
     transition-easing       : ease-in-out,
     transition-speed        : 0.2s,
 );</code></pre>
@@ -244,7 +258,7 @@ $ gulp</code></pre></div>
         <h2>Compatibility</h2>
         <ul>
           <li>All modern browsers</li>
-          <li>IE 9+</li>
+          <li>IE 10+</li>
         </ul>
       </section>
 
@@ -263,15 +277,22 @@ $ gulp</code></pre></div>
     <script src="src/float-labels.js"></script>
     <script>
 
-      new FloatLabels( '.form-1', {
+      var floatlabels = new FloatLabels( '.form-1', {
         style: 1
       });
 
-      // jQuery( '.form-1' ).floatlabels({
-      //   style: 1,
-      // });
+      document.querySelector( '.fl-toggle' ).addEventListener( 'click', function( ev ) {
+        if( document.querySelector( '.fl-form' )) {
+          floatlabels.destroy();
+        }
+        else {
+          floatlabels = new FloatLabels( '.form-1', {
+            style: 1
+          });
+        }
+      });
 
-      document.querySelectorAll( 'input[name="style"]' ).forEach( function( el ) {
+      [].forEach.call( document.querySelectorAll( 'input[name="style"]' ), function( el ) {
         el.addEventListener( 'change', function( ev ) {
           var form = ev.target.closest( 'form' );
           form.className = form.className.replace( /\b fl-style-\d\b/g, '' ) + ' ' + ev.target.value;

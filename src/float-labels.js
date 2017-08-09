@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 2.1.0
+ * Version: 3.0.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -13,14 +13,32 @@
 {
 	"use strict";
 
-	var $ = window.jQuery || window.Zepto || window.$;
-
 	var Plugin = function( el, options )
 	{
 		this.el = this.isString( el ) ? document.querySelectorAll( el ) : el;
+		if( !NodeList.prototype.isPrototypeOf( this.el ))return;
 		this.options = options;
-		this.prefix = 'fl-';
+		this.config = [];
+		this.fields = [];
 		this.init();
+		this.rebuild = function() {
+			for( var i = 0; i < this.el.length; ++i ) {
+				this.current = i;
+				for( var x = 0; x < this.fields[i].length; ++x ) {
+					this.floatLabel( this.fields[i][x], true );
+				}
+			}
+		};
+		this.destroy = function() {
+			for( var i = 0; i < this.el.length; ++i ) {
+				this.current = i;
+				this.el[i].removeEventListener( 'reset', this.events.reset );
+				this.removeClasses( this.el[i] );
+				for( var x = 0; x < this.fields[i].length; ++x ) {
+					this.reset( this.fields[i][x] );
+				}
+			}
+		}
 	};
 
 	Plugin.prototype = {
@@ -30,6 +48,7 @@
 			customLabel  : null,
 			exclude      : '.no-label',
 			inputRegex   : /email|number|password|search|tel|text|url/,
+			prefix       : 'fl-',
 			prioritize   : 'label', // label|placeholder
 			requiredClass: 'required',
 			style        : 0, // 0|1|2
@@ -38,60 +57,98 @@
 
 		init: function()
 		{
-			var _this = this;
+			this.initEvents();
+			for( var i = 0; i < this.el.length; ++i ) {
+				var el = this.el[i];
+				var config = this.extend( {}, this.defaults, this.options, el.getAttribute( 'data-options' ));
+				var exclude = this.sprintf( ':not($0)', config.exclude.split( /[\s,]+/ ).join( '):not(' ));
+				var fields = el.querySelectorAll( config.transform.replace( /,/g, exclude + ',' ) + exclude );
 
-			[].forEach.call( this.el, function( form ) {
-				_this.config = _this.extend( {}, _this.defaults, _this.options, form.getAttribute( 'data-options' ));
+				el.addEventListener( 'reset', this.events.reset );
 
-				var exclude = _this.sprintf( ':not($0)', _this.config.exclude.split(/[\s,]+/).join( '):not(' ));
+				this.config[i] = config;
+				this.fields[i] = fields;
+				this.current = i;
 
-				_this.on( 'reset', form, _this.onReset.bind( _this ));
-
-				_this.addClass( form, _this.prefixed( 'form' ));
-				if( _this.config.style ) {
-					_this.addClass( form, _this.prefixed( 'style-' + _this.config.style ));
+				el.classList.add( this.prefixed( 'form' ));
+				if( config.style ) {
+					el.classList.add( this.prefixed( 'style-' + config.style ));
 				}
-				_this.config.transform.split(/[\s,]+/).forEach( function( tag ) {
-					[].forEach.call( form.querySelectorAll( tag + exclude ), function( el ) {
-						_this.floatLabel( form, el );
-					});
-				});
-			});
+				for( var i = 0; i < fields.length; ++i ) {
+					this.floatLabel( fields[i], el );
+				}
+			}
 		},
 
-		floatLabel: function( form, el )
+		initEvents: function()
 		{
-			if( !el.getAttribute( 'id' ) ||
-				this.hasClass( el.parentNode, this.prefixed( 'wrap' )) || (
-				el.tagName === 'INPUT' && !this.config.inputRegex.test( el.getAttribute( 'type' ))
+			this.events = {
+				blur: this.onBlur.bind( this ),
+				focus: this.onFocus.bind( this ),
+				input: this.onChange.bind( this ),
+				reset: this.onReset.bind( this ),
+			};
+		},
+
+		floatLabel: function( el, rebuild )
+		{
+			if( !el.getAttribute( 'id' ) || (
+				el.tagName === 'INPUT' && !this.config[this.current].inputRegex.test( el.getAttribute( 'type' ))
 			))return;
+			if( this.hasParent( el )) {
+				if( rebuild !== true )return;
+				this.reset( el );
+			}
+			this.build( el );
+		},
 
-			var labelEl = this.getLabel( el, form );
-
+		build: function( el )
+		{
+			var labelEl = this.getLabel( el );
 			if( !labelEl )return;
-
-			this.addClass( labelEl, this.prefixed( 'label' ));
-			this.addClass( el, this.prefixed( el.tagName.toLowerCase() ));
-
+			labelEl.classList.add( this.prefixed( 'label' ));
+			el.classList.add( this.prefixed( el.tagName.toLowerCase() ));
 			this.setLabel( labelEl, el );
 			this.wrapLabel( labelEl, el );
-			this.runEvents( el );
+			this.addEvents( el );
+			if( typeof this.config[this.current].customEvent === 'function' ) {
+				this.config[this.current].customEvent.call( this, el );
+			}
 		},
 
-		getLabel: function( el, form )
+		reset: function( el )
+		{
+			var parent = el.parentNode;
+			if( !this.hasParent( el ))return;
+			var fragment = document.createDocumentFragment();
+			while( parent.firstElementChild ) {
+				this.removeClasses( parent.firstElementChild );
+				fragment.appendChild( parent.firstElementChild );
+			}
+			parent.parentNode.replaceChild( fragment, parent );
+			this.removeEvents( el );
+		},
+
+		removeClasses: function( el )
+		{
+			var prefix = this.config[this.current].prefix;
+			var classes = el.className.split( ' ' ).filter( function( c ) {
+				return c.lastIndexOf( prefix, 0 ) !== 0;
+			});
+			el.className = classes.join( ' ' ).trim();
+		},
+
+		getLabel: function( el )
 		{
 			var label = this.sprintf( 'label[for="$0"]', el.getAttribute( 'id' ));
-			var labelEl = form.querySelectorAll( label );
-
+			var labelEl = this.el[this.current].querySelectorAll( label );
 			// check for multiple labels with identical 'for' attributes
 			if( labelEl.length > 1 ) {
 				labelEl = el.parentNode.querySelectorAll( label );
 			}
-
 			if( labelEl.length === 1 ) {
 				return labelEl[0];
 			}
-
 			return false;
 		},
 
@@ -100,20 +157,17 @@
 			var labelText = labelEl.textContent.replace( /[*:]/g, '' ).trim();
 			var placeholder = el.getAttribute( 'placeholder' );
 
-			if( !labelText || ( labelText && placeholder && this.config.prioritize === 'placeholder' )) {
+			if( !labelText || ( labelText && placeholder && this.config[this.current].prioritize === 'placeholder' )) {
 				labelText = placeholder;
 			}
-
 			// call the custom defined label event
-			if( typeof this.config.customLabel === 'function' ) {
-				var customLabel = this.config.customLabel.call( this, labelEl, el );
+			if( typeof this.config[this.current].customLabel === 'function' ) {
+				var customLabel = this.config[this.current].customLabel.call( this, labelEl, el );
 				if( customLabel !== undefined ) {
 					labelText = customLabel;
 				}
 			}
-
 			labelEl.text = labelText;
-
 			// add a placholder option to the select if it doesn't already exist
 			if( el.tagName === 'SELECT' ) {
 				if( el.firstElementChild.value !== '' ) {
@@ -124,7 +178,7 @@
 				}
 			}
 			// add a textarea/input placeholder attribute if it doesn't exist
-			else if( !placeholder || this.config.prioritize === 'label' ) {
+			else if( !placeholder || this.config[this.current].prioritize === 'label' ) {
 				el.setAttribute( 'placeholder', labelText );
 			}
 		},
@@ -134,112 +188,58 @@
 			var wrapper = this.createEl( 'div', {
 				class: this.prefixed( 'wrap' ) + ' ' + this.prefixed( 'wrap-' + el.tagName.toLowerCase() ),
 			});
-
 			if( el.value.length ) {
-				this.addClass( wrapper, this.prefixed( 'is-active' ));
+				wrapper.classList.add( this.prefixed( 'is-active' ));
 			}
-
-			if( el.getAttribute( 'required' ) !== null || this.hasClass( el, this.config.requiredClass )) {
-				this.addClass( wrapper, this.prefixed( 'is-required' ));
+			if( el.getAttribute( 'required' ) !== null || el.classList.contains( this.config[this.current].requiredClass )) {
+				wrapper.classList.add( this.prefixed( 'is-required' ));
 			}
-
 			el.parentNode.insertBefore( wrapper, el );
-
 			wrapper.appendChild( labelEl );
 			wrapper.appendChild( el );
 		},
 
-		runEvents: function( el )
+		addEvents: function( el )
 		{
-			// call the custom defined event
-			if( typeof this.config.customEvent === 'function' ) {
-				this.config.customEvent.call( this, el );
-			}
+			el.addEventListener( 'blur', this.events.blur );
+			el.addEventListener( 'input', this.events.input );
+			el.addEventListener( 'focus', this.events.focus );
+		},
 
-			// events
-			this.on( 'blur', el, this.onBlur.bind( this ));
-			this.on( 'input', el, this.onChange.bind( this ));
-			this.on( 'focus', el, this.onFocus.bind( this ));
+		removeEvents: function( el )
+		{
+			el.removeEventListener( 'blur', this.events.blur );
+			el.removeEventListener( 'input', this.events.input );
+			el.removeEventListener( 'focus', this.events.focus );
 		},
 
 		onBlur: function( ev )
 		{
-			this.removeClass( ev.target.parentNode, this.prefixed( 'has-focus' ));
+			ev.target.parentNode.classList.remove( this.prefixed( 'has-focus' ));
 		},
 
 		onChange: function( ev )
 		{
 			var event = ev.target.value.length ? 'add' : 'remove';
-			this[event + 'Class']( ev.target.parentNode, this.prefixed( 'is-active' ));
+			ev.target.parentNode.classList[event]( this.prefixed( 'is-active' ));
 		},
 
 		onFocus: function( ev )
 		{
-			this.addClass( ev.target.parentNode, this.prefixed( 'has-focus' ));
+			ev.target.parentNode.classList.add( this.prefixed( 'has-focus' ));
 		},
 
 		onReset: function( ev )
 		{
-			var _this = this;
-
-			this.config.transform.split(/[\s,]+/).forEach( function( tag ) {
-				[].forEach.call( ev.target.querySelectorAll( tag ), function( el ) {
-					_this.removeClass( el.parentNode, _this.prefixed( 'is-active' ));
-				});
-			});
-		},
-
-		addClass: function( el, className )
-		{
-			if( el.classList ) {
-				el.classList.add( className );
-			}
-			else if( !this.hasClass( el, className )) {
-				el.className += ' ' + className;
+			var fields = this.fields[this.current];
+			for( var i = 0; i < fields.length; ++i ) {
+				fields[i].parentNode.classList.remove( this.prefixed( 'is-active' ));
 			}
 		},
 
-		hasClass: function( el, className )
+		hasParent: function( el )
 		{
-			if( el.classList ) {
-				return el.classList.contains( className );
-			}
-
-			return new RegExp( '\\b' + className + '\\b' ).test( el.className );
-		},
-
-		removeClass: function( el, className )
-		{
-			if( el.classList ) {
-				el.classList.remove( className );
-			}
-			else {
-				el.className = el.className.replace( new RegExp( '\\b' + className + '\\b', 'g' ), '' );
-			}
-		},
-
-		event: function( action, event, el, handler )
-		{
-			event.split( ' ' ).forEach( function( event ) {
-				el[action + 'EventListener']( event, handler, false );
-			});
-		},
-
-		on: function( event, el, handler )
-		{
-			this.event( 'add', event, el, handler );
-		},
-
-		off: function( event, el, handler )
-		{
-			this.event( 'remove', event, el, handler );
-		},
-
-		trigger: function( event, el )
-		{
-			var ev = document.createEvent( 'HTMLEvents' );
-			ev.initEvent( event, false, true );
-			el.dispatchEvent( ev );
+			return el.parentNode.classList.contains( this.prefixed( 'wrap' ));
 		},
 
 		extend: function()
@@ -247,14 +247,12 @@
 			var args = [].slice.call( arguments );
 			var result = args[0];
 			var extenders = args.slice(1);
-
 			Object.keys( extenders ).forEach( function( i ) {
 				for( var key in extenders[ i ] ) {
 					if( !extenders[ i ].hasOwnProperty( key ))continue;
 					result[ key ] = extenders[ i ][ key ];
 				}
 			});
-
 			return result;
 		},
 
@@ -265,40 +263,28 @@
 		createEl: function( tag, attributes )
 		{
 			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
-
 			attributes = attributes || {};
-
 			for( var key in attributes ) {
 				if( !attributes.hasOwnProperty( key ))continue;
 				el.setAttribute( key, attributes[ key ] );
 			}
-
 			return el;
 		},
 
 		prefixed: function( value )
 		{
-			return this.prefix + value;
+			return this.config[this.current].prefix + value;
 		},
 
 		sprintf: function( format )
 		{
 			var args = [].slice.call( arguments, 1, arguments.length );
-
 			return format.replace( /\$(\d+)/g, function( match, number ) {
 				return args[ number ] !== undefined ? args[ number ] : match;
 			});
 		},
 	};
 
-	Plugin.defaults = Plugin.prototype.defaults;
-
 	window.FloatLabels = Plugin;
 
-	if( !$ )return;
-
-	$.fn.floatlabels = function( options ) {
-		if( $.data( this, "plugin_floatlabels" ))return;
-		$.data( this, "plugin_floatlabels", new Plugin( this, options ));
-	};
 })( window, document );
