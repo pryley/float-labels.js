@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * Version: 3.0.1
+ * Version: 3.0.2
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/float-labels.js
  * License: MIT
@@ -17,30 +17,23 @@
 	{
 		this.el = this.isString( el ) ? document.querySelectorAll( el ) : el;
 		if( !NodeList.prototype.isPrototypeOf( this.el ))return;
-		this.options = options;
 		this.config = [];
+		this.options = options;
 		this.selectors = [];
 		this.init();
-		this.rebuild = function() {
-			for( var i = 0; i < this.el.length; ++i ) {
-				var fields = this.el[i].querySelectorAll( this.selectors[i] );
-				this.current = i;
-				for( var x = 0; x < fields.length; ++x ) {
-					this.floatLabel( fields[x], true );
-				}
-			}
-		};
 		this.destroy = function() {
-			for( var i = 0; i < this.el.length; ++i ) {
-				var fields = this.el[i].querySelectorAll( this.selectors[i] );
-				this.current = i;
-				this.el[i].removeEventListener( 'reset', this.events.reset );
-				this.removeClasses( this.el[i] );
-				for( var x = 0; x < fields.length; ++x ) {
-					this.reset( fields[x] );
-				}
-			}
-		}
+			this.loop( function( el ) {
+				el.removeEventListener( 'reset', this.events.reset );
+				this.removeClasses( el );
+			}, function( field ) {
+				this.reset( field );
+			});
+		};
+		this.rebuild = function() {
+			this.loop( null, function( field ) {
+				this.floatLabel( field, true );
+			});
+		};
 	};
 
 	Plugin.prototype = {
@@ -57,32 +50,23 @@
 			transform    : 'input,select,textarea'
 		},
 
+		/** @return void */
 		init: function()
 		{
 			this.initEvents();
-			for( var i = 0; i < this.el.length; ++i ) {
-				var el = this.el[i];
-				var config = this.extend( {}, this.defaults, this.options, el.getAttribute( 'data-options' ));
-				var exclude = this.sprintf( ':not($0)', config.exclude.split( /[\s,]+/ ).join( '):not(' ));
-				var selectors = config.transform.replace( /,/g, exclude + ',' ) + exclude;
-				var fields = el.querySelectorAll( selectors );
-
+			this.loop( function( el, i ) {
+				var style = this.config[i].style;
 				el.addEventListener( 'reset', this.events.reset );
-
-				this.config[i] = config;
-				this.selectors[i] = selectors;
-				this.current = i;
-
 				el.classList.add( this.prefixed( 'form' ));
-				if( config.style ) {
-					el.classList.add( this.prefixed( 'style-' + config.style ));
+				if( style ) {
+					el.classList.add( this.prefixed( 'style-' + style ));
 				}
-				for( var i = 0; i < fields.length; ++i ) {
-					this.floatLabel( fields[i], el );
-				}
-			}
+			}, function( field ) {
+				this.floatLabel( field );
+			});
 		},
 
+		/** @return void */
 		initEvents: function()
 		{
 			this.events = {
@@ -93,6 +77,59 @@
 			};
 		},
 
+		/** @return void */
+		addEvents: function( el )
+		{
+			el.addEventListener( 'blur', this.events.blur );
+			el.addEventListener( 'input', this.events.input );
+			el.addEventListener( 'focus', this.events.focus );
+		},
+
+		/** @return null|void */
+		build: function( el )
+		{
+			var labelEl = this.getLabel( el );
+			if( !labelEl )return;
+			var labelText = this.getLabelText( labelEl, el );
+			el.classList.add( this.prefixed( el.tagName.toLowerCase() ));
+			labelEl.classList.add( this.prefixed( 'label' ));
+			labelEl.text = labelText;
+			this.setPlaceholder( labelText, el );
+			this.wrapLabel( labelEl, el );
+			this.addEvents( el );
+			if( typeof this.config[this.current].customEvent === 'function' ) {
+				this.config[this.current].customEvent.call( this, el );
+			}
+		},
+
+		/** @return Element */
+		createEl: function( tag, attributes )
+		{
+			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
+			attributes = attributes || {};
+			for( var key in attributes ) {
+				if( !attributes.hasOwnProperty( key ))continue;
+				el.setAttribute( key, attributes[key] );
+			}
+			return el;
+		},
+
+		/** @return object */
+		extend: function()
+		{
+			var args = [].slice.call( arguments );
+			var result = args[0];
+			var extenders = args.slice(1);
+			Object.keys( extenders ).forEach( function( i ) {
+				for( var key in extenders[i] ) {
+					if( !extenders[i].hasOwnProperty( key ))continue;
+					result[key] = extenders[i][key];
+				}
+			});
+			return result;
+		},
+
+		/** @return null|void */
 		floatLabel: function( el, rebuild )
 		{
 			if( !el.getAttribute( 'id' ) || (
@@ -105,42 +142,7 @@
 			this.build( el );
 		},
 
-		build: function( el )
-		{
-			var labelEl = this.getLabel( el );
-			if( !labelEl )return;
-			labelEl.classList.add( this.prefixed( 'label' ));
-			el.classList.add( this.prefixed( el.tagName.toLowerCase() ));
-			this.setLabel( labelEl, el );
-			this.wrapLabel( labelEl, el );
-			this.addEvents( el );
-			if( typeof this.config[this.current].customEvent === 'function' ) {
-				this.config[this.current].customEvent.call( this, el );
-			}
-		},
-
-		reset: function( el )
-		{
-			var parent = el.parentNode;
-			if( !this.hasParent( el ))return;
-			var fragment = document.createDocumentFragment();
-			while( parent.firstElementChild ) {
-				this.removeClasses( parent.firstElementChild );
-				fragment.appendChild( parent.firstElementChild );
-			}
-			parent.parentNode.replaceChild( fragment, parent );
-			this.removeEvents( el );
-		},
-
-		removeClasses: function( el )
-		{
-			var prefix = this.config[this.current].prefix;
-			var classes = el.className.split( ' ' ).filter( function( c ) {
-				return c.lastIndexOf( prefix, 0 ) !== 0;
-			});
-			el.className = classes.join( ' ' ).trim();
-		},
-
+		/** @return string|false */
 		getLabel: function( el )
 		{
 			var label = this.sprintf( 'label[for="$0"]', el.getAttribute( 'id' ));
@@ -155,13 +157,14 @@
 			return false;
 		},
 
-		setLabel: function( labelEl, el )
+		/** @return string */
+		getLabelText: function( labelEl, el )
 		{
 			var labelText = labelEl.textContent.replace( /[*:]/g, '' ).trim();
-			var placeholder = el.getAttribute( 'placeholder' );
+			var placeholderText = el.getAttribute( 'placeholder' );
 
-			if( !labelText || ( labelText && placeholder && this.config[this.current].prioritize === 'placeholder' )) {
-				labelText = placeholder;
+			if( !labelText || ( labelText && placeholderText && this.config[this.current].prioritize === 'placeholder' )) {
+				labelText = placeholderText;
 			}
 			// call the custom defined label event
 			if( typeof this.config[this.current].customLabel === 'function' ) {
@@ -170,7 +173,111 @@
 					labelText = customLabel;
 				}
 			}
-			labelEl.text = labelText;
+			return labelText;
+		},
+
+		/** @return bool */
+		hasParent: function( el )
+		{
+			return el.parentNode.classList.contains( this.prefixed( 'wrap' ));
+		},
+
+		/** @return bool */
+		isString: function( str ) {
+			return Object.prototype.toString.call( str ) === "[object String]";
+		},
+
+		/** @return void */
+		loop: function( callback1, callback2 ) {
+			for( var i = 0; i < this.el.length; ++i ) {
+				if( typeof this.selectors[i] === 'undefined' ) {
+					var config = this.extend( {}, this.defaults, this.options, this.el[i].getAttribute( 'data-options' ));
+					var exclude = this.sprintf( ':not($0)', config.exclude.split( /[\s,]+/ ).join( '):not(' ));
+					this.selectors[i] = config.transform.replace( /,/g, exclude + ',' ) + exclude;
+					this.config[i] = config;
+				}
+				var fields = this.el[i].querySelectorAll( this.selectors[i] );
+				this.current = i;
+				if( typeof callback1 === 'function' ) {
+					callback1.call( this, this.el[i], i );
+				}
+				for( var x = 0; x < fields.length; ++x ) {
+					if( typeof callback2 === 'function' ) {
+						callback2.call( this, fields[x], i );
+					}
+				}
+			}
+		},
+
+		/** @return void */
+		onBlur: function( ev )
+		{
+			ev.target.parentNode.classList.remove( this.prefixed( 'has-focus' ));
+		},
+
+		/** @return void */
+		onChange: function( ev )
+		{
+			var event = ev.target.value.length ? 'add' : 'remove';
+			ev.target.parentNode.classList[event]( this.prefixed( 'is-active' ));
+		},
+
+		/** @return void */
+		onFocus: function( ev )
+		{
+			ev.target.parentNode.classList.add( this.prefixed( 'has-focus' ));
+		},
+
+		/** @return void */
+		onReset: function( ev )
+		{
+			var fields = this.el[this.current].querySelectorAll( this.selectors[this.current] );
+			for( var i = 0; i < fields.length; ++i ) {
+				fields[i].parentNode.classList.remove( this.prefixed( 'is-active' ));
+			}
+		},
+
+		/** @return string */
+		prefixed: function( value )
+		{
+			return this.config[this.current].prefix + value;
+		},
+
+		/** @return void */
+		removeClasses: function( el )
+		{
+			var prefix = this.config[this.current].prefix;
+			var classes = el.className.split( ' ' ).filter( function( c ) {
+				return c.lastIndexOf( prefix, 0 ) !== 0;
+			});
+			el.className = classes.join( ' ' ).trim();
+		},
+
+		/** @return void */
+		removeEvents: function( el )
+		{
+			el.removeEventListener( 'blur', this.events.blur );
+			el.removeEventListener( 'input', this.events.input );
+			el.removeEventListener( 'focus', this.events.focus );
+		},
+
+		/** @return null|void */
+		reset: function( el )
+		{
+			var parent = el.parentNode;
+			if( !this.hasParent( el ))return;
+			var fragment = document.createDocumentFragment();
+			while( parent.firstElementChild ) {
+				this.removeClasses( parent.firstElementChild );
+				fragment.appendChild( parent.firstElementChild );
+			}
+			parent.parentNode.replaceChild( fragment, parent );
+			this.removeEvents( el );
+		},
+
+		/** @return void */
+		setPlaceholder: function( labelText, el )
+		{
 			// add a placholder option to the select if it doesn't already exist
 			if( el.tagName === 'SELECT' ) {
 				if( el.firstElementChild.value !== '' ) {
@@ -181,11 +288,21 @@
 				}
 			}
 			// add a textarea/input placeholder attribute if it doesn't exist
-			else if( !placeholder || this.config[this.current].prioritize === 'label' ) {
+			else if( !el.getAttribute( 'placeholder' ) || this.config[this.current].prioritize === 'label' ) {
 				el.setAttribute( 'placeholder', labelText );
 			}
 		},
 
+		/** @return string */
+		sprintf: function( format )
+		{
+			var args = [].slice.call( arguments, 1, arguments.length );
+			return format.replace( /\$(\d+)/g, function( match, number ) {
+				return args[number] !== undefined ? args[number] : match;
+			});
+		},
+
+		/** @return void */
 		wrapLabel: function( labelEl, el )
 		{
 			var wrapper = this.createEl( 'div', {
@@ -200,91 +317,6 @@
 			el.parentNode.insertBefore( wrapper, el );
 			wrapper.appendChild( labelEl );
 			wrapper.appendChild( el );
-		},
-
-		addEvents: function( el )
-		{
-			el.addEventListener( 'blur', this.events.blur );
-			el.addEventListener( 'input', this.events.input );
-			el.addEventListener( 'focus', this.events.focus );
-		},
-
-		removeEvents: function( el )
-		{
-			el.removeEventListener( 'blur', this.events.blur );
-			el.removeEventListener( 'input', this.events.input );
-			el.removeEventListener( 'focus', this.events.focus );
-		},
-
-		onBlur: function( ev )
-		{
-			ev.target.parentNode.classList.remove( this.prefixed( 'has-focus' ));
-		},
-
-		onChange: function( ev )
-		{
-			var event = ev.target.value.length ? 'add' : 'remove';
-			ev.target.parentNode.classList[event]( this.prefixed( 'is-active' ));
-		},
-
-		onFocus: function( ev )
-		{
-			ev.target.parentNode.classList.add( this.prefixed( 'has-focus' ));
-		},
-
-		onReset: function( ev )
-		{
-			var fields = this.el[this.current].querySelectorAll( this.selectors[this.current] );
-			for( var i = 0; i < fields.length; ++i ) {
-				fields[i].parentNode.classList.remove( this.prefixed( 'is-active' ));
-			}
-		},
-
-		hasParent: function( el )
-		{
-			return el.parentNode.classList.contains( this.prefixed( 'wrap' ));
-		},
-
-		extend: function()
-		{
-			var args = [].slice.call( arguments );
-			var result = args[0];
-			var extenders = args.slice(1);
-			Object.keys( extenders ).forEach( function( i ) {
-				for( var key in extenders[ i ] ) {
-					if( !extenders[ i ].hasOwnProperty( key ))continue;
-					result[ key ] = extenders[ i ][ key ];
-				}
-			});
-			return result;
-		},
-
-		isString: function( str ) {
-			return Object.prototype.toString.call( str ) === "[object String]";
-		},
-
-		createEl: function( tag, attributes )
-		{
-			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
-			attributes = attributes || {};
-			for( var key in attributes ) {
-				if( !attributes.hasOwnProperty( key ))continue;
-				el.setAttribute( key, attributes[ key ] );
-			}
-			return el;
-		},
-
-		prefixed: function( value )
-		{
-			return this.config[this.current].prefix + value;
-		},
-
-		sprintf: function( format )
-		{
-			var args = [].slice.call( arguments, 1, arguments.length );
-			return format.replace( /\$(\d+)/g, function( match, number ) {
-				return args[ number ] !== undefined ? args[ number ] : match;
-			});
 		},
 	};
 
