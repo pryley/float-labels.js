@@ -47,13 +47,13 @@
             <option value="3">Option 3</option>
           </select>
 
-          <input type="radio" name="style" id="style-0" value="fl-style-0"/>
+          <input type="radio" name="style" id="style-0" value="0"/>
           <label for="style-0">Default Style</label>
 
-          <input type="radio" name="style" id="style-1" value="fl-style-1" checked/>
+          <input type="radio" name="style" id="style-1" value="1" checked/>
           <label for="style-1">Style 1</label>
 
-          <input type="radio" name="style" id="style-2" value="fl-style-2"/>
+          <input type="radio" name="style" id="style-2" value="2"/>
           <label for="style-2">Style 2</label>
 
           <div class="button-group">
@@ -277,27 +277,41 @@ $ gulp</code></pre></div>
     <script src="src/float-labels.js"></script>
     <script>
 
-      var floatlabels = new FloatLabels( '.form-1', {
-        style: 1
-      });
+      var floatlabels;
+      var toggleBtn = document.querySelector( '.fl-toggle' );
+      var styles = document.getElementsByName( 'style' );
 
-      document.querySelector( '.fl-toggle' ).addEventListener( 'click', function( ev ) {
+      var getStyle = function() {
+        for( var i = 0; i < styles.length; ++i ) {
+          if( styles[i].checked ) {
+            return styles[i].value;
+          }
+        }
+      };
+
+      var changeStyle = function( form ) {
+          form.className = form.className.replace( /fl-style-\d/g, 'fl-style-' + getStyle() );
+      };
+
+      toggleBtn.addEventListener( 'click', function( ev ) {
         if( document.querySelector( '.fl-form' )) {
           floatlabels.destroy();
         }
         else {
           floatlabels = new FloatLabels( '.form-1', {
-            style: 1
+            style: getStyle(),
           });
         }
       });
 
-      [].forEach.call( document.querySelectorAll( 'input[name="style"]' ), function( el ) {
-        el.addEventListener( 'change', function( ev ) {
-          var form = ev.target.closest( 'form' );
-          form.className = form.className.replace( /\b fl-style-\d\b/g, '' ) + ' ' + ev.target.value;
-        }, false );
+      [].forEach.call( styles, function( style ) {
+        style.addEventListener( 'change', function( ev ) {
+          changeStyle( ev.target.closest( 'form' ));
+        });
       });
+
+      toggleBtn.click();
+
     </script>
 
   </body>
