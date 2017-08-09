@@ -91,6 +91,7 @@ gulp.task( 'bump', function() {
 	['patch', 'minor', 'major'].some( function( arg ) {
 		if( !args[arg] )return;
 		for( var key in paths.bump ) {
+			if( !paths.bump.hasOwnProperty( key ))continue;
 			gulp.src( paths.bump[key], { base: '.' })
 				.pipe( bump({ type: arg, key: key }))
 				.pipe( gulp.dest('.'));

@@ -7,7 +7,7 @@
  * License: MIT
  */
 
-/** global: Option */
+/** global: NodeList, Option */
 
 ;(function( window, document, undefined )
 {
@@ -229,7 +229,7 @@
 		},
 
 		/** @return void */
-		onReset: function( ev )
+		onReset: function()
 		{
 			var fields = this.el[this.current].querySelectorAll( this.selectors[this.current] );
 			for( var i = 0; i < fields.length; ++i ) {
