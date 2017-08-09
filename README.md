@@ -212,7 +212,7 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
-`v3.0.0 - [2017-08-08]`
+`v3.0.1 - [2017-08-08]`
 
 - Added "rebuild" and "destroy" public methods
 - Added ability to change the CSS class prefix
