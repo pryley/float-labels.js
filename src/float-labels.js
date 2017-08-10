@@ -137,7 +137,7 @@
 		/** @return string|false */
 		getLabel: function( el )
 		{
-			var label = this.sprintf( 'label[for="$0"]', el.getAttribute( 'id' ));
+			var label = 'label[for="' + el.getAttribute( 'id' ) + '"]';
 			var labelEl = this.el[this.current].querySelectorAll( label );
 			// check for multiple labels with identical 'for' attributes
 			if( labelEl.length > 1 ) {
@@ -193,7 +193,7 @@
 			for( var i = 0; i < this.el.length; ++i ) {
 				if( typeof this.selectors[i] === 'undefined' ) {
 					var config = this.extend( {}, this.defaults, this.options, this.el[i].getAttribute( 'data-options' ));
-					var exclude = this.sprintf( ':not($0)', config.exclude.split( /[\s,]+/ ).join( '):not(' ));
+					var exclude = ':not(' + config.exclude.split( /[\s,]+/ ).join( '):not(' ) + ')';
 					this.selectors[i] = config.transform.replace( /,/g, exclude + ',' ) + exclude;
 					this.config[i] = config;
 				}
@@ -284,15 +284,6 @@
 			else if( !el.getAttribute( 'placeholder' ) || this.config[this.current].prioritize === 'label' ) {
 				el.setAttribute( 'placeholder', labelText );
 			}
-		},
-
-		/** @return string */
-		sprintf: function( format )
-		{
-			var args = [].slice.call( arguments, 1, arguments.length );
-			return format.replace( /\$(\d+)/g, function( match, number ) {
-				return args[number] !== undefined ? args[number] : match;
-			});
 		},
 
 		/** @return void */
