@@ -1,17 +1,18 @@
-var browserSync    = require( 'browser-sync' ).create();
-var gulp           = require( 'gulp' );
+var args           = require( 'yargs' ).argv;
 var autoprefixer   = require( 'gulp-autoprefixer' );
+var browserSync    = require( 'browser-sync' ).create();
 var bump           = require( 'gulp-bump' );
 var cssnano        = require( 'gulp-cssnano' );
+var gulp           = require( 'gulp' );
 var gulpif         = require( 'gulp-if' );
 var jshint         = require( 'gulp-jshint' );
 var moduleImporter = require( 'sass-module-importer' );
 var notify         = require( 'gulp-notify' );
+var pump           = require( 'pump' );
 var rename         = require( 'gulp-rename' );
 var sass           = require( 'gulp-sass' );
 var uglify         = require( 'gulp-uglify' );
 var watch          = require( 'gulp-watch' );
-var args           = require( 'yargs' ).argv;
 
 var paths = {
 	dist: 'dist/',
@@ -34,55 +35,60 @@ var paths = {
  -------------------------------------------------- */
 gulp.task( 'css', function ()
 {
-	return gulp
-		.src( paths.scss, { base: '.' })
-		.pipe( sass({
+	pump([
+		gulp.src( paths.scss, { base: '.' }),
+		sass({
 			importer: moduleImporter(),
 			outputStyle: 'expanded'
-		}).on( 'error', sass.logError ))
-		.pipe( autoprefixer() )
-		.pipe( gulpif( args.production, cssnano() ))
-		.pipe( rename( function( path ) {
+		}).on( 'error', sass.logError ),
+		autoprefixer(),
+		gulpif( args.production, cssnano() ),
+		rename( function( path ) {
 			path.dirname = path.dirname.replace( 'src', 'dist' );
 			path.dirname = path.dirname.replace( 'scss', 'css' );
-		}))
-		.pipe( gulp.dest( '.' ))
-		.pipe( browserSync.stream() )
-		.pipe( notify({
+		}),
+		gulp.dest( '.' ),
+		browserSync.stream(),
+		notify({
 			message: 'CSS Task complete!',
 			onLast : true
-		}));
+		}),
+	]);
 });
 
 /* JSHint Task
  -------------------------------------------------- */
 gulp.task( 'jshint', function()
 {
-	return gulp
-		.src( paths.js )
-		.pipe( jshint() )
-		.pipe( jshint.reporter( 'jshint-stylish' ))
-		.pipe( jshint.reporter( 'fail' ).on( 'error', function() { this.emit( 'end' ); }))
-		.pipe( notify({
+	pump([
+		gulp.src( paths.js ).
+		jshint(),
+		jshint.reporter( 'jshint-stylish' ),
+		jshint.reporter( 'fail' ),
+		notify({
 			message: 'JSHint Task complete!',
 			onLast : true
-		}));
+		}),
+	]);
 });
 
 /* JS Task
  -------------------------------------------------- */
 gulp.task( 'js', function ()
 {
-	return gulp
-		.src( paths.js )
-		.pipe( gulpif( args.production, uglify({ preserveComments: 'license' })))
-		.pipe( rename({ suffix: '.min' }))
-		.pipe( gulp.dest( paths.dist ))
-		.pipe( browserSync.stream() )
-		.pipe( notify({
+	pump([
+		gulp.src( paths.js ),
+		gulpif( args.production, uglify({
+			output: { comments: 'some' },
+		})),
+		rename({ suffix: '.min' }),
+		gulp.dest( paths.dist ),
+		browserSync.stream(),
+		notify({
 			message: 'JS Task complete!',
 			onLast : true
-		}));
+		}),
+	]);
 });
 
 /* Version Task
@@ -105,11 +111,8 @@ gulp.task( 'bump', function() {
 gulp.task( 'watch', function ()
 {
 	browserSync.init({
-		server: {
-			baseDir: "."
-		}
+		server: { baseDir: '.' }
 	});
-
 	gulp.watch( paths.js, ['js'] );
 	gulp.watch( paths.scss, ['css'] );
 	gulp.watch( '*.html' ).on( 'change', browserSync.reload );

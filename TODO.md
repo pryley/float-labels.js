@@ -1,1 +1,0 @@
-- [ ] always restore original placeholder/label text
