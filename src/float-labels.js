@@ -77,14 +77,6 @@
 			};
 		},
 
-		/** @return void */
-		addEvents: function( el )
-		{
-			el.addEventListener( 'blur', this.events.blur );
-			el.addEventListener( 'input', this.events.input );
-			el.addEventListener( 'focus', this.events.focus );
-		},
-
 		/** @return null|void */
 		build: function( el )
 		{
@@ -96,7 +88,7 @@
 			labelEl.text = labelText;
 			this.setPlaceholder( labelText, el );
 			this.wrapLabel( labelEl, el );
-			this.addEvents( el );
+			this.handleEvents( el, 'add' );
 			if( typeof this.config[this.current].customEvent === 'function' ) {
 				this.config[this.current].customEvent.call( this, el );
 			}
@@ -176,6 +168,15 @@
 			return labelText;
 		},
 
+		/** @return void */
+		handleEvents: function( el, action )
+		{
+			var events = this.events;
+			['blur','input','focus'].forEach( function( event ) {
+				el[ action + 'EventListener']( event, events[event] );
+			});
+		},
+
 		/** @return bool */
 		hasParent: function( el )
 		{
@@ -253,14 +254,6 @@
 			el.className = classes.join( ' ' ).trim();
 		},
 
-		/** @return void */
-		removeEvents: function( el )
-		{
-			el.removeEventListener( 'blur', this.events.blur );
-			el.removeEventListener( 'input', this.events.input );
-			el.removeEventListener( 'focus', this.events.focus );
-		},
-
 		/** @return null|void */
 		reset: function( el )
 		{
@@ -272,7 +265,7 @@
 				fragment.appendChild( parent.firstElementChild );
 			}
 			parent.parentNode.replaceChild( fragment, parent );
-			this.removeEvents( el );
+			this.handleEvents( el, 'remove' );
 		},
 
 		/** @return void */
