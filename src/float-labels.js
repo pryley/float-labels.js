@@ -189,7 +189,7 @@
 		},
 
 		/** @return void */
-		loop: function( callback1, callback2 ) {
+		loop: function( elCallback, fieldCallback ) {
 			for( var i = 0; i < this.el.length; ++i ) {
 				if( typeof this.selectors[i] === 'undefined' ) {
 					var config = this.extend( {}, this.defaults, this.options, this.el[i].getAttribute( 'data-options' ));
@@ -199,12 +199,12 @@
 				}
 				var fields = this.el[i].querySelectorAll( this.selectors[i] );
 				this.current = i;
-				if( typeof callback1 === 'function' ) {
-					callback1.call( this, this.el[i], i );
+				if( typeof elCallback === 'function' ) {
+					elCallback.call( this, this.el[i], i );
 				}
 				for( var x = 0; x < fields.length; ++x ) {
-					if( typeof callback2 === 'function' ) {
-						callback2.call( this, fields[x], i );
+					if( typeof fieldCallback === 'function' ) {
+						fieldCallback.call( this, fields[x], i );
 					}
 				}
 			}
