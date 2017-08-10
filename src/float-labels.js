@@ -261,27 +261,45 @@
 			if( !this.hasParent( el ))return;
 			var fragment = document.createDocumentFragment();
 			while( parent.firstElementChild ) {
-				this.removeClasses( parent.firstElementChild );
-				fragment.appendChild( parent.firstElementChild );
+				var childEl = parent.firstElementChild;
+				this.removeClasses( childEl );
+				fragment.appendChild( childEl );
 			}
 			parent.parentNode.replaceChild( fragment, parent );
+			this.resetPlaceholder( el );
 			this.handleEvents( el, 'remove' );
+		},
+
+		/** @return void */
+		resetPlaceholder: function( el )
+		{
+			var dataPlaceholder = 'data-placeholder';
+			var originalPlaceholder = el.getAttribute( dataPlaceholder );
+			if( originalPlaceholder !== null ) {
+				el.removeAttribute( dataPlaceholder );
+				el.setAttribute( 'placeholder', originalPlaceholder );
+			}
 		},
 
 		/** @return void */
 		setPlaceholder: function( labelText, el )
 		{
+			var placeholderText = el.getAttribute( 'placeholder' );
 			// add a placholder option to the select if it doesn't already exist
 			if( el.tagName === 'SELECT' ) {
-				if( el.firstElementChild.value !== '' ) {
-					el.insertBefore( new Option( labelText, '', true, true ), el.firstElementChild );
+				var childEl = el.firstElementChild;
+				if( childEl.value ) {
+					el.insertBefore( new Option( labelText, '', true, true ), childEl );
 				}
-				else if( el.firstElementChild.value === '' && el.options[0].text === '' ) {
-					el.firstElementChild.text = labelText;
+				else if( childEl.text === '' ) {
+					childEl.text = labelText;
 				}
 			}
 			// add a textarea/input placeholder attribute if it doesn't exist
-			else if( !el.getAttribute( 'placeholder' ) || this.config[this.current].prioritize === 'label' ) {
+			else if( !placeholderText || this.config[this.current].prioritize === 'label' ) {
+				if( placeholderText ) {
+					el.setAttribute( 'data-placeholder', placeholderText );
+				}
 				el.setAttribute( 'placeholder', labelText );
 			}
 		},
