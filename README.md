@@ -20,6 +20,23 @@ Use one of the following methods to add Float Labels to your project:
 
 ## Usage
 
+Add a `label` element before your `input`, `textarea` or `select` elements, eg:
+
+```html
+<label for="input-1">Enter a title</label>
+<input type="text" id="input-1" placeholder="Input" value="" required/>
+
+<label for="textarea-1">Enter some content</label>
+<textarea id="textarea-1" placeholder="Textarea" rows="4" autocomplete="off" required></textarea>
+
+<label for="select-1">Select an option</label>
+<select id="select-1" class="required">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+</select>
+```
+
 Load the `dist/float-labels.css` and `dist/float-labels.min.js` files somewhere on your page and then trigger the plugin as follows:
 
 ```js
