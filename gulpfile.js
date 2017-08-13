@@ -61,7 +61,7 @@ gulp.task( 'css', function ()
 gulp.task( 'jshint', function()
 {
 	pump([
-		gulp.src( paths.js ).
+		gulp.src( paths.js ),
 		jshint(),
 		jshint.reporter( 'jshint-stylish' ),
 		jshint.reporter( 'fail' ),

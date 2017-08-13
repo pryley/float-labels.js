@@ -94,6 +94,23 @@
 
         <div class="highlight highlight-Javascript"><pre class="alt"><code>floatlabels.destroy();</code></pre></div>
 
+        <h3>HTML markup</h3>
+
+        <p>Make sure your HTML markup is valid. Your form fields must have labels, the labels must have the <code>for</code> attribute which should have the same value as the field <code>id</code> attribute. Also input fields must have a <code>type</code> attribute.</p>
+
+        <div class="highlight highlight-Html"><pre class="alt"><code>&lt;label for="input-1"&gt;Enter a title&lt;/label&gt;
+&lt;input type="text" id="input-1"/&gt;
+
+&lt;label for="textarea-1"&gt;Enter some content&lt;/label&gt;
+&lt;textarea id="textarea-1" placeholder="Placeholders are optional"&gt;&lt;/textarea&gt;
+
+&lt;label for="select-1"&gt;Select an option&lt;/label&gt;
+&lt;select id="select-1"&gt;
+    &lt;option value="1"&gt;Option 1&lt;/option&gt;
+    &lt;option value="2"&gt;Option 2&lt;/option&gt;
+    &lt;option value="3"&gt;Option 3&lt;/option&gt;
+&lt;/select&gt;</code></pre></div>
+
       </section>
 
       <section class="section">
@@ -112,6 +129,12 @@
     style        : 0,
     transform    : 'input, select, textarea',
 }</code></pre></div>
+
+        <ol>
+          <li>Float Labels first looks at the <code>transform</code> option to know which element tags to transform.</li>
+          <li>Next, it filters all INPUT elements by the type found by the <code>inputRegex</code> option.</li>
+          <li>Finally, any resulting elements found in the <code>exclude</code> option are discarded.</li>
+        </ol>
 
         <h4>customEvent</h4>
 

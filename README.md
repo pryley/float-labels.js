@@ -40,6 +40,25 @@ To fully remove Float Labels, including all attached Event Listeners:
 floatlabels.destroy();
 ```
 
+### HTML markup
+
+Make sure your HTML markup is valid. Your form fields must have labels, the labels must have the `for` attribute which should have the same value as the field `id` attribute. Also input fields must have a `type` attribute.
+
+```html
+<label for="input-1">Enter a title</label>
+<input type="text" id="input-1"/>
+
+<label for="textarea-1">Enter some content</label>
+<textarea id="textarea-1" placeholder="Placeholders are optional"></textarea>
+
+<label for="select-1">Select an option</label>
+<select id="select-1">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+</select>
+```
+
 ## Options
 
 Here are the default options
@@ -57,6 +76,10 @@ Here are the default options
     transform    : 'input, select, textarea',
 }
 ```
+
+1. Float Labels first looks at the `transform` option to know which element tags to transform.
+2. Next, it filters all INPUT elements by the type found by the `inputRegex` option.
+3. Finally, any resulting elements found in the `exclude` option are discarded.
 
 ### customEvent:
 
