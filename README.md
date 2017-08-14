@@ -238,6 +238,7 @@ All changes should be committed to the files in `src/`.
 `v3.1.0 - [2017-08-09]`
 
 - Added change event for <input type="file">
+- Removed "background-color" from .fl-style-2
 
 `v3.0.3 - [2017-08-09]`
 
