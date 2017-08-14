@@ -71,8 +71,9 @@
 		{
 			this.events = {
 				blur: this.onBlur.bind( this ),
+				change: this.onInput.bind( this ),
 				focus: this.onFocus.bind( this ),
-				input: this.onChange.bind( this ),
+				input: this.onInput.bind( this ),
 				reset: this.onReset.bind( this ),
 			};
 		},
@@ -173,6 +174,9 @@
 		{
 			var events = this.events;
 			['blur','input','focus'].forEach( function( event ) {
+				if( el.type === 'file' && event === 'input' ) {
+					event = 'change';
+				}
 				el[ action + 'EventListener']( event, events[event] );
 			});
 		},
@@ -217,7 +221,7 @@
 		},
 
 		/** @return void */
-		onChange: function( ev )
+		onInput: function( ev )
 		{
 			var event = ev.target.value.length ? 'add' : 'remove';
 			ev.target.parentNode.classList[event]( this.prefixed( 'is-active' ));

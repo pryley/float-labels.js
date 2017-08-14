@@ -235,6 +235,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.1.0 - [2017-08-09]`
+
+- Added change event for <input type="file">
+
 `v3.0.3 - [2017-08-09]`
 
 - Reset placeholder text on "destroy"
