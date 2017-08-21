@@ -119,15 +119,16 @@
         <h3>Default options</h3>
 
         <div class="highlight highlight-Javascript"><pre><code>{
-    customEvent  : null,
-    customLabel  : null,
-    exclude      : '.no-label',
-    inputRegex   : /email|number|password|search|tel|text|url/,
-    prefix       : 'fl-',
-    prioritize   : 'label',
-    requiredClass: 'required',
-    style        : 0,
-    transform    : 'input, select, textarea',
+    customEvent      : null,
+    customLabel      : null,
+    customPlaceholder: null,
+    exclude          : '.no-label',
+    inputRegex       : /email|number|password|search|tel|text|url/,
+    prefix           : 'fl-',
+    prioritize       : 'label',
+    requiredClass    : 'required',
+    style            : 0,
+    transform        : 'input, select, textarea',
 }</code></pre></div>
 
         <ol>
@@ -150,9 +151,19 @@
 
         <blockquote>
         <p>Type: <code>Function</code></p>
-        <p>This function lets you modify a label text; it must return a string.</p>
+        <p>This function lets you modify the generated label text; it must return a string value.</p>
         <div class="highlight highlight-Javascript"><pre><code>customLabel: function( labelEl, el ) {
-    return labelEl.text;
+    return labelEl.textContent;
+},</code></pre></div>
+        </blockquote>
+
+        <h4>customPlaceholder</h4>
+
+        <blockquote>
+        <p>Type: <code>Function</code></p>
+        <p>This function lets you modify the generated placeholder text; it must return a string value.</p>
+        <div class="highlight highlight-Javascript"><pre><code>customLabel: function( placeholderText, el, labelEl ) {
+    return placeholderText;
 },</code></pre></div>
         </blockquote>
 

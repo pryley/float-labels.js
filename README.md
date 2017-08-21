@@ -65,15 +65,16 @@ Here are the default options
 
 ```js
 {
-    customEvent  : null,
-    customLabel  : null,
-    exclude      : '.no-label',
-    inputRegex   : /email|number|password|search|tel|text|url/,
-    prefix       : 'fl-',
-    prioritize   : 'label',
-    requiredClass: 'required',
-    style        : 0,
-    transform    : 'input, select, textarea',
+    customEvent      : null,
+    customLabel      : null,
+    customPlaceholder: null,
+    exclude          : '.no-label',
+    inputRegex       : /email|number|password|search|tel|text|url/,
+    prefix           : 'fl-',
+    prioritize       : 'label',
+    requiredClass    : 'required',
+    style            : 0,
+    transform        : 'input, select, textarea',
 }
 ```
 
@@ -97,11 +98,23 @@ customEvent: function( el ) {
 
 Type: `Function`
 
-This function lets you modify a label text; it must return a string.
+This function lets you modify the generated label text; it must return a string value.
 
 ```js
 customLabel: function( labelEl, el ) {
-    return labelEl.text;
+    return labelEl.textContent;
+},
+```
+
+### customPlaceholder
+
+Type: `Function`
+
+This function lets you modify the generated placeholder text; it must return a string value.
+
+```js
+customLabel: function( placeholderText, el, labelEl ) {
+    return placeholderText;
 },
 ```
 
@@ -234,6 +247,11 @@ The CSS rule `.fl-form label.fl-label { ... }` now becomes `form#my-form.fl-form
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v3.2.0 - [2017-08-21]`
+
+- Added "customPlaceholder" callback option
+- Fix SELECT placeholder logic
 
 `v3.1.0 - [2017-08-09]`
 
