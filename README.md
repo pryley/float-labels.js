@@ -113,7 +113,7 @@ Type: `Function`
 This function lets you modify the generated placeholder text; it must return a string value.
 
 ```js
-customLabel: function( placeholderText, el, labelEl ) {
+customPlaceholder: function( placeholderText, el, labelEl ) {
     return placeholderText;
 },
 ```
