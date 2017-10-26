@@ -38,5 +38,5 @@
   "scripts": {
     "lint": "jshint src/float-labels.js"
   },
-  "main": "dist/float-labels.min.js",
+  "main": "dist/float-labels.min.js"
 }
