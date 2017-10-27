@@ -248,6 +248,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.2.1 - [2017-10-27]`
+
+- Added main property to package.json (@joppuyo)
+
 `v3.2.0 - [2017-08-21]`
 
 - Added "customPlaceholder" callback option
