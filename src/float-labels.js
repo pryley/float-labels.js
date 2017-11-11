@@ -324,7 +324,7 @@
 
 		/** @return void */
 		wrapLabel: function( labelEl, el )
-		{			
+		{
 			var wrapper = this.createEl( 'div', {
 				class: this.prefixed( 'wrap' ) + ' ' + this.prefixed( 'wrap-' + el.tagName.toLowerCase() ),
 			});
