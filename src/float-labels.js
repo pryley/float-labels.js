@@ -324,12 +324,11 @@
 
 		/** @return void */
 		wrapLabel: function( labelEl, el )
-		{
-			var hasValWithoutAttr = !el.hasAttribute( 'value' ) && el.value !== undefined && el.value.length;
+		{			
 			var wrapper = this.createEl( 'div', {
 				class: this.prefixed( 'wrap' ) + ' ' + this.prefixed( 'wrap-' + el.tagName.toLowerCase() ),
 			});
-			if( ( el.hasAttribute( 'value' ) && el.value.length ) || hasValWithoutAttr ) {
+			if( el.value !== undefined && el.value.length ) {
 				wrapper.classList.add( this.prefixed( 'is-active' ));
 			}
 			if( el.getAttribute( 'required' ) !== null || el.classList.contains( this.config[this.current].requiredClass )) {
