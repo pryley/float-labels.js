@@ -23,6 +23,7 @@ Use one of the following methods to add Float Labels to your project:
 Load the `dist/float-labels.css` and `dist/float-labels.min.js` files somewhere on your page and then trigger the plugin as follows:
 
 ```js
+// You may pass in a CSS selector, an HTMLElement or a DomList
 var floatlabels = new FloatLabels( 'form', {
     // options go here
 });
@@ -247,6 +248,11 @@ The CSS rule `.fl-form label.fl-label { ... }` now becomes `form#my-form.fl-form
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v3.3.0 - [2017-11-11]
+
+- Added ability to accept a single Element (@raysuelzer)
+- Handle inputs that have a value without the value attribute (@raysuelzer)
 
 `v3.2.1 - [2017-10-27]`
 

@@ -15,8 +15,7 @@
 
 	var Plugin = function( el, options )
 	{
-		this.el = this.isString( el ) ? document.querySelectorAll( el ) : el;
-		if( !NodeList.prototype.isPrototypeOf( this.el ))return;
+		this.el = this.isString( el ) ? document.querySelectorAll( el ) : [el];
 		this.config = [];
 		this.options = options;
 		this.selectors = [];
