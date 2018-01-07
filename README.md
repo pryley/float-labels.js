@@ -249,6 +249,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.3.2 - [2018-01-06]`
+
+- Fixed issue [#16](https://github.com/geminilabs/float-labels.js/issues/16)
+
 `v3.3.0 - [2017-11-11]`
 
 - Added ability to accept a single Element (@raysuelzer)

@@ -308,46 +308,8 @@ $ gulp</code></pre></div>
       <p>This project is maintained by <a href="https://github.com/geminilabs">Gemini Labs</a></p>
     </footer>
 
-    <!-- <script src="demo/js/jquery-3.1.1.slim.min.js"></script> -->
     <script src="src/float-labels.js"></script>
-    <script>
-
-      var floatlabels;
-      var toggleBtn = document.querySelector( '.fl-toggle' );
-      var styles = document.getElementsByName( 'style' );
-
-      var getStyle = function() {
-        for( var i = 0; i < styles.length; ++i ) {
-          if( styles[i].checked ) {
-            return styles[i].value;
-          }
-        }
-      };
-
-      var changeStyle = function( form ) {
-        form.className = form.className.replace( /fl-style-\d/g, 'fl-style-' + getStyle() );
-      };
-
-      toggleBtn.addEventListener( 'click', function( ev ) {
-        if( document.querySelector( '.fl-form' )) {
-          floatlabels.destroy();
-        }
-        else {
-          floatlabels = new FloatLabels( '.form-1', {
-            style: getStyle(),
-          });
-        }
-      });
-
-      [].forEach.call( styles, function( style ) {
-        style.addEventListener( 'change', function( ev ) {
-          changeStyle( ev.target.closest( 'form' ));
-        });
-      });
-
-      toggleBtn.click();
-
-    </script>
+    <script src="demo/js/script.js"></script>
 
   </body>
 </html>

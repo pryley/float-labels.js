@@ -1,7 +1,7 @@
 /*!
  * Float Labels
  *
- * @version: 3.3.0
+ * @version: 3.3.2
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://geminilabs.github.io/float-labels.js
  * @license: MIT
@@ -76,6 +76,12 @@
 				input: this.onInput.bind( this ),
 				reset: this.onReset.bind( this ),
 			};
+		},
+
+		/** @return string */
+		addRemove: function( bool )
+		{
+			return bool ? 'add' : 'remove';
 		},
 
 		/** @return null|void */
@@ -213,8 +219,9 @@
 		/** @return void */
 		onInput: function( ev )
 		{
-			var event = ev.target.value.length ? 'add' : 'remove';
-			ev.target.parentNode.classList[event]( this.prefixed( 'is-active' ));
+			ev.target.parentNode.classList[
+				this.addRemove( ev.target.value.length )
+			]( this.prefixed( 'is-active' ));
 		},
 
 		/** @return void */
@@ -226,10 +233,7 @@
 		/** @return void */
 		onReset: function()
 		{
-			var fields = this.el[this.current].querySelectorAll( this.selectors[this.current] );
-			for( var i = 0; i < fields.length; ++i ) {
-				fields[i].parentNode.classList.remove( this.prefixed( 'is-active' ));
-			}
+			setTimeout( this.resetFields.bind( this ));
 		},
 
 		/** @return string */
@@ -262,6 +266,17 @@
 			parent.parentNode.replaceChild( fragment, parent );
 			this.resetPlaceholder( el );
 			this.handleEvents( el, 'remove' );
+		},
+
+		/** @return void */
+		resetFields: function()
+		{
+			var fields = this.el[this.current].querySelectorAll( this.selectors[this.current] );
+			for( var i = 0; i < fields.length; ++i ) {
+				fields[i].parentNode.classList[
+					this.addRemove( fields[i].tagName === 'SELECT' && fields[i].value !== '' )
+				]( this.prefixed( 'is-active' ));
+			}
 		},
 
 		/** @return void */
@@ -311,7 +326,8 @@
 		{
 			var childEl = el.firstElementChild;
 			if( childEl.hasAttribute( 'value' ) && childEl.value ) {
-				el.insertBefore( new Option( placeholderText, '', true, true ), childEl );
+				var selected = el.options[el.selectedIndex].defaultSelected !== true ? true : false;
+				el.insertBefore( new Option( placeholderText, '', selected, selected ), childEl );
 			}
 			else {
 				childEl.setAttribute( 'value', '' );
