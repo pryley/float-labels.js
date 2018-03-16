@@ -346,7 +346,7 @@
 			if( el.value !== undefined && el.value.length ) {
 				wrapper.classList.add( this.prefixed( 'is-active' ));
 			}
-			if( el.getAttribute( 'required' ) !== null || el.classList.contains( this.config[this.current].requiredClass )) {
+			if( (el.getAttribute( 'required' ) !== null && el.getAttribute( 'required' ) !== 'false') || el.classList.contains( this.config[this.current].requiredClass )) {
 				wrapper.classList.add( this.prefixed( 'is-required' ));
 			}
 			el.parentNode.insertBefore( wrapper, el );
