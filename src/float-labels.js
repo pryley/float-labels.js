@@ -169,8 +169,9 @@
 		handleEvents: function( el, action )
 		{
 			var events = this.events;
+			var isIE = this.isIe();
 			['blur','input','focus'].forEach( function( event ) {
-				if( el.type === 'file' && event === 'input' ) {
+				if( el.type === 'file' && event === 'input' || el.nodeName === 'SELECT' && isIE ) {
 					event = 'change';
 				}
 				el[ action + 'EventListener']( event, events[event] );
@@ -181,6 +182,11 @@
 		hasParent: function( el )
 		{
 			return el.parentNode.classList.contains( this.prefixed( 'wrap' ));
+		},
+
+		/** @return bool */
+		isIe: function() {
+			return !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
 		},
 
 		/** @return bool */
