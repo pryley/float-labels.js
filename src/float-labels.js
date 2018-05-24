@@ -169,9 +169,9 @@
 		handleEvents: function( el, action )
 		{
 			var events = this.events;
-			var isIE = this.isIe();
+			var isMS = this.isMSBrowser();
 			['blur','input','focus'].forEach( function( event ) {
-				if( el.type === 'file' && event === 'input' || el.nodeName === 'SELECT' && isIE ) {
+				if( el.type === 'file' && event === 'input' || el.nodeName === 'SELECT' && isMS ) {
 					event = 'change';
 				}
 				el[ action + 'EventListener']( event, events[event] );
@@ -185,8 +185,8 @@
 		},
 
 		/** @return bool */
-		isIe: function() {
-			return !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
+		isMSBrowser: function() {
+			return !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g) || !!navigator.userAgent.match(/Edge/g);
 		},
 
 		/** @return bool */
