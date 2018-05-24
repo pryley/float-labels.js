@@ -21,8 +21,8 @@ $features: (
 	styled: false,
 );
 
-@import "../../node_modules/nolie.css/src/1-functions/all";
-@import "../../node_modules/nolie.css/src/2-config/all";
+@import "../../node_modules/nolie/src/1-functions/all";
+@import "../../node_modules/nolie/src/2-config/all";
 
 $float-labels: (
 	margin-bottom: spacing($base-line-height - 1),
@@ -44,8 +44,8 @@ $typestyles: extend($typestyles, (
 	heading-4: m 1 bold,
 ));
 
-@import "../../node_modules/nolie.css/src/3-mixins/all";
-@import "../../node_modules/nolie.css/src/4-components/all";
+@import "../../node_modules/nolie/src/3-mixins/all";
+@import "../../node_modules/nolie/src/4-components/all";
 @import "../../src/float-labels";
 
 $transition-duration: 0.2s;
