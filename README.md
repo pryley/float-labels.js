@@ -251,6 +251,7 @@ All changes should be committed to the files in `src/`.
 
 `v3.3.4 - [2018-05-25]`
 
+- Fixed compatibility with IE10/Edge @bishsbytes
 `v3.3.3 - [2018-01-30]`
 
 - Expose FloatLabels as a module
@@ -271,7 +272,7 @@ All changes should be committed to the files in `src/`.
 `v3.2.0 - [2017-08-21]`
 
 - Added "customPlaceholder" callback option
-- Fix SELECT placeholder logic
+- Fixed SELECT placeholder logic
 
 `v3.1.0 - [2017-08-09]`
 
@@ -295,11 +296,11 @@ All changes should be committed to the files in `src/`.
 
 `v2.0.2 - [2017-07-14]`
 
-- Fix usage of forEach method on a NodeList
+- Fixed usage of forEach method on a NodeList
 
 `v2.0.1 - [2017-01-23]`
 
-- Fix jQuery plugin
+- Fixed jQuery plugin
 
 `v2.0.0 - [2017-01-11]`
 
