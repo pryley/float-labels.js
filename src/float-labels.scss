@@ -155,6 +155,9 @@ $float-labels-defaults: (
 	cursor: pointer;
 	-webkit-appearance: none;
 	-moz-appearance: none;
+	&::-ms-expand {
+		display: none;
+	}
 }
 
 #{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-active input.#{fl(prefix)}input,
