@@ -252,6 +252,8 @@ All changes should be committed to the files in `src/`.
 `v3.3.4 - [2018-05-25]`
 
 - Fixed compatibility with IE10/Edge @bishsbytes
+- Prevented SELECT elements with the "multiple" attribute from transforming
+
 `v3.3.3 - [2018-01-30]`
 
 - Expose FloatLabels as a module

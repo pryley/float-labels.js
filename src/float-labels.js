@@ -126,11 +126,8 @@
 		},
 
 		/** @return null|void */
-		floatLabel: function( el, rebuild )
-		{
-			if( !el.getAttribute( 'id' ) || (
-				el.tagName === 'INPUT' && !this.config[this.current].inputRegex.test( el.getAttribute( 'type' ))
-			))return;
+		floatLabel: function( el, rebuild ) {
+			if( !this.isValidField( el ))return;
 			if( this.hasParent( el )) {
 				if( rebuild !== true )return;
 				this.reset( el );
@@ -191,6 +188,13 @@
 		/** @return bool */
 		isString: function( str ) {
 			return Object.prototype.toString.call( str ) === "[object String]";
+		},
+
+		/** @return bool */
+		isValidField: function( el ) {
+			var isInvalidInput = el.tagName === 'INPUT' && !this.config[this.current].inputRegex.test( el.getAttribute( 'type' ));
+			var isInvalidSelect = el.tagName === 'SELECT' && el.getAttribute( 'multiple' ) !== null;
+			return el.getAttribute( 'id' ) && !isInvalidInput && !isInvalidSelect;
 		},
 
 		/** @return void */
