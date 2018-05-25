@@ -169,9 +169,9 @@
 		handleEvents: function( el, action )
 		{
 			var events = this.events;
-			var isMS = this.isMSBrowser();
+			var isMicrosoftSelectEl = el.nodeName === 'SELECT' && this.isMSBrowser();
 			['blur','input','focus'].forEach( function( event ) {
-				if( el.type === 'file' && event === 'input' || el.nodeName === 'SELECT' && isMS ) {
+				if( event === 'input' && ( el.type === 'file' || isMicrosoftSelectEl )) {
 					event = 'change';
 				}
 				el[ action + 'EventListener']( event, events[event] );
