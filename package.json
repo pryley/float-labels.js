@@ -31,8 +31,9 @@
     "gulp-watch": "^4.3.11",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
-    "nolie.css": "geminilabs/nolie.css#develop",
+    "nolie": "github:geminilabs/nolie.css#develop",
     "pump": "^1.0.2",
+    "sass-module-importer": "^1.4.0",
     "yargs": "^8.0.2"
   },
   "scripts": {
