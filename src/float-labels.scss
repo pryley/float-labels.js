@@ -1,7 +1,6 @@
 /*!
  * Float Labels
- *
- * @version: 3.3.3
+ * @version: 3.3.4
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://geminilabs.github.io/float-labels.js
  * @license: MIT

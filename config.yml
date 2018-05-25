@@ -1,0 +1,12 @@
+bump:
+  - bower.json
+  - package.json
+  - src/float-labels.js
+  - src/float-labels.scss
+dest: dist/
+watch:
+  html: index.html
+  js: src/float-labels.js
+  scss:
+    - demo/styles.scss
+    - src/float-labels.scss
