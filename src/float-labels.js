@@ -172,7 +172,7 @@
 
 		/** @return bool */
 		isMSBrowser: function() {
-			return !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g) || !!navigator.userAgent.match(/Edge/g);
+			return !!navigator.userAgent.match(/Edge|MSIE|Trident/g);
 		},
 
 		/** @return bool */
