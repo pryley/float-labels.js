@@ -6,7 +6,7 @@
  * @license: MIT
  */
 
-/** global: NodeList, Option */
+/** global: define, navigator, NodeList, Option */
 
 ;(function( window, document, undefined )
 {
@@ -50,8 +50,7 @@
 		},
 
 		/** @return void */
-		init: function()
-		{
+		init: function() {
 			this.initEvents();
 			this.loop( function( el, i ) {
 				var style = this.config[i].style;
@@ -66,8 +65,7 @@
 		},
 
 		/** @return void */
-		initEvents: function()
-		{
+		initEvents: function() {
 			this.events = {
 				blur: this.onBlur.bind( this ),
 				change: this.onInput.bind( this ),
@@ -78,14 +76,12 @@
 		},
 
 		/** @return string */
-		addRemove: function( bool )
-		{
+		addRemove: function( bool ) {
 			return bool ? 'add' : 'remove';
 		},
 
 		/** @return null|void */
-		build: function( el )
-		{
+		build: function( el ) {
 			var labelEl = this.getLabel( el );
 			if( !labelEl )return;
 			el.classList.add( this.prefixed( el.tagName.toLowerCase() ));
@@ -99,8 +95,7 @@
 		},
 
 		/** @return Element */
-		createEl: function( tag, attributes )
-		{
+		createEl: function( tag, attributes ) {
 			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
 			attributes = attributes || {};
 			for( var key in attributes ) {
@@ -111,8 +106,7 @@
 		},
 
 		/** @return object */
-		extend: function()
-		{
+		extend: function() {
 			var args = [].slice.call( arguments );
 			var result = args[0];
 			var extenders = args.slice(1);
@@ -136,8 +130,7 @@
 		},
 
 		/** @return string|false */
-		getLabel: function( el )
-		{
+		getLabel: function( el ) {
 			var label = 'label[for="' + el.getAttribute( 'id' ) + '"]';
 			var labelEl = this.el[this.current].querySelectorAll( label );
 			// check for multiple labels with identical 'for' attributes
@@ -151,8 +144,7 @@
 		},
 
 		/** @return string */
-		getLabelText: function( labelEl, el )
-		{
+		getLabelText: function( labelEl, el ) {
 			var labelText = labelEl.textContent.replace( /[*:]/g, '' ).trim();
 			var placeholderText = el.getAttribute( 'placeholder' );
 			if( !labelText || ( labelText && placeholderText && this.config[this.current].prioritize === 'placeholder' )) {
@@ -162,8 +154,7 @@
 		},
 
 		/** @return void */
-		handleEvents: function( el, action )
-		{
+		handleEvents: function( el, action ) {
 			var events = this.events;
 			var isMicrosoftSelectEl = el.nodeName === 'SELECT' && this.isMSBrowser();
 			['blur','input','focus'].forEach( function( event ) {
@@ -175,8 +166,7 @@
 		},
 
 		/** @return bool */
-		hasParent: function( el )
-		{
+		hasParent: function( el ) {
 			return el.parentNode.classList.contains( this.prefixed( 'wrap' ));
 		},
 
@@ -220,40 +210,34 @@
 		},
 
 		/** @return void */
-		onBlur: function( ev )
-		{
+		onBlur: function( ev ) {
 			ev.target.parentNode.classList.remove( this.prefixed( 'has-focus' ));
 		},
 
 		/** @return void */
-		onInput: function( ev )
-		{
+		onInput: function( ev ) {
 			ev.target.parentNode.classList[
 				this.addRemove( ev.target.value.length )
 			]( this.prefixed( 'is-active' ));
 		},
 
 		/** @return void */
-		onFocus: function( ev )
-		{
+		onFocus: function( ev ) {
 			ev.target.parentNode.classList.add( this.prefixed( 'has-focus' ));
 		},
 
 		/** @return void */
-		onReset: function()
-		{
+		onReset: function() {
 			setTimeout( this.resetFields.bind( this ));
 		},
 
 		/** @return string */
-		prefixed: function( value )
-		{
+		prefixed: function( value ) {
 			return this.config[this.current].prefix + value;
 		},
 
 		/** @return void */
-		removeClasses: function( el )
-		{
+		removeClasses: function( el ) {
 			var prefix = this.config[this.current].prefix;
 			var classes = el.className.split( ' ' ).filter( function( c ) {
 				return c.lastIndexOf( prefix, 0 ) !== 0;
@@ -262,8 +246,7 @@
 		},
 
 		/** @return null|void */
-		reset: function( el )
-		{
+		reset: function( el ) {
 			var parent = el.parentNode;
 			if( !this.hasParent( el ))return;
 			var fragment = document.createDocumentFragment();
@@ -278,8 +261,7 @@
 		},
 
 		/** @return void */
-		resetFields: function()
-		{
+		resetFields: function() {
 			var fields = this.el[this.current].querySelectorAll( this.selectors[this.current] );
 			for( var i = 0; i < fields.length; ++i ) {
 				fields[i].parentNode.classList[
@@ -289,8 +271,7 @@
 		},
 
 		/** @return void */
-		resetPlaceholder: function( el )
-		{
+		resetPlaceholder: function( el ) {
 			var dataPlaceholder = 'data-placeholder';
 			var originalPlaceholder = el.getAttribute( dataPlaceholder );
 			if( originalPlaceholder !== null ) {
@@ -300,8 +281,7 @@
 		},
 
 		/** @return void */
-		setLabel: function( labelEl, el )
-		{
+		setLabel: function( labelEl, el ) {
 			labelEl.classList.add( this.prefixed( 'label' ));
 			labelEl.textContent = this.getLabelText( labelEl, el );
 			if( typeof this.config[this.current].customLabel === 'function' ) {
@@ -310,8 +290,7 @@
 		},
 
 		/** @return void */
-		setPlaceholder: function( labelEl, el )
-		{
+		setPlaceholder: function( labelEl, el ) {
 			var placeholderText = el.getAttribute( 'placeholder' );
 			if( this.config[this.current].prioritize === 'label' || !placeholderText ) {
 				if( placeholderText ) {
@@ -331,8 +310,7 @@
 		},
 
 		/** @return void */
-		setSelectPlaceholder: function( el, placeholderText )
-		{
+		setSelectPlaceholder: function( el, placeholderText ) {
 			var childEl = el.firstElementChild;
 			if( childEl.hasAttribute( 'value' ) && childEl.value ) {
 				var selected = el.options[el.selectedIndex].defaultSelected !== true ? true : false;
@@ -347,8 +325,7 @@
 		},
 
 		/** @return void */
-		wrapLabel: function( labelEl, el )
-		{
+		wrapLabel: function( labelEl, el ) {
 			var wrapper = this.createEl( 'div', {
 				class: this.prefixed( 'wrap' ) + ' ' + this.prefixed( 'wrap-' + el.tagName.toLowerCase() ),
 			});
