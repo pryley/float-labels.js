@@ -14,29 +14,29 @@
 
 	var Plugin = function( el, options )
 	{
-		this.el = this.isString( el ) ? document.querySelectorAll( el ) : [el];
-		this.config = [];
-		this.options = options;
-		this.selectors = [];
-		this.init();
+		this.el_ = this.isString_( el ) ? document.querySelectorAll( el ) : [el];
+		this.config_ = [];
+		this.options_ = options;
+		this.selectors_ = [];
+		this.init_();
 		this.destroy = function() {
-			this.loop( function( el ) {
+			this.loop_( function( el ) {
 				el.removeEventListener( 'reset', this.events.reset );
-				this.removeClasses( el );
+				this.removeClasses_( el );
 			}, function( field ) {
-				this.reset( field );
+				this.reset_( field );
 			});
 		};
 		this.rebuild = function() {
-			this.loop( null, function( field ) {
-				this.floatLabel( field, true );
+			this.loop_( null, function( field ) {
+				this.floatLabel_( field, true );
 			});
 		};
 	};
 
 	Plugin.prototype = {
 
-		defaults: {
+		defaults_: {
 			customEvent: null,
 			customLabel: null,
 			customPlaceholder: null,
@@ -50,52 +50,55 @@
 		},
 
 		/** @return void */
-		init: function() {
-			this.initEvents();
-			this.loop( function( el, i ) {
-				var style = this.config[i].style;
-				el.addEventListener( 'reset', this.events.reset );
-				el.classList.add( this.prefixed( 'form' ));
+		init_: function() {
+			var self = this;
+			self.initEvents_();
+			self.loop_( function( el, i ) {
+				var style = self.config_[i].style;
+				el.addEventListener( 'reset', self.events.reset );
+				el.classList.add( self.prefixed_( 'form' ));
 				if( style ) {
-					el.classList.add( this.prefixed( 'style-' + style ));
+					el.classList.add( self.prefixed_( 'style-' + style ));
 				}
 			}, function( field ) {
-				this.floatLabel( field );
+				self.floatLabel_( field );
 			});
 		},
 
 		/** @return void */
-		initEvents: function() {
-			this.events = {
-				blur: this.onBlur.bind( this ),
-				change: this.onInput.bind( this ),
-				focus: this.onFocus.bind( this ),
-				input: this.onInput.bind( this ),
-				reset: this.onReset.bind( this ),
+		initEvents_: function() {
+			var self = this;
+			self.events = {
+				blur: self.onBlur_.bind( self ),
+				change: self.onInput_.bind( self ),
+				focus: self.onFocus_.bind( self ),
+				input: self.onInput_.bind( self ),
+				reset: self.onReset_.bind( self ),
 			};
 		},
 
 		/** @return string */
-		addRemove: function( bool ) {
+		addRemove_: function( bool ) {
 			return bool ? 'add' : 'remove';
 		},
 
 		/** @return null|void */
-		build: function( el ) {
-			var labelEl = this.getLabel( el );
+		build_: function( el ) {
+			var self = this;
+			var labelEl = self.getLabel_( el );
 			if( !labelEl )return;
-			el.classList.add( this.prefixed( el.tagName.toLowerCase() ));
-			this.setLabel( labelEl, el );
-			this.setPlaceholder( labelEl, el );
-			this.wrapLabel( labelEl, el );
-			this.handleEvents( el, 'add' );
-			if( typeof this.config[this.current].customEvent === 'function' ) {
-				this.config[this.current].customEvent.call( this, el );
+			el.classList.add( self.prefixed_( el.tagName.toLowerCase() ));
+			self.setLabel_( labelEl, el );
+			self.setPlaceholder_( labelEl, el );
+			self.wrapLabel_( labelEl, el );
+			self.handleEvents_( el, 'add' );
+			if( typeof self.config_[self.current_].customEvent === 'function' ) {
+				self.config_[self.current_].customEvent.call( self, el );
 			}
 		},
 
 		/** @return Element */
-		createEl: function( tag, attributes ) {
+		createEl_: function( tag, attributes ) {
 			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
 			attributes = attributes || {};
 			for( var key in attributes ) {
@@ -106,7 +109,7 @@
 		},
 
 		/** @return object */
-		extend: function() {
+		extend_: function() {
 			var args = [].slice.call( arguments );
 			var result = args[0];
 			var extenders = args.slice(1);
@@ -120,19 +123,20 @@
 		},
 
 		/** @return null|void */
-		floatLabel: function( el, rebuild ) {
-			if( !this.isValidField( el ))return;
-			if( this.hasParent( el )) {
+		floatLabel_: function( el, rebuild ) {
+			var self = this;
+			if( !self.isValidField_( el ))return;
+			if( self.hasParent_( el )) {
 				if( rebuild !== true )return;
-				this.reset( el );
+				self.reset_( el );
 			}
-			this.build( el );
+			self.build_( el );
 		},
 
 		/** @return string|false */
-		getLabel: function( el ) {
+		getLabel_: function( el ) {
 			var label = 'label[for="' + el.getAttribute( 'id' ) + '"]';
-			var labelEl = this.el[this.current].querySelectorAll( label );
+			var labelEl = this.el_[this.current_].querySelectorAll( label );
 			// check for multiple labels with identical 'for' attributes
 			if( labelEl.length > 1 ) {
 				labelEl = el.parentNode.querySelectorAll( label );
@@ -144,17 +148,17 @@
 		},
 
 		/** @return string */
-		getLabelText: function( labelEl, el ) {
+		getLabelText_: function( labelEl, el ) {
 			var labelText = labelEl.textContent.replace( /[*:]/g, '' ).trim();
 			var placeholderText = el.getAttribute( 'placeholder' );
-			if( !labelText || ( labelText && placeholderText && this.config[this.current].prioritize === 'placeholder' )) {
+			if( !labelText || ( labelText && placeholderText && this.config_[this.current_].prioritize === 'placeholder' )) {
 				labelText = placeholderText;
 			}
 			return labelText;
 		},
 
 		/** @return void */
-		handleEvents: function( el, action ) {
+		handleEvents_: function( el, action ) {
 			var events = this.events;
 			['blur','input','focus'].forEach( function( event ) {
 				if( event === 'input' && ( el.type === 'file' || el.nodeName === 'SELECT' )) {
@@ -165,74 +169,75 @@
 		},
 
 		/** @return bool */
-		hasParent: function( el ) {
-			return el.parentNode.classList.contains( this.prefixed( 'wrap' ));
+		hasParent_: function( el ) {
+			return el.parentNode.classList.contains( this.prefixed_( 'wrap' ));
 		},
 
 		/** @return bool */
-		isString: function( str ) {
+		isString_: function( str ) {
 			return Object.prototype.toString.call( str ) === "[object String]";
 		},
 
 		/** @return bool */
-		isValidField: function( el ) {
-			var isInvalidInput = el.tagName === 'INPUT' && !this.config[this.current].inputRegex.test( el.getAttribute( 'type' ));
+		isValidField_: function( el ) {
+			var isInvalidInput = el.tagName === 'INPUT' && !this.config_[this.current_].inputRegex.test( el.getAttribute( 'type' ));
 			var isInvalidSelect = el.tagName === 'SELECT' && el.getAttribute( 'multiple' ) !== null;
 			return el.getAttribute( 'id' ) && !isInvalidInput && !isInvalidSelect;
 		},
 
 		/** @return void */
-		loop: function( elCallback, fieldCallback ) {
-			for( var i = 0; i < this.el.length; ++i ) {
-				if( typeof this.selectors[i] === 'undefined' ) {
-					var config = this.extend( {}, this.defaults, this.options, this.el[i].getAttribute( 'data-options' ));
+		loop_: function( elCallback, fieldCallback ) {
+			var self = this;
+			for( var i = 0; i < self.el_.length; ++i ) {
+				if( typeof self.selectors_[i] === 'undefined' ) {
+					var config = self.extend_( {}, self.defaults_, self.options_, self.el_[i].getAttribute( 'data-options' ));
 					var exclude = ':not(' + config.exclude.split( /[\s,]+/ ).join( '):not(' ) + ')';
-					this.selectors[i] = config.transform.replace( /,/g, exclude + ',' ) + exclude;
-					this.config[i] = config;
+					self.selectors_[i] = config.transform.replace( /,/g, exclude + ',' ) + exclude;
+					self.config_[i] = config;
 				}
-				var fields = this.el[i].querySelectorAll( this.selectors[i] );
-				this.current = i;
+				var fields = self.el_[i].querySelectorAll( self.selectors_[i] );
+				self.current_ = i;
 				if( typeof elCallback === 'function' ) {
-					elCallback.call( this, this.el[i], i );
+					elCallback.call( self, self.el_[i], i );
 				}
 				for( var x = 0; x < fields.length; ++x ) {
 					if( typeof fieldCallback === 'function' ) {
-						fieldCallback.call( this, fields[x], i );
+						fieldCallback.call( self, fields[x], i );
 					}
 				}
 			}
 		},
 
 		/** @return void */
-		onBlur: function( ev ) {
-			ev.target.parentNode.classList.remove( this.prefixed( 'has-focus' ));
+		onBlur_: function( ev ) {
+			ev.target.parentNode.classList.remove( this.prefixed_( 'has-focus' ));
 		},
 
 		/** @return void */
-		onInput: function( ev ) {
+		onInput_: function( ev ) {
 			ev.target.parentNode.classList[
-				this.addRemove( ev.target.value.length )
-			]( this.prefixed( 'is-active' ));
+				this.addRemove_( ev.target.value.length )
+			]( this.prefixed_( 'is-active' ));
 		},
 
 		/** @return void */
-		onFocus: function( ev ) {
-			ev.target.parentNode.classList.add( this.prefixed( 'has-focus' ));
+		onFocus_: function( ev ) {
+			ev.target.parentNode.classList.add( this.prefixed_( 'has-focus' ));
 		},
 
 		/** @return void */
-		onReset: function() {
-			setTimeout( this.resetFields.bind( this ));
+		onReset_: function() {
+			setTimeout( this.resetFields_.bind( this ));
 		},
 
 		/** @return string */
-		prefixed: function( value ) {
-			return this.config[this.current].prefix + value;
+		prefixed_: function( value ) {
+			return this.config_[this.current_].prefix + value;
 		},
 
 		/** @return void */
-		removeClasses: function( el ) {
-			var prefix = this.config[this.current].prefix;
+		removeClasses_: function( el ) {
+			var prefix = this.config_[this.current_].prefix;
 			var classes = el.className.split( ' ' ).filter( function( c ) {
 				return c.lastIndexOf( prefix, 0 ) !== 0;
 			});
@@ -240,32 +245,34 @@
 		},
 
 		/** @return null|void */
-		reset: function( el ) {
+		reset_: function( el ) {
+			var self = this;
 			var parent = el.parentNode;
-			if( !this.hasParent( el ))return;
+			if( !self.hasParent_( el ))return;
 			var fragment = document.createDocumentFragment();
 			while( parent.firstElementChild ) {
 				var childEl = parent.firstElementChild;
-				this.removeClasses( childEl );
+				self.removeClasses_( childEl );
 				fragment.appendChild( childEl );
 			}
 			parent.parentNode.replaceChild( fragment, parent );
-			this.resetPlaceholder( el );
-			this.handleEvents( el, 'remove' );
+			self.resetPlaceholder_( el );
+			self.handleEvents_( el, 'remove' );
 		},
 
 		/** @return void */
-		resetFields: function() {
-			var fields = this.el[this.current].querySelectorAll( this.selectors[this.current] );
+		resetFields_: function() {
+			var self = this;
+			var fields = self.el_[self.current_].querySelectorAll( self.selectors_[self.current_] );
 			for( var i = 0; i < fields.length; ++i ) {
 				fields[i].parentNode.classList[
-					this.addRemove( fields[i].tagName === 'SELECT' && fields[i].value !== '' )
-				]( this.prefixed( 'is-active' ));
+					self.addRemove_( fields[i].tagName === 'SELECT' && fields[i].value !== '' )
+				]( self.prefixed_( 'is-active' ));
 			}
 		},
 
 		/** @return void */
-		resetPlaceholder: function( el ) {
+		resetPlaceholder_: function( el ) {
 			var dataPlaceholder = 'data-placeholder';
 			var originalPlaceholder = el.getAttribute( dataPlaceholder );
 			if( originalPlaceholder !== null ) {
@@ -275,28 +282,30 @@
 		},
 
 		/** @return void */
-		setLabel: function( labelEl, el ) {
-			labelEl.classList.add( this.prefixed( 'label' ));
-			labelEl.textContent = this.getLabelText( labelEl, el );
-			if( typeof this.config[this.current].customLabel === 'function' ) {
-				labelEl.textContent = this.config[this.current].customLabel.call( this, labelEl, el );
+		setLabel_: function( labelEl, el ) {
+			var self = this;
+			labelEl.classList.add( self.prefixed_( 'label' ));
+			labelEl.textContent = self.getLabelText_( labelEl, el );
+			if( typeof self.config_[self.current_].customLabel === 'function' ) {
+				labelEl.textContent = self.config_[self.current_].customLabel.call( self, labelEl, el );
 			}
 		},
 
 		/** @return void */
-		setPlaceholder: function( labelEl, el ) {
+		setPlaceholder_: function( labelEl, el ) {
+			var self = this;
 			var placeholderText = el.getAttribute( 'placeholder' );
-			if( this.config[this.current].prioritize === 'label' || !placeholderText ) {
+			if( self.config_[self.current_].prioritize === 'label' || !placeholderText ) {
 				if( placeholderText ) {
 					el.setAttribute( 'data-placeholder', placeholderText );
 				}
-				placeholderText = this.getLabelText( labelEl, el );
+				placeholderText = self.getLabelText_( labelEl, el );
 			}
-			if( typeof this.config[this.current].customPlaceholder === 'function' ) {
-				placeholderText = this.config[this.current].customPlaceholder.call( this, placeholderText, el, labelEl );
+			if( typeof self.config_[self.current_].customPlaceholder === 'function' ) {
+				placeholderText = self.config_[self.current_].customPlaceholder.call( self, placeholderText, el, labelEl );
 			}
 			if( el.tagName === 'SELECT' ) {
-				this.setSelectPlaceholder( el, placeholderText );
+				self.setSelectPlaceholder_( el, placeholderText );
 			}
 			else {
 				el.setAttribute( 'placeholder', placeholderText );
@@ -304,7 +313,7 @@
 		},
 
 		/** @return void */
-		setSelectPlaceholder: function( el, placeholderText ) {
+		setSelectPlaceholder_: function( el, placeholderText ) {
 			var childEl = el.firstElementChild;
 			if( childEl.hasAttribute( 'value' ) && childEl.value ) {
 				el.insertBefore( new Option( placeholderText, '' ), childEl );
@@ -321,15 +330,16 @@
 		},
 
 		/** @return void */
-		wrapLabel: function( labelEl, el ) {
-			var wrapper = this.createEl( 'div', {
-				class: this.prefixed( 'wrap' ) + ' ' + this.prefixed( 'wrap-' + el.tagName.toLowerCase() ),
+		wrapLabel_: function( labelEl, el ) {
+			var self = this;
+			var wrapper = self.createEl_( 'div', {
+				class: self.prefixed_( 'wrap' ) + ' ' + self.prefixed_( 'wrap-' + el.tagName.toLowerCase() ),
 			});
 			if( el.value !== undefined && el.value.length ) {
-				wrapper.classList.add( this.prefixed( 'is-active' ));
+				wrapper.classList.add( self.prefixed_( 'is-active' ));
 			}
-			if( el.getAttribute( 'required' ) !== null || el.classList.contains( this.config[this.current].requiredClass )) {
-				wrapper.classList.add( this.prefixed( 'is-required' ));
+			if( el.getAttribute( 'required' ) !== null || el.classList.contains( self.config_[self.current_].requiredClass )) {
+				wrapper.classList.add( self.prefixed_( 'is-required' ));
 			}
 			el.parentNode.insertBefore( wrapper, el );
 			wrapper.appendChild( labelEl );
