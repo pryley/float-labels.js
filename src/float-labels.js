@@ -156,9 +156,8 @@
 		/** @return void */
 		handleEvents: function( el, action ) {
 			var events = this.events;
-			var isMicrosoftSelectEl = el.nodeName === 'SELECT' && this.isMSBrowser();
 			['blur','input','focus'].forEach( function( event ) {
-				if( event === 'input' && ( el.type === 'file' || isMicrosoftSelectEl )) {
+				if( event === 'input' && ( el.type === 'file' || el.nodeName === 'SELECT' )) {
 					event = 'change';
 				}
 				el[ action + 'EventListener']( event, events[event] );
@@ -168,11 +167,6 @@
 		/** @return bool */
 		hasParent: function( el ) {
 			return el.parentNode.classList.contains( this.prefixed( 'wrap' ));
-		},
-
-		/** @return bool */
-		isMSBrowser: function() {
-			return !!navigator.userAgent.match(/Edge|MSIE|Trident/g);
 		},
 
 		/** @return bool */
