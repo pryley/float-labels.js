@@ -1,6 +1,6 @@
 /*!
  * Float Labels
- * @version: 3.3.4
+ * @version: 3.3.5
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://geminilabs.github.io/float-labels.js
  * @license: MIT
@@ -313,7 +313,7 @@
 		setSelectPlaceholder: function( el, placeholderText ) {
 			var childEl = el.firstElementChild;
 			if( childEl.hasAttribute( 'value' ) && childEl.value ) {
-				var selected = el.options[el.selectedIndex].defaultSelected !== true ? true : false;
+				var selected = el.options[Math.max( 0, el.selectedIndex )].defaultSelected !== true ? true : false;
 				el.insertBefore( new Option( placeholderText, '', selected, selected ), childEl );
 			}
 			else {

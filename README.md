@@ -249,6 +249,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.3.5 - [2018-08-14]`
+- Fixed #27
+
 `v3.3.4 - [2018-05-25]`
 
 - Fixed compatibility with IE10/Edge (@bishsbytes)
