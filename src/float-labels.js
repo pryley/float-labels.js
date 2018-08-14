@@ -307,8 +307,10 @@
 		setSelectPlaceholder: function( el, placeholderText ) {
 			var childEl = el.firstElementChild;
 			if( childEl.hasAttribute( 'value' ) && childEl.value ) {
-				var selected = el.options[Math.max( 0, el.selectedIndex )].defaultSelected !== true ? true : false;
-				el.insertBefore( new Option( placeholderText, '', selected, selected ), childEl );
+				el.insertBefore( new Option( placeholderText, '' ), childEl );
+				if( el.options[el.selectedIndex].defaultSelected === false ) {
+					el.selectedIndex = 0;
+				}
 			}
 			else {
 				childEl.setAttribute( 'value', '' );
