@@ -3,8 +3,12 @@ bump:
   - package.json
   - src/float-labels.js
   - src/float-labels.scss
+  - index.html
 dest: dist/
 watch:
+  css:
+    - dist/*.css
+    - "!dist/*.min.css"
   html: index.html
   js: src/float-labels.js
   scss:
