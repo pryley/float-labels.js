@@ -249,6 +249,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.3.6 - [2018-10-09]`
+- Fixed Invalid CSS property #29 (@timelsass)
+
 `v3.3.5 - [2018-08-14]`
 - Fixed #27
 
