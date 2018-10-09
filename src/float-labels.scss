@@ -183,7 +183,7 @@ $float-labels-defaults: (
 	font-weight: fl(font-weight);
 	line-height: 1;
 	color: fl(color-placeholder);
-	border-radius-top-left: fl(border-radius);
+	border-top-left-radius: fl(border-radius);
 	transition: all fl(transition-speed) fl(transition-easing);
 	z-index: 1;
 }

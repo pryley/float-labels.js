@@ -638,7 +638,7 @@ input[type=checkbox] + label {
   font-weight: 400;
   line-height: 1;
   color: #bbb;
-  border-radius-top-left: 3px;
+  border-top-left-radius: 3px;
   transition: all 0.2s ease-in-out;
   z-index: 1;
 }
