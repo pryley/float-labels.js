@@ -250,14 +250,14 @@ All changes should be committed to the files in `src/`.
 ## Changelog
 
 `v3.3.6 - [2018-10-09]`
-- Fixed Invalid CSS property #29 (@timelsass)
+- Fixed issue [#29](https://github.com/geminilabs/float-labels.js/issues/29) Invalid CSS property ([@timelsass](https://github.com/timelsass))
 
 `v3.3.5 - [2018-08-14]`
-- Fixed #27
+- Fixed issue [#27](https://github.com/geminilabs/float-labels.js/issues/27)
 
 `v3.3.4 - [2018-05-25]`
 
-- Fixed compatibility with IE10/Edge (@bishsbytes)
+- Fixed compatibility with IE10/Edge ([@bishsbytes](https://github.com/bishsbytes))
 - Prevented SELECT elements with the "multiple" attribute from transforming
 
 `v3.3.3 - [2018-01-30]`
@@ -270,12 +270,12 @@ All changes should be committed to the files in `src/`.
 
 `v3.3.0 - [2017-11-11]`
 
-- Added ability to accept a single Element (@raysuelzer)
-- Handle inputs that have a value without the value attribute (@raysuelzer)
+- Added ability to accept a single Element ([@raysuelzer](https://github.com/raysuelzer))
+- Handle inputs that have a value without the value attribute ([@raysuelzer](https://github.com/raysuelzer))
 
 `v3.2.1 - [2017-10-27]`
 
-- Added main property to package.json (@joppuyo)
+- Added main property to package.json ([@joppuyo](https://github.com/joppuyo))
 
 `v3.2.0 - [2017-08-21]`
 
