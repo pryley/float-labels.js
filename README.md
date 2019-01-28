@@ -1,7 +1,7 @@
 # float-labels.js
 
-[![GitHub version](https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js.svg)](https://badge.fury.io/gh/geminilabs%2Ffloat-labels.js)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/geminilabs/star-rating.js/blob/master/LICENSE)
+[![GitHub version](https://badge.fury.io/gh/pryley%2Ffloat-labels.js.svg)](https://badge.fury.io/gh/pryley%2Ffloat-labels.js)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/pryley/float-labels.js/blob/master/LICENSE)
 
 A zero-dependency plugin that applies the float label pattern to a form.
 
@@ -13,7 +13,7 @@ For production, use the files from the `dist/` folder.
 
 Use one of the following methods to add Float Labels to your project:
 
-- [Download ZIP](https://github.com/geminilabs/float-labels.js/zipball/master)
+- [Download ZIP](https://github.com/pryley/float-labels.js/zipball/master)
 - `yarn add float-labels.js`
 - `npm install float-labels.js`
 - `bower install float-labels.js`
@@ -250,10 +250,10 @@ All changes should be committed to the files in `src/`.
 ## Changelog
 
 `v3.3.6 - [2018-10-09]`
-- Fixed issue [#29](https://github.com/geminilabs/float-labels.js/issues/29) Invalid CSS property ([@timelsass](https://github.com/timelsass))
+- Fixed issue [#29](https://github.com/pryley/float-labels.js/issues/29) Invalid CSS property ([@timelsass](https://github.com/timelsass))
 
 `v3.3.5 - [2018-08-14]`
-- Fixed issue [#27](https://github.com/geminilabs/float-labels.js/issues/27)
+- Fixed issue [#27](https://github.com/pryley/float-labels.js/issues/27)
 
 `v3.3.4 - [2018-05-25]`
 
@@ -266,7 +266,7 @@ All changes should be committed to the files in `src/`.
 
 `v3.3.2 - [2018-01-06]`
 
-- Fixed issue [#16](https://github.com/geminilabs/float-labels.js/issues/16)
+- Fixed issue [#16](https://github.com/pryley/float-labels.js/issues/16)
 
 `v3.3.0 - [2017-11-11]`
 

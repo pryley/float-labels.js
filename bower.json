@@ -1,8 +1,8 @@
 {
   "name": "float-labels.js",
-  "version": "3.3.6",
+  "version": "3.3.7",
   "description": "A zero-dependency plugin that applies the float label pattern to a form.",
-  "homepage": "https://github.com/geminilabs/float-labels.js",
+  "homepage": "https://github.com/pryley/float-labels.js",
   "authors": [
     "Paul Ryley <paul@geminilabs.io>"
   ],
@@ -13,7 +13,8 @@
   "keywords": [
     "floatlabels",
     "float-labels",
-    "geminilabs"
+    "geminilabs",
+    "pryley"
   ],
   "license": "MIT",
   "ignore": [
