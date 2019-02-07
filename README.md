@@ -249,6 +249,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.3.8 - [2019-02-07]`
+- Fixed issue [#34](https://github.com/pryley/float-labels.js/issues/34)
+
 `v3.3.6 - [2018-10-09]`
 - Fixed issue [#29](https://github.com/pryley/float-labels.js/issues/29) Invalid CSS property ([@timelsass](https://github.com/timelsass))
 
