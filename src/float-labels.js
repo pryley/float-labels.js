@@ -149,7 +149,7 @@
 
 		/** @return string */
 		getLabelText_: function( labelEl, el ) {
-			var labelText = labelEl.textContent.replace( /[*:]/g, '' ).trim();
+			var labelText = labelEl.textContent.trim();
 			var placeholderText = el.getAttribute( 'placeholder' );
 			if( !labelText || ( labelText && placeholderText && this.config_[this.current_].prioritize === 'placeholder' )) {
 				labelText = placeholderText;
