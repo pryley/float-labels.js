@@ -249,6 +249,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.3.9 - [2019-06-04]`
+- Added RTL support when body tag uses the dir attribute (i.e. `<body dir="rtl">`)
+
 `v3.3.8 - [2019-02-07]`
 - Fixed issue [#34](https://github.com/pryley/float-labels.js/issues/34)
 

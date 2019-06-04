@@ -1,6 +1,6 @@
 /*!
  * Float Labels
- * @version: 3.3.8
+ * @version: 3.3.9
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://pryley.github.io/float-labels.js
  * @license: MIT
@@ -188,6 +188,11 @@ $float-labels-defaults: (
 	z-index: 1;
 }
 
+body[dir=rtl] #{fl(parent)}.#{fl(prefix)}form label.#{fl(prefix)}label {
+	left: unset;
+	right: 0;
+}
+
 #{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-active label.#{fl(prefix)}label {
 	opacity: 1;
 	visibility: visible;
@@ -212,6 +217,11 @@ $float-labels-defaults: (
 	z-index: 1;
 }
 
+body[dir=rtl] #{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-required:before {
+	right: unset;
+	left: fl(base-height)/2 + fl(base-padding)/2;
+}
+
 #{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}is-required.#{fl(prefix)}is-active:before {
 	opacity: 0;
 }
@@ -220,8 +230,18 @@ $float-labels-defaults: (
 	@include fl-style-1;
 }
 
+body[dir=rtl] #{fl(parent)}.#{fl(prefix)}form.#{fl(prefix)}style-1 label.#{fl(prefix)}label {
+	left: unset;
+	right: fl(border-width) + fl(base-padding)*1.5;
+}
+
 #{fl(parent)}.#{fl(prefix)}form.#{fl(prefix)}style-2 {
 	@include fl-style-2;
+}
+
+body[dir=rtl] #{fl(parent)}.#{fl(prefix)}form.#{fl(prefix)}style-2 label.#{fl(prefix)}label {
+	left: unset;
+	right: fl(border-width) + fl(base-padding)*1.5;
 }
 
 #{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}wrap-select:after {
@@ -236,4 +256,9 @@ $float-labels-defaults: (
 	background-position: 100% 50%;
 	background-size: 7px 14px;
 	z-index: 2;
+}
+
+body[dir=rtl] #{fl(parent)}.#{fl(prefix)}form .#{fl(prefix)}wrap-select:after {
+	right: unset;
+	left: 6px;
 }
