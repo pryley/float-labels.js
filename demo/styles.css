@@ -549,7 +549,7 @@ input[type=checkbox] + label {
 
 /*!
  * Float Labels
- * @version: 3.3.8
+ * @version: 3.3.9
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://pryley.github.io/float-labels.js
  * @license: MIT
@@ -643,6 +643,11 @@ input[type=checkbox] + label {
   z-index: 1;
 }
 
+body[dir=rtl] .fl-form label.fl-label {
+  left: unset;
+  right: 0;
+}
+
 .fl-form .fl-is-active label.fl-label {
   opacity: 1;
   visibility: visible;
@@ -665,6 +670,11 @@ input[type=checkbox] + label {
   transition: all 0.2s ease-in-out;
   padding: 6px 0 0;
   z-index: 1;
+}
+
+body[dir=rtl] .fl-form .fl-is-required:before {
+  right: unset;
+  left: 15px;
 }
 
 .fl-form .fl-is-required.fl-is-active:before {
@@ -715,6 +725,11 @@ input[type=checkbox] + label {
   top: 9px;
 }
 
+body[dir=rtl] .fl-form.fl-style-1 label.fl-label {
+  left: unset;
+  right: 10px;
+}
+
 .fl-form.fl-style-2 input.fl-input,
 .fl-form.fl-style-2 select.fl-select,
 .fl-form.fl-style-2 textarea.fl-textarea {
@@ -741,6 +756,11 @@ input[type=checkbox] + label {
   padding-top: 12px;
 }
 
+body[dir=rtl] .fl-form.fl-style-2 label.fl-label {
+  left: unset;
+  right: 10px;
+}
+
 .fl-form .fl-wrap-select:after {
   content: '';
   position: absolute;
@@ -753,6 +773,11 @@ input[type=checkbox] + label {
   background-position: 100% 50%;
   background-size: 7px 14px;
   z-index: 2;
+}
+
+body[dir=rtl] .fl-form .fl-wrap-select:after {
+  right: unset;
+  left: 6px;
 }
 
 a {

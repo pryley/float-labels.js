@@ -1,6 +1,6 @@
 {
   "name": "float-labels.js",
-  "version": "3.3.8",
+  "version": "3.3.9",
   "description": "A zero-dependency plugin that applies the float label pattern to a form.",
   "homepage": "https://github.com/pryley/float-labels.js",
   "authors": [
