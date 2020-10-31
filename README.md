@@ -1,3 +1,5 @@
+This package is abandoned. Please use https://github.com/anydigital/float-label-css instead.
+
 # float-labels.js
 
 [![GitHub version](https://badge.fury.io/gh/pryley%2Ffloat-labels.js.svg)](https://badge.fury.io/gh/pryley%2Ffloat-labels.js)
