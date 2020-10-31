@@ -1,4 +1,4 @@
-> This package is abandoned. Please use https://github.com/anydigital/float-label-css instead.
+> This package is no longer maintained. Please use https://github.com/anydigital/float-label-css instead.
 
 # float-labels.js
 
